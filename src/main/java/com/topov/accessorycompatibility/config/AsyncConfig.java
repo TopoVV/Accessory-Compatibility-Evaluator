@@ -7,7 +7,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.Executor;
 
-@EnableAsync
+//@EnableAsync
 @Configuration
 public class AsyncConfig {
     @Bean
@@ -15,8 +15,8 @@ public class AsyncConfig {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(5);
         executor.setMaxPoolSize(5);
-        executor.setThreadNamePrefix("specificationsParserThread-");
-        executor.setQueueCapacity(5);
+        executor.setThreadNamePrefix("specificationsThread-");
+        executor.setQueueCapacity(10);
         executor.initialize();
         return executor;
     }

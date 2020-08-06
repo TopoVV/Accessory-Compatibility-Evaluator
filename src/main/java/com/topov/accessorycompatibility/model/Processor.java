@@ -1,8 +1,7 @@
-package com.topov.accessorycompatibility.accessory;
+package com.topov.accessorycompatibility.model;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Builder
 @Data

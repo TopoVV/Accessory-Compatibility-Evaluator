@@ -1,6 +1,6 @@
 package com.topov.accessorycompatibility.assembler;
 
-import com.topov.accessorycompatibility.accessory.Processor;
+import com.topov.accessorycompatibility.model.Processor;
 
 import java.util.Map;
 

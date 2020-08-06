@@ -24,7 +24,6 @@ import java.util.stream.Stream;
 
 @SpringBootApplication
 public class AccessoryCompatibilityApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(AccessoryCompatibilityApplication.class, args);
     }
