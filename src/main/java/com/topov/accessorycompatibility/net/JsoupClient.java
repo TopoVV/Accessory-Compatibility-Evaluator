@@ -10,5 +10,5 @@ import java.util.concurrent.CompletableFuture;
 
 public interface JsoupClient {
     Document getProcessorDom(String processor);
-    Optional<Document> getMotherboardDom(String motherboard);
+    Document getMotherboardDom(String motherboard);
 }

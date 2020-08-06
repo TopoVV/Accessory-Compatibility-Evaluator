@@ -42,4 +42,17 @@ public class EkatalogSpecificationsReceiver {
             return CompletableFuture.failedFuture(e);
         }
     }
+
+    @Async
+    public CompletableFuture<Map<String, String>> receiveMotherboardSpecifications(String motherboard) {
+        LOG.info("Receiving motherboard specifications: " + Thread.currentThread().getName());
+        try {
+            final Document processorDom = client.getMotherboardDom(motherboard);
+            final Map<String, String> specifications = parser.parseMotherboardSpecifications(processorDom);
+            return CompletableFuture.completedFuture(specifications);
+        } catch (RuntimeException e) {
+            LOG.info(e);
+            return CompletableFuture.failedFuture(e);
+        }
+    }
 }

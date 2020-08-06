@@ -20,7 +20,7 @@ import java.util.concurrent.CompletableFuture;
 @Service("ekatalogClient")
 public class EkatalogClient implements JsoupClient {
     private static final Logger LOG = LogManager.getLogger(EkatalogClient.class.getName());
-
+    private static final String MOTHERBOARD_URL_PATTERN = "https://ek.ua/ek-item.php?resolved_name_=%s&view_=tbl";
     private static final String PROCESSOR_URL_PATTERN = "https://ek.ua/%s.htm";
 
     @Override
@@ -28,8 +28,7 @@ public class EkatalogClient implements JsoupClient {
         LOG.info("Requesting processor dom from ekatalog: " + Thread.currentThread().getName());
         try {
             final String url = String.format(PROCESSOR_URL_PATTERN, processor.replace(' ', '-'));
-            final Document processorDom = Jsoup.connect(url).get();
-            return processorDom;
+            return Jsoup.connect(url).get();
         } catch (IOException e) {
             LOG.info(e);
             throw new RuntimeException("Failed to receive document from Ekatalog", e);
@@ -37,7 +36,14 @@ public class EkatalogClient implements JsoupClient {
     }
 
     @Override
-    public Optional<Document> getMotherboardDom(String motherboard) {
-        return null;
+    public Document getMotherboardDom(String motherboard) {
+        LOG.info("Requesting motherboard dom from ekatalog: " + Thread.currentThread().getName());
+        try {
+            final String url = String.format(MOTHERBOARD_URL_PATTERN, motherboard.replace(' ', '-'));
+            return Jsoup.connect(url).get();
+        } catch (IOException e) {
+            LOG.info(e);
+            throw new RuntimeException("Failed to receive document from Ekatalog", e);
+        }
     }
 }

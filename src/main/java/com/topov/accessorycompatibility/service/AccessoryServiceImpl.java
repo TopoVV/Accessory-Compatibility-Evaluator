@@ -1,6 +1,7 @@
 package com.topov.accessorycompatibility.service;
 
 import com.topov.accessorycompatibility.assembler.AccessoryModelAssembler;
+import com.topov.accessorycompatibility.model.Motherboard;
 import com.topov.accessorycompatibility.model.Processor;
 import com.topov.accessorycompatibility.receiver.EkatalogSpecificationsReceiver;
 import org.apache.logging.log4j.LogManager;
@@ -28,35 +29,35 @@ public class AccessoryServiceImpl implements AccessoryService {
         LOG.info("Starting");
         final long start = System.currentTimeMillis();
         final CompletableFuture<Processor> join1 =
-            specificationsReceiver.receiveProcessorSpecifications("AMD-3600-BOX")
+            specificationsReceiver.receiveProcessorSpecifications("AMD 3600 BOX")
                                   .thenApply(accessoryAssembler::assembleProcessor)
                                   .exceptionally(throwable -> {
                                       LOG.info(throwable);
                                       return null;
                                   });
         final CompletableFuture<Processor> join2 =
-            specificationsReceiver.receiveProcessorSpecifications("AMD-3600-BOX")
+            specificationsReceiver.receiveProcessorSpecifications("AMD 3600 BOX")
                                   .thenApply(accessoryAssembler::assembleProcessor)
                                   .exceptionally(throwable -> {
                                       LOG.info(throwable);
                                       return null;
                                   });
-        final CompletableFuture<Processor> join3 =
-            specificationsReceiver.receiveProcessorSpecifications("AMD-3600-BOX")
-                                  .thenApply(accessoryAssembler::assembleProcessor)
+        final CompletableFuture<Motherboard> join3 =
+            specificationsReceiver.receiveMotherboardSpecifications("MSI B450-A PRO MAX")
+                                  .thenApply(accessoryAssembler::assembleMotherboard)
                                   .exceptionally(throwable -> {
                                       LOG.info(throwable);
                                       return null;
                                   });
         final CompletableFuture<Processor> join4 =
-            specificationsReceiver.receiveProcessorSpecifications("AMD-36wq0-BOX")
+            specificationsReceiver.receiveProcessorSpecifications("AMD 36wq0 BOX")
                                   .thenApply(accessoryAssembler::assembleProcessor)
                                   .exceptionally(throwable -> {
                                       LOG.error(throwable);
                                       return null;
                                   });
         final CompletableFuture<Processor> join5 =
-            specificationsReceiver.receiveProcessorSpecifications("AMD-3600-BOX")
+            specificationsReceiver.receiveProcessorSpecifications("AMD 3600 BOX")
                                   .thenApply(accessoryAssembler::assembleProcessor)
                                   .exceptionally(throwable -> {
                                       LOG.info(throwable);

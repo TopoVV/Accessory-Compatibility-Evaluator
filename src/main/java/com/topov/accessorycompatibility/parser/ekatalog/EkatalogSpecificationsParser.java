@@ -29,21 +29,32 @@ public class EkatalogSpecificationsParser implements SpecificationsParser {
     @Override
     public Map<String, String> parseProcessorSpecifications(Document processorDom) {
         LOG.info("Parsing processor specifications: " + Thread.currentThread().getName());
+        return parseDom(processorDom);
+    }
+
+    @Override
+    public Map<String, String> parseMotherboardSpecifications(Document motherboardDom) {
+        LOG.info("Parsing motherboard specifications: " + Thread.currentThread().getName());
+        return parseDom(motherboardDom);
+    }
+
+    private Map<String, String> parseDom(Document document) {
         final Map<String, String> specifications = new HashMap<>();
-        final Elements parametersHTML = processorDom.select("td.op1");
-        final Elements valuesHTML = processorDom.select("td.op3");
+        final Elements parameters = document.select("td.op1");
+        final Elements values = document.select("td.op3");
 
-        valuesHTML.removeIf(element -> element.parent().children().size() < 2 && element.text().equals(""));
-        parametersHTML.removeIf(element -> element.parent().children().size() < 2);
+        parameters.removeIf(element -> element.parent().children().size() < 2);
+        values.removeIf(element -> element.parent().children().size() < 2);
 
-        for(int i = 0; i < parametersHTML.size() - 1; i++) {
-            final Element paramHTML = parametersHTML.get(i).getElementsByTag("span").first();
-            final Element valueHTML = valuesHTML.get(i);
-            final String paramName = specificationKeyGeneralizer.getAppropriateKey(paramHTML.text().trim());
-            final String paramValue = valueHTML.text().equals("") ? "true" : valueHTML.text().replaceAll(CYRILLIC, "").trim();
+        for(int i = 0; i < parameters.size() - 1; i++) {
+            final Element parameter = parameters.get(i).getElementsByTag("span").first();
+            final Element value = values.get(i);
+            final String parsedParameterName = parameter.text().trim();
+            final String parsedParameterValue = value.text().trim();
+            final String paramName = specificationKeyGeneralizer.getAppropriateKey(parsedParameterName);
+            final String paramValue = parsedParameterValue.equals("") ? "true" : parsedParameterValue.replaceAll(CYRILLIC, "").trim();
             specifications.put(paramName, paramValue);
         }
         return specifications;
     }
-
 }

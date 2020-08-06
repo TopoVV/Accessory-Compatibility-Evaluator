@@ -8,4 +8,5 @@ import java.util.concurrent.CompletableFuture;
 
 public interface SpecificationsParser {
     Map<String, String> parseProcessorSpecifications(Document processorDom);
+    Map<String, String> parseMotherboardSpecifications(Document motherboardDom);
 }

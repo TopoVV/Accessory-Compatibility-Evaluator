@@ -18,6 +18,7 @@ public class SpecificationKeyGeneralizer {
         keys.put("Разъем (Socket)", "socket");
         keys.put("Тепловыделение (TDP)", "tdp");
         keys.put("Тактовая частота", "ghz default");
+        keys.put("Socket", "socket");
     }
 
     public String getAppropriateKey(String key) {

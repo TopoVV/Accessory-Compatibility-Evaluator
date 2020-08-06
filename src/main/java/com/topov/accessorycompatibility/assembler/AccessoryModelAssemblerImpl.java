@@ -1,5 +1,6 @@
 package com.topov.accessorycompatibility.assembler;
 
+import com.topov.accessorycompatibility.model.Motherboard;
 import com.topov.accessorycompatibility.model.Processor;
 import com.topov.accessorycompatibility.receiver.EkatalogSpecificationsReceiver;
 import org.apache.logging.log4j.LogManager;
@@ -21,5 +22,14 @@ public class AccessoryModelAssemblerImpl implements AccessoryModelAssembler {
                         .socket(socket)
                         .heatRelease(Long.parseLong(tdp.matches("[0-9]+") ? tdp : "-100"))
                         .build();
+    }
+
+    @Override
+    public Motherboard assembleMotherboard(Map<String, String> specifications) {
+        LOG.info("Assembling motherboard: " + Thread.currentThread().getName());
+        final String socket = specifications.getOrDefault("socket", "undefined");
+        return Motherboard.builder()
+                          .socket(socket)
+                          .build();
     }
 }
