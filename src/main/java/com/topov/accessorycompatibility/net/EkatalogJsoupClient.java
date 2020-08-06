@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 
+
+/**
+ * Receives specifications of the specified accessory as jsoup.Document from Ekatalog.
+ * */
 @Service
 public class EkatalogJsoupClient implements JsoupClient {
     private static final String PROCESSOR_URL_PATTERN = "https://ek.ua/%s.htm";
