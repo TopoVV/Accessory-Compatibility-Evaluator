@@ -6,6 +6,9 @@ import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Generalizes specification key for different sources.
+ * */
 @Service
 public class SpecificationKeyGeneralizer {
     private final Map<String, String> keys = new HashMap<>();
