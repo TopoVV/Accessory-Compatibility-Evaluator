@@ -3,6 +3,7 @@ package com.topov.accessorycompatibility.receiver.ekatalog;
 import com.topov.accessorycompatibility.assembler.AccessoryModelAssembler;
 import com.topov.accessorycompatibility.model.Motherboard;
 import com.topov.accessorycompatibility.model.Processor;
+import com.topov.accessorycompatibility.model.Ram;
 import com.topov.accessorycompatibility.net.JsoupClient;
 import com.topov.accessorycompatibility.parser.SpecificationsGeneralizer;
 import com.topov.accessorycompatibility.parser.SpecificationsParser;
@@ -40,6 +41,7 @@ public class EkatalogSpecificationsReceiver implements SpecificationsReceiver {
     }
 
     @Async
+    @Override
     public CompletableFuture<Processor> receiveProcessorSpecifications(String processorName) {
         LOG.info("Receiving processor specifications: " + Thread.currentThread().getName());
         try {
@@ -54,6 +56,7 @@ public class EkatalogSpecificationsReceiver implements SpecificationsReceiver {
     }
 
     @Async
+    @Override
     public CompletableFuture<Motherboard> receiveMotherboardSpecifications(String motherboardName) {
         LOG.info("Receiving motherboard specifications: " + Thread.currentThread().getName());
         try {
@@ -65,5 +68,11 @@ public class EkatalogSpecificationsReceiver implements SpecificationsReceiver {
         } catch (RuntimeException e) {
             return CompletableFuture.failedFuture(e);
         }
+    }
+
+    @Async
+    @Override
+    public CompletableFuture<Ram> receiveRamSpecifications(String ramName) {
+        return null;
     }
 }

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -18,37 +19,95 @@ class EkatalogSpecificationsParserTest {
     private final SpecificationsParser specificationsParser;
 
     @Autowired
-    EkatalogSpecificationsParserTest(SpecificationsParser specificationsParser) {
+    public EkatalogSpecificationsParserTest(SpecificationsParser specificationsParser) {
         this.specificationsParser = specificationsParser;
     }
 
     @Test
     public void parseProcessorSpecifications() {
-        Document doc = Jsoup.parse("<td class='op01' width='48%'>" +
-            "<table width='100%' cellspacing='0' cellpadding='3' border='0'>" +
+        Document doc = Jsoup.parse("<td class='" +
+            "op01'" +
+            " width='" +
+            "48%'" +
+            ">" +
+            "<table width='" +
+            "100%'" +
+            " cellspacing='" +
+            "0'" +
+            " cellpadding='" +
+            "3'" +
+            " border='" +
+            "0'" +
+            ">" +
             "<tbody>" +
 
-            "<tr valign='top'>" +
-            "<td class='op1' width='49%'>" +
-            "<span class='gloss' jtype='click' jsource='https://ek.ua/mtools/mui_gloss.php?idGloss_=7478' jid='p7478' jsub='Y'>" +
-            "Разъем <span class='nobr ib'>" +
+            "<tr valign='" +
+            "top'" +
+            ">" +
+            "<td class='" +
+            "op1'" +
+            " width='" +
+            "49%'" +
+            ">" +
+            "<span class='" +
+            "gloss'" +
+            " jtype='" +
+            "click'" +
+            " jsource='" +
+            "https://ek.ua/mtools/mui_gloss.php?idGloss_=7478'" +
+            " jid='" +
+            "p7478'" +
+            " jsub='" +
+            "Y'" +
+            ">" +
+            "Разъем <span class='" +
+            "nobr ib'" +
+            ">" +
             "(Socket)</span>" +
             "</span>" +
             "</td>" +
-            "<td class='op3' width='51%'>" +
-            "<a href='/ek-list.php?katalog_=187&amp;idgm_=1485970'>" +
+            "<td class='" +
+            "op3'" +
+            " width='" +
+            "51%'" +
+            ">" +
+            "<a href='" +
+            "/ek-list.php?katalog_=187&amp;idgm_=1485970'" +
+            ">" +
             "AMD AM4</a>" +
             "</td>" +
             "</tr>" +
 
-            "<tr valign='top'>" +
-            "<td class='op1' width='49%'>" +
-            "<span class='gloss' jtype='click' jsource='https://ek.ua/mtools/mui_gloss.php?idGloss_=7492' jid='p7492' jsub='Y'>" +
-            "Тепловыделение <span class='nobr ib'>" +
+            "<tr valign='" +
+            "top'" +
+            ">" +
+            "<td class='" +
+            "op1'" +
+            " width='" +
+            "49%'" +
+            ">" +
+            "<span class='" +
+            "gloss'" +
+            " jtype='" +
+            "click'" +
+            " jsource='" +
+            "https://ek.ua/mtools/mui_gloss.php?idGloss_=7492'" +
+            " jid='" +
+            "p7492'" +
+            " jsub='" +
+            "Y'" +
+            ">" +
+            "Тепловыделение <span class='" +
+            "nobr ib'" +
+            ">" +
             "(TDP)</span>" +
             "</span>" +
             "</td>" +
-            "<td class='op3' width='51%'>" +
+            "<td class='" +
+            "op3'" +
+            " width='" +
+            "51%'" +
+            ">" +
             "65&nbsp;Вт</td>" +
             "</tr>" +
 
@@ -62,5 +121,14 @@ class EkatalogSpecificationsParserTest {
         final String tdp = specificationsMap.get("Тепловыделение (TDP)");
         assertEquals("amd am4", socket.toLowerCase());
         assertEquals("65 вт", tdp.toLowerCase());
+    }
+
+    @Test
+    public void receiveRamSpecificationsTest() throws IOException {
+        final Document document = Jsoup.connect("https://ek.ua/TEAM-GROUP-ELITE-SO-DIMM-DDR4.htm").get();
+
+        Map<String, String> ramSpecs = specificationsParser.parseRamSpecifications(document);
+        String value = ramSpecs.get("Объем памяти комплекта");
+        assertEquals("16 ГБ", value);
     }
 }

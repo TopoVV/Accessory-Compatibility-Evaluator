@@ -4,6 +4,7 @@ import com.topov.accessorycompatibility.compatibility.CompatibilityEvaluator;
 import com.topov.accessorycompatibility.dto.response.MotherboardProcessorCompatibility;
 import com.topov.accessorycompatibility.model.Motherboard;
 import com.topov.accessorycompatibility.model.Processor;
+import com.topov.accessorycompatibility.model.Ram;
 import com.topov.accessorycompatibility.receiver.SpecificationsReceiver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,8 +32,10 @@ public class AccessoryServiceImpl implements AccessoryService {
         final long start = System.currentTimeMillis();
         String processorName = "INTEL i5-9400 BOX";
         String motherboardName = "ASROCK B450M PRO4 F";
+        String ramName = "CRUCIAL-BALLISTIX-DDR4-2X8GB";
         CompletableFuture<Processor> processorFuture = specificationsReceiver.receiveProcessorSpecifications(processorName);
         CompletableFuture<Motherboard> motherboardFuture = specificationsReceiver.receiveMotherboardSpecifications(motherboardName);
+        CompletableFuture<Ram> ramFuture = specificationsReceiver.receiveRamSpecifications(ramName);
 
         System.out.println(processorFuture.join());
         System.out.println(motherboardFuture.join());
