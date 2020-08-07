@@ -2,7 +2,6 @@ package com.topov.accessorycompatibility.assembler;
 
 import com.topov.accessorycompatibility.model.Motherboard;
 import com.topov.accessorycompatibility.model.Processor;
-import com.topov.accessorycompatibility.receiver.EkatalogSpecificationsReceiver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;

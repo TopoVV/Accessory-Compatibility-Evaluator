@@ -1,9 +1,11 @@
 package com.topov.accessorycompatibility.receiver;
 
+import com.topov.accessorycompatibility.assembler.AccessoryModelAssembler;
+import com.topov.accessorycompatibility.model.Motherboard;
+import com.topov.accessorycompatibility.model.Processor;
 import com.topov.accessorycompatibility.net.JsoupClient;
-import com.topov.accessorycompatibility.net.ekatalog.EkatalogClient;
+import com.topov.accessorycompatibility.parser.SpecificationsGeneralizer;
 import com.topov.accessorycompatibility.parser.SpecificationsParser;
-import com.topov.accessorycompatibility.service.AccessoryServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jsoup.nodes.Document;
@@ -22,37 +24,45 @@ public class EkatalogSpecificationsReceiver {
 
     private final JsoupClient client;
     private final SpecificationsParser parser;
+    private final AccessoryModelAssembler accessoryAssembler;
+    private final SpecificationsGeneralizer specificationsGeneralizer;
 
     @Autowired
-    public EkatalogSpecificationsReceiver(@Qualifier("ekatalogClient") JsoupClient client,
-                                          @Qualifier("ekatalogParser") SpecificationsParser parser) {
+    public EkatalogSpecificationsReceiver(AccessoryModelAssembler accessoryAssembler,
+                                          @Qualifier("ekatalogClient") JsoupClient client,
+                                          @Qualifier("ekatalogParser") SpecificationsParser parser,
+                                          @Qualifier("ekatalogSpecificationsGeneralizer") SpecificationsGeneralizer specificationsGeneralizer) {
         this.client = client;
         this.parser = parser;
+        this.accessoryAssembler = accessoryAssembler;
+        this.specificationsGeneralizer = specificationsGeneralizer;
     }
 
     @Async
-    public CompletableFuture<Map<String, String>> receiveProcessorSpecifications(String processor) {
+    public CompletableFuture<Optional<Processor>> receiveProcessorSpecifications(String processorName) {
         LOG.info("Receiving processor specifications: " + Thread.currentThread().getName());
         try {
-            final Document processorDom = client.getProcessorDom(processor);
+            final Document processorDom = client.getProcessorDom(processorName);
             final Map<String, String> specifications = parser.parseProcessorSpecifications(processorDom);
-            return CompletableFuture.completedFuture(specifications);
-        } catch (RuntimeException e) {
-            LOG.info(e);
-            return CompletableFuture.failedFuture(e);
+            final Map<String, String> generalized = specificationsGeneralizer.generalizeSpecifications(specifications);
+            final Processor processor = accessoryAssembler.assembleProcessor(generalized);
+            return CompletableFuture.completedFuture(Optional.of(processor));
+        } catch (Exception e) {
+            return CompletableFuture.completedFuture(Optional.empty());
         }
     }
 
     @Async
-    public CompletableFuture<Map<String, String>> receiveMotherboardSpecifications(String motherboard) {
+    public CompletableFuture<Optional<Motherboard>> receiveMotherboardSpecifications(String motherboardName) {
         LOG.info("Receiving motherboard specifications: " + Thread.currentThread().getName());
         try {
-            final Document processorDom = client.getMotherboardDom(motherboard);
+            final Document processorDom = client.getMotherboardDom(motherboardName);
             final Map<String, String> specifications = parser.parseMotherboardSpecifications(processorDom);
-            return CompletableFuture.completedFuture(specifications);
+            final Map<String, String> generalized = specificationsGeneralizer.generalizeSpecifications(specifications);
+            final Motherboard motherboard = accessoryAssembler.assembleMotherboard(generalized);
+            return CompletableFuture.completedFuture(Optional.of(motherboard));
         } catch (RuntimeException e) {
-            LOG.info(e);
-            return CompletableFuture.failedFuture(e);
+            return CompletableFuture.completedFuture(Optional.empty());
         }
     }
 }

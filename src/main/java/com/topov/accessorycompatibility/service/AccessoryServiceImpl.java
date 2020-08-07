@@ -1,6 +1,5 @@
 package com.topov.accessorycompatibility.service;
 
-import com.topov.accessorycompatibility.assembler.AccessoryModelAssembler;
 import com.topov.accessorycompatibility.model.Motherboard;
 import com.topov.accessorycompatibility.model.Processor;
 import com.topov.accessorycompatibility.receiver.EkatalogSpecificationsReceiver;
@@ -9,66 +8,39 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Stream;
 
 @Service
 public class AccessoryServiceImpl implements AccessoryService {
     private static final Logger LOG = LogManager.getLogger(AccessoryServiceImpl.class.getName());
 
     private final EkatalogSpecificationsReceiver specificationsReceiver;
-    private final AccessoryModelAssembler accessoryAssembler;
-
     @Autowired
-    public AccessoryServiceImpl(EkatalogSpecificationsReceiver specificationsReceiver, AccessoryModelAssembler accessoryAssembler) {
+    public AccessoryServiceImpl(EkatalogSpecificationsReceiver specificationsReceiver) {
         this.specificationsReceiver = specificationsReceiver;
-        this.accessoryAssembler = accessoryAssembler;
     }
 
     @Override
     public void doWork() {
-        LOG.info("Starting");
         final long start = System.currentTimeMillis();
-        final CompletableFuture<Processor> join1 =
-            specificationsReceiver.receiveProcessorSpecifications("AMD 3600 BOX")
-                                  .thenApply(accessoryAssembler::assembleProcessor)
-                                  .exceptionally(throwable -> {
-                                      LOG.info(throwable);
-                                      return null;
-                                  });
-        final CompletableFuture<Processor> join2 =
-            specificationsReceiver.receiveProcessorSpecifications("AMD 3600 BOX")
-                                  .thenApply(accessoryAssembler::assembleProcessor)
-                                  .exceptionally(throwable -> {
-                                      LOG.info(throwable);
-                                      return null;
-                                  });
-        final CompletableFuture<Motherboard> join3 =
-            specificationsReceiver.receiveMotherboardSpecifications("MSI B450-A PRO MAX")
-                                  .thenApply(accessoryAssembler::assembleMotherboard)
-                                  .exceptionally(throwable -> {
-                                      LOG.info(throwable);
-                                      return null;
-                                  });
-        final CompletableFuture<Processor> join4 =
-            specificationsReceiver.receiveProcessorSpecifications("AMD 36wq0 BOX")
-                                  .thenApply(accessoryAssembler::assembleProcessor)
-                                  .exceptionally(throwable -> {
-                                      LOG.error(throwable);
-                                      return null;
-                                  });
-        final CompletableFuture<Processor> join5 =
-            specificationsReceiver.receiveProcessorSpecifications("AMD 3600 BOX")
-                                  .thenApply(accessoryAssembler::assembleProcessor)
-                                  .exceptionally(throwable -> {
-                                      LOG.info(throwable);
-                                      return null;
-                                  });
-        System.out.println(join1.join());
-        System.out.println(join2.join());
-        System.out.println(join3.join());
-        System.out.println(join4.join());
-        System.out.println(join5.join());
+        CompletableFuture<Optional<Processor>> processor1 =
+            specificationsReceiver.receiveProcessorSpecifications("AMD 3100");
+        CompletableFuture<Optional<Motherboard>> motherboard =
+            specificationsReceiver.receiveMotherboardSpecifications("ASROCK B450M PRO4 F");
+        CompletableFuture<Optional<Processor>> processor3 =
+            specificationsReceiver.receiveProcessorSpecifications("AMD 3100");
+        CompletableFuture<Optional<Processor>> processor4 =
+            specificationsReceiver.receiveProcessorSpecifications("AMD 3100");
+        CompletableFuture<Optional<Processor>> processor5 =
+            specificationsReceiver.receiveProcessorSpecifications("AMD 3100");
+        Stream.of(processor1, motherboard, processor3, processor4, processor5)
+              .map(CompletableFuture::join)
+              .forEach(System.out::println);
+
         final long stop = System.currentTimeMillis();
         LOG.info(stop - start);
     }
+
 }

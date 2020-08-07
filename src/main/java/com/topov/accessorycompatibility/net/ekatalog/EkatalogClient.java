@@ -1,17 +1,13 @@
 package com.topov.accessorycompatibility.net.ekatalog;
 
-import com.topov.accessorycompatibility.assembler.AccessoryModelAssemblerImpl;
 import com.topov.accessorycompatibility.net.JsoupClient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 
 
 /**
