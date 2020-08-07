@@ -21,25 +21,25 @@ public class EkatalogClient implements JsoupClient {
 
     @Override
     public Document getProcessorDom(String processor) {
-        LOG.info("Requesting processor dom from ekatalog: " + Thread.currentThread().getName());
+        LOG.info("Requesting processor dom from Ekatalog: " + Thread.currentThread().getName());
         try {
             final String url = String.format(PROCESSOR_URL_PATTERN, processor.replace(' ', '-'));
             return Jsoup.connect(url).get();
         } catch (IOException e) {
             LOG.info(e);
-            throw new RuntimeException("Failed to receive document from Ekatalog", e);
+            throw new RuntimeException("Failed to receive processor document from Ekatalog", e);
         }
     }
 
     @Override
     public Document getMotherboardDom(String motherboard) {
-        LOG.info("Requesting motherboard dom from ekatalog: " + Thread.currentThread().getName());
+        LOG.info("Requesting motherboard dom from Ekatalog: " + Thread.currentThread().getName());
         try {
             final String url = String.format(MOTHERBOARD_URL_PATTERN, motherboard.replace(' ', '-'));
             return Jsoup.connect(url).get();
         } catch (IOException e) {
             LOG.info(e);
-            throw new RuntimeException("Failed to receive document from Ekatalog", e);
+            throw new RuntimeException("Failed to receive motherboard document from Ekatalog", e);
         }
     }
 }

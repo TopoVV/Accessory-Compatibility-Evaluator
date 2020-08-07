@@ -1,4 +1,4 @@
-package com.topov.accessorycompatibility.receiver;
+package com.topov.accessorycompatibility.receiver.ekatalog;
 
 import com.topov.accessorycompatibility.assembler.AccessoryModelAssembler;
 import com.topov.accessorycompatibility.model.Motherboard;
@@ -6,6 +6,7 @@ import com.topov.accessorycompatibility.model.Processor;
 import com.topov.accessorycompatibility.net.JsoupClient;
 import com.topov.accessorycompatibility.parser.SpecificationsGeneralizer;
 import com.topov.accessorycompatibility.parser.SpecificationsParser;
+import com.topov.accessorycompatibility.receiver.SpecificationsReceiver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jsoup.nodes.Document;
@@ -19,7 +20,7 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class EkatalogSpecificationsReceiver {
+public class EkatalogSpecificationsReceiver implements SpecificationsReceiver {
     private static final Logger LOG = LogManager.getLogger(EkatalogSpecificationsReceiver.class.getName());
 
     private final JsoupClient client;
@@ -39,30 +40,30 @@ public class EkatalogSpecificationsReceiver {
     }
 
     @Async
-    public CompletableFuture<Optional<Processor>> receiveProcessorSpecifications(String processorName) {
+    public CompletableFuture<Processor> receiveProcessorSpecifications(String processorName) {
         LOG.info("Receiving processor specifications: " + Thread.currentThread().getName());
         try {
             final Document processorDom = client.getProcessorDom(processorName);
             final Map<String, String> specifications = parser.parseProcessorSpecifications(processorDom);
             final Map<String, String> generalized = specificationsGeneralizer.generalizeSpecifications(specifications);
             final Processor processor = accessoryAssembler.assembleProcessor(generalized);
-            return CompletableFuture.completedFuture(Optional.of(processor));
+            return CompletableFuture.completedFuture(processor);
         } catch (Exception e) {
-            return CompletableFuture.completedFuture(Optional.empty());
+            return CompletableFuture.failedFuture(e);
         }
     }
 
     @Async
-    public CompletableFuture<Optional<Motherboard>> receiveMotherboardSpecifications(String motherboardName) {
+    public CompletableFuture<Motherboard> receiveMotherboardSpecifications(String motherboardName) {
         LOG.info("Receiving motherboard specifications: " + Thread.currentThread().getName());
         try {
             final Document processorDom = client.getMotherboardDom(motherboardName);
             final Map<String, String> specifications = parser.parseMotherboardSpecifications(processorDom);
             final Map<String, String> generalized = specificationsGeneralizer.generalizeSpecifications(specifications);
             final Motherboard motherboard = accessoryAssembler.assembleMotherboard(generalized);
-            return CompletableFuture.completedFuture(Optional.of(motherboard));
+            return CompletableFuture.completedFuture(motherboard);
         } catch (RuntimeException e) {
-            return CompletableFuture.completedFuture(Optional.empty());
+            return CompletableFuture.failedFuture(e);
         }
     }
 }

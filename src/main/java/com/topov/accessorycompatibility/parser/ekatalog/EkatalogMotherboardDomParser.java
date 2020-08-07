@@ -20,7 +20,7 @@ public class EkatalogMotherboardDomParser implements MotherboardDomParser {
         parameters.removeIf(element -> element.parent().children().size() < 2);
         values.removeIf(element -> element.parent().children().size() < 2);
 
-        for(int i = 0; i < parameters.size() - 1; i++) {
+        for(int i = 0; i < parameters.size(); i++) {
             final Element parameter = parameters.get(i).getElementsByTag("span").first();
             final Element value = values.get(i);
             final String paramName =  parameter.text().trim();
