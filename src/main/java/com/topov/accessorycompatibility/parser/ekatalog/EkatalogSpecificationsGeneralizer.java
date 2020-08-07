@@ -11,15 +11,19 @@ import java.util.Map;
 public class EkatalogSpecificationsGeneralizer implements SpecificationsGeneralizer {
     private final String CYRILLIC = "[АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя]";
 
-    private final Map<String, String> keys = new HashMap<>();
-
-    @PostConstruct
-    public void configureKeys() {
-        keys.put("Socket", SOCKET_KEY);
-        keys.put("Разъем (Socket)", SOCKET_KEY);
-        keys.put("Тепловыделение (TDP)", TDP_KEY);
-        keys.put("Тактовая частота", GHZ_KEY);
-    }
+    private final Map<String, String> keys = Map.ofEntries(
+        Map.entry("Socket", SOCKET_KEY),
+        Map.entry("Разъем (Socket)", SOCKET_KEY),
+        Map.entry("Тепловыделение (TDP)", TDP_KEY),
+        Map.entry("Тактовая частота", GHZ_KEY),
+        Map.entry("Кол-во ядер", CORES_KEY),
+        Map.entry("Форм-фактор", MOTHERBOARD_FORM_FACTOR_KEY),
+        Map.entry("Кол-во потоков", THREADS_KEY),
+        Map.entry("Чипсет", CHIPSET_KEY),
+        Map.entry("Максимальный объем памяти", MAX_RAM_KEY),
+        Map.entry("Форм-фактор слота для памяти", RAM_FORM_FACTOR_KEY),
+        Map.entry("Максимальная тактовая частота", RAM_FREQUENCY_KEY)
+    );
 
     @Override
     public Map<String, String> generalizeSpecifications(Map<String, String> specifications) {

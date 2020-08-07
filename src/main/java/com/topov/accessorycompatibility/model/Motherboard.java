@@ -7,4 +7,9 @@ import lombok.Data;
 @Data
 public class Motherboard {
     private String socket;
+    private String chipset;
+    private String formFactor;
+    private Integer maxRam;
+    private Integer ramFrequency;
+    private String ramFormFactor;
 }

@@ -30,17 +30,15 @@ public class AccessoryServiceImpl implements AccessoryService {
     public void doWork() {
         final long start = System.currentTimeMillis();
         String processorName = "INTEL i5-9400 BOX";
-        String motherboardName = "ASROawCK B450M PRO4 F";
+        String motherboardName = "ASROCK B450M PRO4 F";
         CompletableFuture<Processor> processorFuture = specificationsReceiver.receiveProcessorSpecifications(processorName);
         CompletableFuture<Motherboard> motherboardFuture = specificationsReceiver.receiveMotherboardSpecifications(motherboardName);
 
-
-        CompletableFuture<MotherboardProcessorCompatibility> isCompatible1 = compatibilityEvaluator.checkCompatibility(processorFuture, motherboardFuture);
-        CompletableFuture<MotherboardProcessorCompatibility> isCompatible2 = compatibilityEvaluator.checkCompatibility(processorFuture, motherboardFuture);
-        CompletableFuture<MotherboardProcessorCompatibility> isCompatible3 = compatibilityEvaluator.checkCompatibility(processorFuture, motherboardFuture);
-        System.out.println(isCompatible1.join());
-        System.out.println(isCompatible2.join());
-        System.out.println(isCompatible3.join());
+        System.out.println(processorFuture.join());
+        System.out.println(motherboardFuture.join());
+        CompletableFuture<MotherboardProcessorCompatibility> motherboardProcessor =
+            compatibilityEvaluator.checkCompatibility(processorFuture, motherboardFuture);
+        System.out.println(motherboardProcessor.join());
 
 
         final long stop = System.currentTimeMillis();

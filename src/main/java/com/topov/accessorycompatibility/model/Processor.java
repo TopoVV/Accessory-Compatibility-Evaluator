@@ -7,5 +7,8 @@ import lombok.Data;
 @Data
 public class Processor {
     private String socket;
+    private Integer cores;
+    private Integer threads;
+    private Long frequency;
     private Long heatRelease;
 }
