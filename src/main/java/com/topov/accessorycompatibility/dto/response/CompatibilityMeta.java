@@ -1,16 +1,11 @@
 package com.topov.accessorycompatibility.dto.response;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@NoArgsConstructor
+@Getter
+@AllArgsConstructor
+@ToString
 public class CompatibilityMeta {
-    private String evaluationStatus;
-    private String description;
-
-    public CompatibilityMeta(String evaluationStatus, String description) {
-        this.evaluationStatus = evaluationStatus;
-        this.description = description;
-    }
+    protected final String evaluationStatus;
+    protected final String description;
 }
