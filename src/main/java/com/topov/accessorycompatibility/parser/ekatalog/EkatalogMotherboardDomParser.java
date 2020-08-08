@@ -23,9 +23,15 @@ public class EkatalogMotherboardDomParser implements MotherboardDomParser {
         for(int i = 0; i < parameters.size(); i++) {
             final Element parameter = parameters.get(i).getElementsByTag("span").first();
             final Element value = values.get(i);
-            final String paramName =  parameter.text().trim();
-            final String paramValue = value.text().trim();;
-//            System.out.println(paramName + "  ===  " + paramValue);
+            final String paramName =  String.format("mbd-%s", parameter.text().trim().toLowerCase());
+            final String paramValue = value.text().trim().toLowerCase();
+
+            if(paramName.contains("ddr")) {
+                final String motherboardRamTypeParam = "mbd-тип-памяти";
+                final String motherboardRamTypeValue = paramName.replace("mbd-", "");
+                specifications.put(motherboardRamTypeParam, motherboardRamTypeValue);
+            }
+
             specifications.put(paramName, paramValue);
         }
         return specifications;

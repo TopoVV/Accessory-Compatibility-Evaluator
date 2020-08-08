@@ -12,4 +12,5 @@ public class Motherboard {
     private Integer maxRam;
     private Integer ramFrequency;
     private String ramFormFactor;
+    private String ramType;
 }

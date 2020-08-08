@@ -35,10 +35,11 @@ public class AccessoryServiceImpl implements AccessoryService {
         CompletableFuture<Motherboard> motherboardFuture = specificationsReceiver.receiveMotherboardSpecifications("https://ek.ua/ek-item.php?resolved_name_=ASUS-TUF-B450-PRO-GAMING&view_=tbl");
         CompletableFuture<Ram> ramFuture = specificationsReceiver.receiveRamSpecifications("https://ek.ua/TEAM-GROUP-ELITE-SO-DIMM-DDR4.htm");
 
+        System.out.println(ramFuture.join());
         System.out.println(processorFuture.join());
         System.out.println(motherboardFuture.join());
-        CompletableFuture<MotherboardProcessorCompatibility> motherboardProcessor =
-            compatibilityEvaluator.checkCompatibility(processorFuture, motherboardFuture);
+
+        CompletableFuture<MotherboardProcessorCompatibility> motherboardProcessor = compatibilityEvaluator.checkCompatibility(processorFuture, motherboardFuture);
         System.out.println(motherboardProcessor.join());
 
 

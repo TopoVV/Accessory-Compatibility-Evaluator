@@ -3,7 +3,6 @@ package com.topov.accessorycompatibility.parser.ekatalog;
 import com.topov.accessorycompatibility.parser.SpecificationsGeneralizer;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,20 +11,25 @@ public class EkatalogSpecificationsGeneralizer implements SpecificationsGenerali
     private final String CYRILLIC = "[АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя]";
 
     private final Map<String, String> keys = Map.ofEntries(
-        Map.entry("Socket", SOCKET_KEY),
-        Map.entry("Разъем (Socket)", SOCKET_KEY),
-        Map.entry("Тепловыделение (TDP)", TDP_KEY),
-        Map.entry("Тактовая частота", GHZ_KEY),
-        Map.entry("Кол-во ядер", CORES_KEY),
-        Map.entry("Форм-фактор", MOTHERBOARD_FORM_FACTOR_KEY),
-        Map.entry("Кол-во потоков", THREADS_KEY),
-        Map.entry("Чипсет", CHIPSET_KEY),
-        Map.entry("Максимальный объем памяти", MAX_RAM_KEY),
-        Map.entry("Форм-фактор слота для памяти", RAM_FORM_FACTOR_KEY),
-        Map.entry("Форм-фактор памяти", RAM_FORM_FACTOR_KEY),
-        Map.entry("Схема таймингов памяти", RAM_TIMINGS_KEY),
-        Map.entry("Рабочее напряжение", RAM_VOLTAGE_KEY),
-        Map.entry("Тип памяти", RAM_TYPE_KEY)
+        Map.entry("cpu-разъем (socket)", CPU_SOCKET_KEY),
+        Map.entry("cpu-тепловыделение (tdp)", CPU_TDP_KEY),
+        Map.entry("cpu-тактовая частота", CPU_FREQUENCY_KEY),
+        Map.entry("cpu-кол-во потоков", CPU_THREADS_KEY),
+        Map.entry("cpu-кол-во ядер", CPU_CORES_KEY),
+
+        Map.entry("mbd-socket", MBD_SOCKET_KEY),
+        Map.entry("mbd-форм-фактор", MBD_FORM_FACTOR_KEY),
+        Map.entry("mbd-чипсет", MBD_CHIPSET_KEY),
+        Map.entry("mbd-максимальный объем памяти", MBD_MAX_RAM_KEY),
+        Map.entry("mbd-максимальная тактовая частота", MBD_MAX_RAM_FREQUENCY_KEY),
+        Map.entry("mbd-форм-фактор слота для памяти", MBD_RAM_FROM_FACTOR_KEY),
+        Map.entry("mbd-тип-памяти", MBD_RAM_TYPE),
+
+        Map.entry("ram-схема таймингов памяти", RAM_TIMINGS_KEY),
+        Map.entry("ram-тактовая частота", RAM_FREQUENCY_KEY),
+        Map.entry("ram-форм-фактор памяти", RAM_FORM_FACTOR_KEY),
+        Map.entry("ram-рабочее напряжение", RAM_VOLTAGE_KEY),
+        Map.entry("ram-тип памяти", RAM_TYPE_KEY)
     );
 
     @Override

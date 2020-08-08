@@ -24,111 +24,28 @@ class EkatalogSpecificationsParserTest {
     }
 
     @Test
-    public void parseProcessorSpecifications() {
-        Document doc = Jsoup.parse("<td class='" +
-            "op01'" +
-            " width='" +
-            "48%'" +
-            ">" +
-            "<table width='" +
-            "100%'" +
-            " cellspacing='" +
-            "0'" +
-            " cellpadding='" +
-            "3'" +
-            " border='" +
-            "0'" +
-            ">" +
-            "<tbody>" +
-
-            "<tr valign='" +
-            "top'" +
-            ">" +
-            "<td class='" +
-            "op1'" +
-            " width='" +
-            "49%'" +
-            ">" +
-            "<span class='" +
-            "gloss'" +
-            " jtype='" +
-            "click'" +
-            " jsource='" +
-            "https://ek.ua/mtools/mui_gloss.php?idGloss_=7478'" +
-            " jid='" +
-            "p7478'" +
-            " jsub='" +
-            "Y'" +
-            ">" +
-            "Разъем <span class='" +
-            "nobr ib'" +
-            ">" +
-            "(Socket)</span>" +
-            "</span>" +
-            "</td>" +
-            "<td class='" +
-            "op3'" +
-            " width='" +
-            "51%'" +
-            ">" +
-            "<a href='" +
-            "/ek-list.php?katalog_=187&amp;idgm_=1485970'" +
-            ">" +
-            "AMD AM4</a>" +
-            "</td>" +
-            "</tr>" +
-
-            "<tr valign='" +
-            "top'" +
-            ">" +
-            "<td class='" +
-            "op1'" +
-            " width='" +
-            "49%'" +
-            ">" +
-            "<span class='" +
-            "gloss'" +
-            " jtype='" +
-            "click'" +
-            " jsource='" +
-            "https://ek.ua/mtools/mui_gloss.php?idGloss_=7492'" +
-            " jid='" +
-            "p7492'" +
-            " jsub='" +
-            "Y'" +
-            ">" +
-            "Тепловыделение <span class='" +
-            "nobr ib'" +
-            ">" +
-            "(TDP)</span>" +
-            "</span>" +
-            "</td>" +
-            "<td class='" +
-            "op3'" +
-            " width='" +
-            "51%'" +
-            ">" +
-            "65&nbsp;Вт</td>" +
-            "</tr>" +
-
-            "</tbody>" +
-            "</table>" +
-            "</td>" +
-            "");
-        System.out.println(doc);
-        Map<String, String> specificationsMap = specificationsParser.parseProcessorSpecifications(doc);
-        final String socket = specificationsMap.get("Разъем (Socket)");
-        final String tdp = specificationsMap.get("Тепловыделение (TDP)");
+    public void parseProcessorSpecifications() throws IOException {
+        final Document doc = Jsoup.connect("https://ek.ua/AMD-3600-BOX.htm").get();
+        Map<String, String> specs = specificationsParser.parseProcessorSpecifications(doc);
+        final String socket = specs.get("cpu-разъем (socket)");
+        final String tdp = specs.get("cpu-тепловыделение (tdp)");
         assertEquals("amd am4", socket.toLowerCase());
         assertEquals("65 вт", tdp.toLowerCase());
     }
 
     @Test
-    public void receiveRamSpecificationsTest() throws IOException {
-        final Document document = Jsoup.connect("https://ek.ua/TEAM-GROUP-ELITE-SO-DIMM-DDR4.htm").get();
+    public void parseMotherboardSpecifications() throws IOException {
+        final Document doc = Jsoup.connect("https://ek.ua/ek-item.php?resolved_name_=ASUS-ROG-STRIX-B550-F-GAMING&view_=tbl").get();
+        Map<String, String> specs = specificationsParser.parseMotherboardSpecifications(doc);
+        final String socket = specs.get("mbd-socket");
+        assertEquals("amd am4", socket.toLowerCase());
+    }
 
-        Map<String, String> ramSpecs = specificationsParser.parseRamSpecifications(document);
-        String value = ramSpecs.get("Объем памяти комплекта");
-        assertEquals("16 ГБ", value);
+    @Test
+    public void receiveRamSpecificationsTest() throws IOException {
+        final Document doc = Jsoup.connect("https://ek.ua/TEAM-GROUP-ELITE-SO-DIMM-DDR4.htm").get();
+        Map<String, String> specs = specificationsParser.parseRamSpecifications(doc);
+        String value = specs.get("ram-объем памяти комплекта");
+        assertEquals("8 гб", value.toLowerCase());
     }
 }

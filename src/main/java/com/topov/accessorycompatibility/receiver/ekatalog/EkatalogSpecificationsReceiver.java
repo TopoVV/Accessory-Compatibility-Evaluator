@@ -73,6 +73,7 @@ public class EkatalogSpecificationsReceiver implements SpecificationsReceiver {
     @Async
     @Override
     public CompletableFuture<Ram> receiveRamSpecifications(String ramUrl) {
+        LOG.info("Receiving ram specifications: " + Thread.currentThread().getName());
         try {
             final Document ramDom = client.requestDom(ramUrl);
             final Map<String, String> specifications = parser.parseRamSpecifications(ramDom);

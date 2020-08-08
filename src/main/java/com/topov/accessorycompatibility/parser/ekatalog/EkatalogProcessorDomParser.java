@@ -23,9 +23,8 @@ public class EkatalogProcessorDomParser implements ProcessorDomParser {
         for(int i = 0; i < parameters.size(); i++) {
             final Element parameter = parameters.get(i).getElementsByTag("span").first();
             final Element value = values.get(i);
-            final String paramName = parameter.text().trim();
-            final String paramValue = value.text().trim();;
-//            System.out.println(paramName + "  ===  " + paramValue);
+            final String paramName = String.format("cpu-%s", parameter.text().trim().toLowerCase());
+            final String paramValue = value.text().trim().toLowerCase();
             specifications.put(paramName, paramValue);
         }
         return specifications;
