@@ -13,21 +13,21 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class SpecsResolverDelegator {
-    private static final Logger LOG = LogManager.getLogger(SpecsResolverDelegator.class.getName());
+public class SpecsReceiverDelegator {
+    private static final Logger LOG = LogManager.getLogger(SpecsReceiverDelegator.class.getName());
 
-    private final Set<SpecsResolver> receivers;
+    private final Set<SpecsReceiver> receivers;
 
     @Autowired
-    public SpecsResolverDelegator(Set<SpecsResolver> receivers) {
+    public SpecsReceiverDelegator(Set<SpecsReceiver> receivers) {
         this.receivers = receivers;
     }
 
     @Async
-    public CompletableFuture<Processor> receiveProcessorSpecifications(String processorUrl) {
+    public CompletableFuture<Processor> receiveProcessor(String processorUrl) {
         try {
-            final SpecsResolver receiver = findAppropriateReceiver(processorUrl);
-            final Processor processor = receiver.getProcessorSpecs(processorUrl);
+            final SpecsReceiver receiver = findAppropriateReceiver(processorUrl);
+            final Processor processor = receiver.receiveProcessor(processorUrl);
             return CompletableFuture.completedFuture(processor);
         } catch (RuntimeException e) {
             LOG.error(e);
@@ -36,10 +36,10 @@ public class SpecsResolverDelegator {
     }
 
     @Async
-    public CompletableFuture<Motherboard> receiveMotherboardSpecifications(String motherboardUrl) {
+    public CompletableFuture<Motherboard> receiveMotherboard(String motherboardUrl) {
         try {
-            final SpecsResolver receiver = findAppropriateReceiver(motherboardUrl);
-            final Motherboard motherboard = receiver.getMotherboardSpecs(motherboardUrl);
+            final SpecsReceiver receiver = findAppropriateReceiver(motherboardUrl);
+            final Motherboard motherboard = receiver.receiveMotherboard(motherboardUrl);
             return CompletableFuture.completedFuture(motherboard);
         } catch (RuntimeException e) {
             LOG.error(e);
@@ -48,10 +48,10 @@ public class SpecsResolverDelegator {
     }
 
     @Async
-    public CompletableFuture<Ram> receiveRamSpecifications(String ramUrl) {
+    public CompletableFuture<Ram> receiveRam(String ramUrl) {
         try {
-            final SpecsResolver receiver = findAppropriateReceiver(ramUrl);
-            final Ram ram = receiver.getRamSpecs(ramUrl);
+            final SpecsReceiver receiver = findAppropriateReceiver(ramUrl);
+            final Ram ram = receiver.receiveRam(ramUrl);
             return CompletableFuture.completedFuture(ram);
         } catch (RuntimeException e) {
             LOG.error(e);
@@ -59,9 +59,9 @@ public class SpecsResolverDelegator {
         }
     }
 
-    private SpecsResolver findAppropriateReceiver(String url) {
+    private SpecsReceiver findAppropriateReceiver(String url) {
         return receivers.stream()
-                        .filter(r -> r.supports(url))
+                        .filter(receiver -> receiver.supports(url))
                         .findFirst()
                         .orElseThrow(() -> new RuntimeException("Receivers do not support provided url."));
     }

@@ -22,7 +22,7 @@ public class CompatibilityEvaluatorImpl implements CompatibilityEvaluator {
 
     @Async
     public CompletableFuture<Compatibility>
-    checkMotherboardProcessorCompatibility(CompletableFuture<Processor> processor, CompletableFuture<Motherboard> motherboard) {
+    evaluateProcessorMotherboardCompatibility(CompletableFuture<Processor> processor, CompletableFuture<Motherboard> motherboard) {
         LOG.info("Evaluating motherboard and processor compatibility: " + Thread.currentThread().getName());
         List<String> incompatibilities = new ArrayList<>();
         return processor.thenCombine(motherboard, (prc, mbr) -> {
@@ -44,7 +44,7 @@ public class CompatibilityEvaluatorImpl implements CompatibilityEvaluator {
     
     @Async
     public CompletableFuture<Compatibility>
-    checkMotherboardRamCompatibility(CompletableFuture<Ram> ram, CompletableFuture<Motherboard> motherboard) {
+    evaluateMotherboardRamCompatibility(CompletableFuture<Ram> ram, CompletableFuture<Motherboard> motherboard) {
         LOG.info("Evaluating motherboard and ram compatibility: " + Thread.currentThread().getName());
         List<String> incompatibilities = new ArrayList<>();
         return ram.thenCombine(motherboard, (rm, mbr) -> {

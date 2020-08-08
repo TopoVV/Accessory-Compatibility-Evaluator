@@ -5,7 +5,7 @@ import com.topov.accessorycompatibility.dto.response.Compatibility;
 import com.topov.accessorycompatibility.model.Motherboard;
 import com.topov.accessorycompatibility.model.Processor;
 import com.topov.accessorycompatibility.model.Ram;
-import com.topov.accessorycompatibility.receiver.SpecsResolverDelegator;
+import com.topov.accessorycompatibility.receiver.SpecsReceiverDelegator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,36 +17,32 @@ import java.util.concurrent.CompletableFuture;
 public class AccessoryServiceImpl implements AccessoryService {
     private static final Logger LOG = LogManager.getLogger(AccessoryServiceImpl.class.getName());
 
-    private final SpecsResolverDelegator resolverDelegator;
+    private final SpecsReceiverDelegator receiverDelegator;
     private final CompatibilityEvaluator compatibilityEvaluator;
 
     @Autowired
-    public AccessoryServiceImpl(SpecsResolverDelegator resolverDelegator, CompatibilityEvaluator compatibilityEvaluator) {
-        this.resolverDelegator = resolverDelegator;
+    public AccessoryServiceImpl(SpecsReceiverDelegator receiverDelegator, CompatibilityEvaluator compatibilityEvaluator) {
+        this.receiverDelegator = receiverDelegator;
         this.compatibilityEvaluator = compatibilityEvaluator;
     }
 
     @Override
     public void doWork() {
-        final long start = System.currentTimeMillis();
-
-        CompletableFuture<Processor> processorFuture =
-            resolverDelegator.receiveProcessorSpecifications("https://ek.ua/AMD-RYZEN-3-MATISSE.htm");
-        CompletableFuture<Motherboard> motherboardFuture =
-            resolverDelegator.receiveMotherboardSpecifications("https://ek.ua/ek-item.php?resolved_name_=ASUS-M5A78L-M-LX3&view_=tbl");
-        CompletableFuture<Ram> ramFuture =
-            resolverDelegator.receiveRamSpecifications("https://ek.ua/TEAM-GROUP-ELITE-SO-DIMM-DDR4.htm");
+        final String processorUrl = "https://ek.ua/AMD-RYZEN-3-MATISSE.htm";
+        final String motherboardUrl = "https://ek.ua/ek-item.php?resolved_name_=ASUS-M5A78L-M-LX3&view_=tbl";
+        final String ramUrl = "https://ek.ua/TEAM-GROUP-ELITE-SO-DIMM-DDR4.htm";
+        CompletableFuture<Processor> processor = receiverDelegator.receiveProcessor(processorUrl);
+        CompletableFuture<Motherboard> motherboard = receiverDelegator.receiveMotherboard(motherboardUrl);
+        CompletableFuture<Ram> ram = receiverDelegator.receiveRam(ramUrl);
 
         CompletableFuture<Compatibility> motherboardProcessor =
-            compatibilityEvaluator.checkMotherboardProcessorCompatibility(processorFuture, motherboardFuture);
+            compatibilityEvaluator.evaluateProcessorMotherboardCompatibility(processor, motherboard);
         CompletableFuture<Compatibility> ramMotherboard =
-            compatibilityEvaluator.checkMotherboardRamCompatibility(ramFuture, motherboardFuture);
+            compatibilityEvaluator.evaluateMotherboardRamCompatibility(ram, motherboard);
 
         System.out.println(motherboardProcessor.join());
         System.out.println(ramMotherboard.join());
 
-        final long stop = System.currentTimeMillis();
-        LOG.info(stop - start);
     }
 
 }

@@ -7,7 +7,7 @@ import com.topov.accessorycompatibility.model.Ram;
 import com.topov.accessorycompatibility.net.JsoupClient;
 import com.topov.accessorycompatibility.parser.SpecsGeneralizer;
 import com.topov.accessorycompatibility.parser.SpecsParser;
-import com.topov.accessorycompatibility.receiver.SpecsResolver;
+import com.topov.accessorycompatibility.receiver.SpecsReceiver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class EkatalogSpecsResolver implements SpecsResolver {
-    private static final Logger LOG = LogManager.getLogger(EkatalogSpecsResolver.class.getName());
+public class EkatalogSpecsReceiver implements SpecsReceiver {
+    private static final Logger LOG = LogManager.getLogger(EkatalogSpecsReceiver.class.getName());
     private static final String SUPPORTED_URL = "https://ek.ua/";
 
     private final JsoupClient client;
@@ -27,7 +27,7 @@ public class EkatalogSpecsResolver implements SpecsResolver {
     private final SpecsGeneralizer specsGeneralizer;
 
     @Autowired
-    public EkatalogSpecsResolver(SpecsModelAssembler accessoryAssembler,
+    public EkatalogSpecsReceiver(SpecsModelAssembler accessoryAssembler,
                                  @Qualifier("ekatalogClient") JsoupClient client,
                                  @Qualifier("ekatalogParser") SpecsParser parser,
                                  @Qualifier("ekatalogSpecsGeneralizer") SpecsGeneralizer specsGeneralizer) {
@@ -38,7 +38,7 @@ public class EkatalogSpecsResolver implements SpecsResolver {
     }
 
     @Override
-    public Processor getProcessorSpecs(String processorUrl) {
+    public Processor receiveProcessor(String processorUrl) {
         LOG.info("Receiving processor specifications: " + Thread.currentThread().getName());
         return Optional.of(client.requestDom(processorUrl))
                        .map(parser::parseProcessorSpecs)
@@ -48,17 +48,17 @@ public class EkatalogSpecsResolver implements SpecsResolver {
     }
 
     @Override
-    public Motherboard getMotherboardSpecs(String motherboardUrl) {
+    public Motherboard receiveMotherboard(String motherboardUrl) {
         LOG.info("Receiving motherboard specifications: " + Thread.currentThread().getName());
         return Optional.of(client.requestDom(motherboardUrl))
-                .map(parser::parseMotherboardSpecs)
-                .map(specsGeneralizer::generalizeSpecifications)
-                .map(accessoryAssembler::assembleMotherboard)
-                .orElseThrow(() -> new RuntimeException("Specs model creation exception!"));
+                       .map(parser::parseMotherboardSpecs)
+                       .map(specsGeneralizer::generalizeSpecifications)
+                       .map(accessoryAssembler::assembleMotherboard)
+                       .orElseThrow(() -> new RuntimeException("Specs model creation exception!"));
     }
 
     @Override
-    public Ram getRamSpecs(String ramUrl) {
+    public Ram receiveRam(String ramUrl) {
         LOG.info("Receiving ram specifications: " + Thread.currentThread().getName());
         return Optional.of(client.requestDom(ramUrl))
                        .map(parser::parseRamSpecs)
