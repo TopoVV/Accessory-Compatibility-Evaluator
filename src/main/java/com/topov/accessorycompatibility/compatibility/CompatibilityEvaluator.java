@@ -4,7 +4,6 @@ import com.topov.accessorycompatibility.dto.response.MotherboardProcessorCompati
 import com.topov.accessorycompatibility.model.Motherboard;
 import com.topov.accessorycompatibility.model.Processor;
 
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public interface CompatibilityEvaluator {

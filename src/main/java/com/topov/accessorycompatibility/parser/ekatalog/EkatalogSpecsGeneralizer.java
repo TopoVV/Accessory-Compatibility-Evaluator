@@ -1,13 +1,13 @@
 package com.topov.accessorycompatibility.parser.ekatalog;
 
-import com.topov.accessorycompatibility.parser.SpecificationsGeneralizer;
+import com.topov.accessorycompatibility.parser.SpecsGeneralizer;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class EkatalogSpecificationsGeneralizer implements SpecificationsGeneralizer {
+public class EkatalogSpecsGeneralizer implements SpecsGeneralizer {
     private final String CYRILLIC = "[АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя]";
 
     private final Map<String, String> keys = Map.ofEntries(

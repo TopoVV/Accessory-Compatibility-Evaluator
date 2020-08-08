@@ -7,17 +7,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class AccessoryModelAssemblerImplTest {
-    private final AccessoryModelAssembler accessoryModelAssembler;
+class SpecsModelAssemblerImplTest {
+    private final SpecsModelAssembler specsModelAssembler;
 
     @Autowired
-    AccessoryModelAssemblerImplTest(AccessoryModelAssembler accessoryModelAssembler) {
-        this.accessoryModelAssembler = accessoryModelAssembler;
+    SpecsModelAssemblerImplTest(SpecsModelAssembler specsModelAssembler) {
+        this.specsModelAssembler = specsModelAssembler;
     }
 
     @Test
@@ -25,7 +24,7 @@ class AccessoryModelAssemblerImplTest {
         Map<String, String> parsedSpecifications = new HashMap<>();
         parsedSpecifications.put("socket", "AMD AM 4");
         parsedSpecifications.put("tdp", "70");
-        Processor processor = accessoryModelAssembler.assembleProcessor(parsedSpecifications);
+        Processor processor = specsModelAssembler.assembleProcessor(parsedSpecifications);
         assertEquals("AMD AM 4", processor.getSocket());
         assertEquals(70, processor.getHeatRelease());
     }
@@ -35,7 +34,7 @@ class AccessoryModelAssemblerImplTest {
         Map<String, String> parsedSpecifications = new HashMap<>();
         parsedSpecifications.put("socket", "AMD AM 4");
         parsedSpecifications.put("tdp", "");
-        Processor processor = accessoryModelAssembler.assembleProcessor(parsedSpecifications);
+        Processor processor = specsModelAssembler.assembleProcessor(parsedSpecifications);
         assertEquals("AMD AM 4", processor.getSocket());
         assertEquals(-100, processor.getHeatRelease());
     }

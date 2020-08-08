@@ -3,18 +3,17 @@ package com.topov.accessorycompatibility.assembler;
 import com.topov.accessorycompatibility.model.Motherboard;
 import com.topov.accessorycompatibility.model.Processor;
 import com.topov.accessorycompatibility.model.Ram;
-import com.topov.accessorycompatibility.parser.SpecificationsGeneralizer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
-import static com.topov.accessorycompatibility.parser.SpecificationsGeneralizer.*;
+import static com.topov.accessorycompatibility.parser.SpecsGeneralizer.*;
 
 @Service
-public class AccessoryModelAssemblerImpl implements AccessoryModelAssembler {
-    private static final Logger LOG = LogManager.getLogger(AccessoryModelAssemblerImpl.class.getName());
+public class SpecsModelAssemblerImpl implements SpecsModelAssembler {
+    private static final Logger LOG = LogManager.getLogger(SpecsModelAssemblerImpl.class.getName());
 
     @Override
     public Processor assembleProcessor(Map<String, String> specifications) {

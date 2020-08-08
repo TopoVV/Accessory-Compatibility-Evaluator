@@ -23,7 +23,6 @@ public class EkatalogClient implements JsoupClient {
         try {
             return Jsoup.connect(url).get();
         } catch (IOException e) {
-            LOG.info(e);
             throw new RuntimeException("Failed to receive processor document from Ekatalog", e);
         }
     }

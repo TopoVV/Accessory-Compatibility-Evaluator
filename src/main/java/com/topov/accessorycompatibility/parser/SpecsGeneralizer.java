@@ -2,7 +2,7 @@ package com.topov.accessorycompatibility.parser;
 
 import java.util.Map;
 
-public interface SpecificationsGeneralizer {
+public interface SpecsGeneralizer {
     String CPU_SOCKET_KEY = "cpu-socket";
     String CPU_TDP_KEY = "cpu-tdp";
     String CPU_FREQUENCY_KEY = "cpu-freq";

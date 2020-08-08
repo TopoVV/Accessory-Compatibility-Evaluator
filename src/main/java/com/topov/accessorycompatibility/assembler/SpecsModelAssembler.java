@@ -6,7 +6,7 @@ import com.topov.accessorycompatibility.model.Ram;
 
 import java.util.Map;
 
-public interface AccessoryModelAssembler {
+public interface SpecsModelAssembler {
     Processor assembleProcessor(Map<String, String> specifications);
     Motherboard assembleMotherboard(Map<String, String> specifications);
     Ram assembleRam(Map<String, String> generalized);
