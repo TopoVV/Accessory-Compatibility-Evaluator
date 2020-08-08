@@ -45,7 +45,7 @@ public class EkatalogSpecificationsReceiver implements SpecificationsReceiver {
     public CompletableFuture<Processor> receiveProcessorSpecifications(String processorUrl) {
         LOG.info("Receiving processor specifications: " + Thread.currentThread().getName());
         try {
-            final Document processorDom = client.getProcessorDom(processorUrl);
+            final Document processorDom = client.requestDom(processorUrl);
             final Map<String, String> specifications = parser.parseProcessorSpecifications(processorDom);
             final Map<String, String> generalized = specificationsGeneralizer.generalizeSpecifications(specifications);
             final Processor processor = accessoryAssembler.assembleProcessor(generalized);
@@ -60,7 +60,7 @@ public class EkatalogSpecificationsReceiver implements SpecificationsReceiver {
     public CompletableFuture<Motherboard> receiveMotherboardSpecifications(String motherboardUrl) {
         LOG.info("Receiving motherboard specifications: " + Thread.currentThread().getName());
         try {
-            final Document processorDom = client.getMotherboardDom(motherboardUrl);
+            final Document processorDom = client.requestDom(motherboardUrl);
             final Map<String, String> specifications = parser.parseMotherboardSpecifications(processorDom);
             final Map<String, String> generalized = specificationsGeneralizer.generalizeSpecifications(specifications);
             final Motherboard motherboard = accessoryAssembler.assembleMotherboard(generalized);
@@ -74,7 +74,7 @@ public class EkatalogSpecificationsReceiver implements SpecificationsReceiver {
     @Override
     public CompletableFuture<Ram> receiveRamSpecifications(String ramUrl) {
         try {
-            final Document ramDom = client.getRamDom(ramUrl);
+            final Document ramDom = client.requestDom(ramUrl);
             final Map<String, String> specifications = parser.parseRamSpecifications(ramDom);
             final Map<String, String> generalized = specificationsGeneralizer.generalizeSpecifications(specifications);
             final Ram ram = accessoryAssembler.assembleRam(generalized);

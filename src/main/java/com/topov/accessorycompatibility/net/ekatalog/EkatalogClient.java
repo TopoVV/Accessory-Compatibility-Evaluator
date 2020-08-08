@@ -18,35 +18,13 @@ public class EkatalogClient implements JsoupClient {
     private static final Logger LOG = LogManager.getLogger(EkatalogClient.class.getName());
 
     @Override
-    public Document getProcessorDom(String processorUrl) {
+    public Document requestDom(String url) {
         LOG.info("Requesting processor dom from Ekatalog: " + Thread.currentThread().getName());
         try {
-            return Jsoup.connect(processorUrl).get();
+            return Jsoup.connect(url).get();
         } catch (IOException e) {
             LOG.info(e);
             throw new RuntimeException("Failed to receive processor document from Ekatalog", e);
-        }
-    }
-
-    @Override
-    public Document getMotherboardDom(String motherboardUrl) {
-        LOG.info("Requesting motherboard dom from Ekatalog: " + Thread.currentThread().getName());
-        try {
-            return Jsoup.connect(motherboardUrl).get();
-        } catch (IOException e) {
-            LOG.info(e);
-            throw new RuntimeException("Failed to receive motherboard document from Ekatalog", e);
-        }
-    }
-
-    @Override
-    public Document getRamDom(String ramUrl) {
-        LOG.info("Requesting ramDom dom from Ekatalog: " + Thread.currentThread().getName());
-        try {
-            return Jsoup.connect(ramUrl).get();
-        } catch (IOException e) {
-            LOG.info(e);
-            throw new RuntimeException("Failed to receive motherboard document from Ekatalog", e);
         }
     }
 }
