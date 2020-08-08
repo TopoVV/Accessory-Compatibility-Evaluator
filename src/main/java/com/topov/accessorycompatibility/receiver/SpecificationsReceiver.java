@@ -8,7 +8,8 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public interface SpecificationsReceiver {
-    CompletableFuture<Processor> receiveProcessorSpecifications(String processorUrl);
-    CompletableFuture<Motherboard> receiveMotherboardSpecifications(String motherboardUrl);
-    CompletableFuture<Ram> receiveRamSpecifications(String ramUrl);
+    Processor receiveProcessorSpecifications(String processorUrl);
+    Motherboard receiveMotherboardSpecifications(String motherboardUrl);
+    Ram receiveRamSpecifications(String ramUrl);
+    boolean supports(String url);
 }

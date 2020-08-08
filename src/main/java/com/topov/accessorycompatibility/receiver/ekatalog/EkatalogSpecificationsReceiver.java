@@ -23,6 +23,8 @@ import java.util.concurrent.CompletableFuture;
 @Service
 public class EkatalogSpecificationsReceiver implements SpecificationsReceiver {
     private static final Logger LOG = LogManager.getLogger(EkatalogSpecificationsReceiver.class.getName());
+    private static final String SUPPORTED_URL = "https://ek.ua/";
+
 
     private final JsoupClient client;
     private final SpecificationsParser parser;
@@ -40,48 +42,35 @@ public class EkatalogSpecificationsReceiver implements SpecificationsReceiver {
         this.specificationsGeneralizer = specificationsGeneralizer;
     }
 
-    @Async
     @Override
-    public CompletableFuture<Processor> receiveProcessorSpecifications(String processorUrl) {
+    public Processor receiveProcessorSpecifications(String processorUrl) {
         LOG.info("Receiving processor specifications: " + Thread.currentThread().getName());
-        try {
-            final Document processorDom = client.requestDom(processorUrl);
-            final Map<String, String> specifications = parser.parseProcessorSpecifications(processorDom);
-            final Map<String, String> generalized = specificationsGeneralizer.generalizeSpecifications(specifications);
-            final Processor processor = accessoryAssembler.assembleProcessor(generalized);
-            return CompletableFuture.completedFuture(processor);
-        } catch (Exception e) {
-            return CompletableFuture.failedFuture(e);
-        }
+        final Document processorDom = client.requestDom(processorUrl);
+        final Map<String, String> specifications = parser.parseProcessorSpecifications(processorDom);
+        final Map<String, String> generalized = specificationsGeneralizer.generalizeSpecifications(specifications);
+        return accessoryAssembler.assembleProcessor(generalized);
     }
 
-    @Async
     @Override
-    public CompletableFuture<Motherboard> receiveMotherboardSpecifications(String motherboardUrl) {
+    public Motherboard receiveMotherboardSpecifications(String motherboardUrl) {
         LOG.info("Receiving motherboard specifications: " + Thread.currentThread().getName());
-        try {
-            final Document processorDom = client.requestDom(motherboardUrl);
-            final Map<String, String> specifications = parser.parseMotherboardSpecifications(processorDom);
-            final Map<String, String> generalized = specificationsGeneralizer.generalizeSpecifications(specifications);
-            final Motherboard motherboard = accessoryAssembler.assembleMotherboard(generalized);
-            return CompletableFuture.completedFuture(motherboard);
-        } catch (RuntimeException e) {
-            return CompletableFuture.failedFuture(e);
-        }
+        final Document processorDom = client.requestDom(motherboardUrl);
+        final Map<String, String> specifications = parser.parseMotherboardSpecifications(processorDom);
+        final Map<String, String> generalized = specificationsGeneralizer.generalizeSpecifications(specifications);
+        return accessoryAssembler.assembleMotherboard(generalized);
     }
 
-    @Async
     @Override
-    public CompletableFuture<Ram> receiveRamSpecifications(String ramUrl) {
+    public Ram receiveRamSpecifications(String ramUrl) {
         LOG.info("Receiving ram specifications: " + Thread.currentThread().getName());
-        try {
-            final Document ramDom = client.requestDom(ramUrl);
-            final Map<String, String> specifications = parser.parseRamSpecifications(ramDom);
-            final Map<String, String> generalized = specificationsGeneralizer.generalizeSpecifications(specifications);
-            final Ram ram = accessoryAssembler.assembleRam(generalized);
-            return CompletableFuture.completedFuture(ram);
-        } catch (RuntimeException e) {
-            return CompletableFuture.failedFuture(e);
-        }
+        final Document ramDom = client.requestDom(ramUrl);
+        final Map<String, String> specifications = parser.parseRamSpecifications(ramDom);
+        final Map<String, String> generalized = specificationsGeneralizer.generalizeSpecifications(specifications);
+        return accessoryAssembler.assembleRam(generalized);
+    }
+
+    @Override
+    public boolean supports(String url) {
+        return url.startsWith(SUPPORTED_URL);
     }
 }

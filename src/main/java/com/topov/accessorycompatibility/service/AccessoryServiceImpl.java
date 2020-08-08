@@ -6,6 +6,7 @@ import com.topov.accessorycompatibility.model.Motherboard;
 import com.topov.accessorycompatibility.model.Processor;
 import com.topov.accessorycompatibility.model.Ram;
 import com.topov.accessorycompatibility.receiver.SpecificationsReceiver;
+import com.topov.accessorycompatibility.receiver.SpecificationsResolverDelegator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,12 @@ import java.util.concurrent.CompletableFuture;
 public class AccessoryServiceImpl implements AccessoryService {
     private static final Logger LOG = LogManager.getLogger(AccessoryServiceImpl.class.getName());
 
-    private final SpecificationsReceiver specificationsReceiver;
+    private final SpecificationsResolverDelegator resolverDelegator;
     private final CompatibilityEvaluator compatibilityEvaluator;
 
     @Autowired
-    public AccessoryServiceImpl(SpecificationsReceiver specificationsReceiver, CompatibilityEvaluator compatibilityEvaluator) {
-        this.specificationsReceiver = specificationsReceiver;
+    public AccessoryServiceImpl(SpecificationsResolverDelegator resolverDelegator, CompatibilityEvaluator compatibilityEvaluator) {
+        this.resolverDelegator = resolverDelegator;
         this.compatibilityEvaluator = compatibilityEvaluator;
     }
 
@@ -31,9 +32,9 @@ public class AccessoryServiceImpl implements AccessoryService {
     public void doWork() {
         final long start = System.currentTimeMillis();
 
-        CompletableFuture<Processor> processorFuture = specificationsReceiver.receiveProcessorSpecifications("https://ek.ua/AMD-RYZEN-3-MATISSE.htm");
-        CompletableFuture<Motherboard> motherboardFuture = specificationsReceiver.receiveMotherboardSpecifications("https://ek.ua/ek-item.php?resolved_name_=ASUS-TUF-B450-PRO-GAMING&view_=tbl");
-        CompletableFuture<Ram> ramFuture = specificationsReceiver.receiveRamSpecifications("https://ek.ua/TEAM-GROUP-ELITE-SO-DIMM-DDR4.htm");
+        CompletableFuture<Processor> processorFuture = resolverDelegator.receiveProcessorSpecifications("https://ek.ua/AMD-RYZEN-3-MATISSE.htm");
+        CompletableFuture<Motherboard> motherboardFuture = resolverDelegator.receiveMotherboardSpecifications("https://ek.ua/ek-item.php?resolved_name_=ASUS-TUF-B450-PRO-GAMING&view_=tbl");
+        CompletableFuture<Ram> ramFuture = resolverDelegator.receiveRamSpecifications("https://ek.ua/TEAM-GROUP-ELITE-SO-DIMM-DDR4.htm");
 
         System.out.println(ramFuture.join());
         System.out.println(processorFuture.join());

@@ -32,13 +32,11 @@ public class EkatalogSpecificationsParser implements SpecificationsParser {
 
     @Override
     public Map<String, String> parseProcessorSpecifications(Document processorDom) {
-        LOG.info("Parsing processor specifications: " + Thread.currentThread().getName());
         return processorDomParser.parseProcessorDom(processorDom);
     }
 
     @Override
     public Map<String, String> parseMotherboardSpecifications(Document motherboardDom) {
-        LOG.info("Parsing motherboard specifications: " + Thread.currentThread().getName());
         return motherboardDomParser.parseMotherboardDom(motherboardDom);
     }
 
