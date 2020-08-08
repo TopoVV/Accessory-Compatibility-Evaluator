@@ -22,7 +22,10 @@ public class EkatalogSpecificationsGeneralizer implements SpecificationsGenerali
         Map.entry("Чипсет", CHIPSET_KEY),
         Map.entry("Максимальный объем памяти", MAX_RAM_KEY),
         Map.entry("Форм-фактор слота для памяти", RAM_FORM_FACTOR_KEY),
-        Map.entry("Максимальная тактовая частота", RAM_FREQUENCY_KEY)
+        Map.entry("Форм-фактор памяти", RAM_FORM_FACTOR_KEY),
+        Map.entry("Схема таймингов памяти", RAM_TIMINGS_KEY),
+        Map.entry("Рабочее напряжение", RAM_VOLTAGE_KEY),
+        Map.entry("Тип памяти", RAM_TYPE_KEY)
     );
 
     @Override

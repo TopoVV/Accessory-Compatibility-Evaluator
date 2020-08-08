@@ -27,8 +27,7 @@ public class EkatalogRamDomParser implements RamDomParser {
             final Element value = values.get(i);
             final String paramName = param.select("span.gloss").text();
             final String paramValue = value.text();
-
-            LOG.info(paramName + "   ====   " + paramValue);
+//            System.out.println(paramName + "  ===  " + paramValue);
             specifications.put(paramName, paramValue);
         }
         return specifications;

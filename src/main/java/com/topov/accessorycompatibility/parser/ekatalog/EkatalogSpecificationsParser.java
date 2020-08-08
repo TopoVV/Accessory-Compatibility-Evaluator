@@ -43,8 +43,8 @@ public class EkatalogSpecificationsParser implements SpecificationsParser {
     }
 
     @Override
-    public Map<String, String> parseRamSpecifications(Document document) {
-        return ramDomParser.parseRamDom(document);
+    public Map<String, String> parseRamSpecifications(Document ramUrl) {
+        return ramDomParser.parseRamDom(ramUrl);
 
     }
 }

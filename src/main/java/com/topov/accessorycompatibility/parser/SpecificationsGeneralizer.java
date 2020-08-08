@@ -13,5 +13,9 @@ public interface SpecificationsGeneralizer {
     String RAM_FREQUENCY_KEY = "ram-mgz";
     String RAM_FORM_FACTOR_KEY = "ram-form-factor";
     String CHIPSET_KEY = "chipset";
+    String RAM_VOLTAGE_KEY = "ram-vltg";
+    String RAM_TIMINGS_KEY = "ram-timings";
+    String RAM_TYPE_KEY = "ram-type";
+
     Map<String, String> generalizeSpecifications(Map<String, String> specifications);
 }

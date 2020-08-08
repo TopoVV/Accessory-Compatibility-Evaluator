@@ -25,6 +25,7 @@ public class EkatalogMotherboardDomParser implements MotherboardDomParser {
             final Element value = values.get(i);
             final String paramName =  parameter.text().trim();
             final String paramValue = value.text().trim();;
+//            System.out.println(paramName + "  ===  " + paramValue);
             specifications.put(paramName, paramValue);
         }
         return specifications;

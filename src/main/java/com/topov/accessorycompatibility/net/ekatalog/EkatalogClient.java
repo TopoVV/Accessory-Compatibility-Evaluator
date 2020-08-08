@@ -16,15 +16,12 @@ import java.io.IOException;
 @Service("ekatalogClient")
 public class EkatalogClient implements JsoupClient {
     private static final Logger LOG = LogManager.getLogger(EkatalogClient.class.getName());
-    private static final String MOTHERBOARD_URL_PATTERN = "https://ek.ua/ek-item.php?resolved_name_=%s&view_=tbl";
-    private static final String PROCESSOR_URL_PATTERN = "https://ek.ua/%s.htm";
 
     @Override
-    public Document getProcessorDom(String processor) {
+    public Document getProcessorDom(String processorUrl) {
         LOG.info("Requesting processor dom from Ekatalog: " + Thread.currentThread().getName());
         try {
-            final String url = String.format(PROCESSOR_URL_PATTERN, processor.replace(' ', '-'));
-            return Jsoup.connect(url).get();
+            return Jsoup.connect(processorUrl).get();
         } catch (IOException e) {
             LOG.info(e);
             throw new RuntimeException("Failed to receive processor document from Ekatalog", e);
@@ -32,11 +29,21 @@ public class EkatalogClient implements JsoupClient {
     }
 
     @Override
-    public Document getMotherboardDom(String motherboard) {
+    public Document getMotherboardDom(String motherboardUrl) {
         LOG.info("Requesting motherboard dom from Ekatalog: " + Thread.currentThread().getName());
         try {
-            final String url = String.format(MOTHERBOARD_URL_PATTERN, motherboard.replace(' ', '-'));
-            return Jsoup.connect(url).get();
+            return Jsoup.connect(motherboardUrl).get();
+        } catch (IOException e) {
+            LOG.info(e);
+            throw new RuntimeException("Failed to receive motherboard document from Ekatalog", e);
+        }
+    }
+
+    @Override
+    public Document getRamDom(String ramUrl) {
+        LOG.info("Requesting ramDom dom from Ekatalog: " + Thread.currentThread().getName());
+        try {
+            return Jsoup.connect(ramUrl).get();
         } catch (IOException e) {
             LOG.info(e);
             throw new RuntimeException("Failed to receive motherboard document from Ekatalog", e);

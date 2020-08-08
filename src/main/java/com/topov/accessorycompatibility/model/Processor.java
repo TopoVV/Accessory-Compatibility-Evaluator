@@ -3,8 +3,8 @@ package com.topov.accessorycompatibility.model;
 import lombok.Builder;
 import lombok.Data;
 
-@Builder
 @Data
+@Builder
 public class Processor {
     private String socket;
     private Integer cores;

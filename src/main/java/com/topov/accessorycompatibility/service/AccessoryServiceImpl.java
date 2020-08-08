@@ -30,12 +30,10 @@ public class AccessoryServiceImpl implements AccessoryService {
     @Override
     public void doWork() {
         final long start = System.currentTimeMillis();
-        String processorName = "INTEL i5-9400 BOX";
-        String motherboardName = "ASROCK B450M PRO4 F";
-        String ramName = "CRUCIAL-BALLISTIX-DDR4-2X8GB";
-        CompletableFuture<Processor> processorFuture = specificationsReceiver.receiveProcessorSpecifications(processorName);
-        CompletableFuture<Motherboard> motherboardFuture = specificationsReceiver.receiveMotherboardSpecifications(motherboardName);
-        CompletableFuture<Ram> ramFuture = specificationsReceiver.receiveRamSpecifications(ramName);
+
+        CompletableFuture<Processor> processorFuture = specificationsReceiver.receiveProcessorSpecifications("https://ek.ua/AMD-RYZEN-3-MATISSE.htm");
+        CompletableFuture<Motherboard> motherboardFuture = specificationsReceiver.receiveMotherboardSpecifications("https://ek.ua/ek-item.php?resolved_name_=ASUS-TUF-B450-PRO-GAMING&view_=tbl");
+        CompletableFuture<Ram> ramFuture = specificationsReceiver.receiveRamSpecifications("https://ek.ua/TEAM-GROUP-ELITE-SO-DIMM-DDR4.htm");
 
         System.out.println(processorFuture.join());
         System.out.println(motherboardFuture.join());
