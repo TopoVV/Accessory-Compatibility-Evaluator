@@ -5,9 +5,9 @@ import lombok.Getter;
 import lombok.ToString;
 
 @Getter
-@AllArgsConstructor
 @ToString
+@AllArgsConstructor
 public class CompatibilityMeta {
     protected final String evaluationStatus;
-    protected final String description;
+    protected final String compatibilityStatus;
 }
