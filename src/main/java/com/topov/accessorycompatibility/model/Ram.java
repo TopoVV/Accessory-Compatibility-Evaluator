@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Ram {
+public class Ram extends Hardware {
     private String formFactor;
     private Integer frequency;
     private String timings;

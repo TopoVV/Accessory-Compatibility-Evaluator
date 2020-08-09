@@ -18,6 +18,7 @@ import java.util.concurrent.CompletableFuture;
 public class CompatibilityEvaluatorImpl implements CompatibilityEvaluator {
     private static final String MOTHERBOARD_PROCESSOR_SOCKET_INCOMPATIBLE = "The motherboard socket (%s) is not compatible with the processor socket (%s)";
     private static final String MOTHERBOARD_RAM_TYPES_INCOMPATIBLE = "The motherboard ram socket (%s) is not compatible with the ram type (%s)";
+
     private static final Logger LOG = LogManager.getLogger(CompatibilityEvaluatorImpl.class.getName());
 
     @Async

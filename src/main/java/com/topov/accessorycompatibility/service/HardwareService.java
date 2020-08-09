@@ -1,5 +1,5 @@
 package com.topov.accessorycompatibility.service;
 
-public interface AccessoryService {
+public interface HardwareService {
     void doWork();
 }

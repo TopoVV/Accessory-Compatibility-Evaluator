@@ -12,8 +12,8 @@ import java.util.Map;
 import static com.topov.accessorycompatibility.parser.SpecsGeneralizer.*;
 
 @Service
-public class SpecsModelAssemblerImpl implements SpecsModelAssembler {
-    private static final Logger LOG = LogManager.getLogger(SpecsModelAssemblerImpl.class.getName());
+public class HardwareAssemblerImpl implements HardwareAssembler {
+    private static final Logger LOG = LogManager.getLogger(HardwareAssemblerImpl.class.getName());
 
     @Override
     public Processor assembleProcessor(Map<String, String> specifications) {

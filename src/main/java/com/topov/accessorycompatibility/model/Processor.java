@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Processor {
+public class Processor extends Hardware {
     private String socket;
     private Integer cores;
     private Integer threads;

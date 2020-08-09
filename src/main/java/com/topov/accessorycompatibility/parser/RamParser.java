@@ -4,6 +4,6 @@ import org.jsoup.nodes.Document;
 
 import java.util.Map;
 
-public interface MotherboardDomParser {
-    Map<String, String> parseMotherboardDom(Document document);
+public interface RamParser {
+    Map<String, String> parseRamDom(Document document);
 }

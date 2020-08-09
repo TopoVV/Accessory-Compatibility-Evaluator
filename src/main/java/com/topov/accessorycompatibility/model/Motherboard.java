@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Motherboard {
+public class Motherboard extends Hardware {
     private String socket;
     private String chipset;
     private String formFactor;

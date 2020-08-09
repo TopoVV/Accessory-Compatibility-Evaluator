@@ -5,7 +5,7 @@ import com.topov.accessorycompatibility.dto.response.Compatibility;
 import com.topov.accessorycompatibility.model.Motherboard;
 import com.topov.accessorycompatibility.model.Processor;
 import com.topov.accessorycompatibility.model.Ram;
-import com.topov.accessorycompatibility.receiver.SpecsReceiverDelegator;
+import com.topov.accessorycompatibility.receiver.HadrwareReceiverDelegator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +14,14 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class AccessoryServiceImpl implements AccessoryService {
-    private static final Logger LOG = LogManager.getLogger(AccessoryServiceImpl.class.getName());
+public class HardwareServiceImpl implements HardwareService {
+    private static final Logger LOG = LogManager.getLogger(HardwareServiceImpl.class.getName());
 
-    private final SpecsReceiverDelegator receiverDelegator;
+    private final HadrwareReceiverDelegator receiverDelegator;
     private final CompatibilityEvaluator compatibilityEvaluator;
 
     @Autowired
-    public AccessoryServiceImpl(SpecsReceiverDelegator receiverDelegator, CompatibilityEvaluator compatibilityEvaluator) {
+    public HardwareServiceImpl(HadrwareReceiverDelegator receiverDelegator, CompatibilityEvaluator compatibilityEvaluator) {
         this.receiverDelegator = receiverDelegator;
         this.compatibilityEvaluator = compatibilityEvaluator;
     }
@@ -42,6 +42,7 @@ public class AccessoryServiceImpl implements AccessoryService {
 
         System.out.println(motherboardProcessor.join());
         System.out.println(ramMotherboard.join());
+        System.out.println(processor.join());
 
     }
 

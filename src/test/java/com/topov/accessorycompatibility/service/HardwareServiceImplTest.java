@@ -4,14 +4,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
-class AccessoryServiceImplTest {
-    private final AccessoryService service;
+class HardwareServiceImplTest {
+    private final HardwareService service;
 
     @Autowired
-    AccessoryServiceImplTest(AccessoryService service) {
+    HardwareServiceImplTest(HardwareService service) {
         this.service = service;
     }
 

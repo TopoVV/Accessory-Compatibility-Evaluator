@@ -11,12 +11,12 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class SpecsModelAssemblerImplTest {
-    private final SpecsModelAssembler specsModelAssembler;
+class HardwareAssemblerImplTest {
+    private final HardwareAssembler hardwareAssembler;
 
     @Autowired
-    SpecsModelAssemblerImplTest(SpecsModelAssembler specsModelAssembler) {
-        this.specsModelAssembler = specsModelAssembler;
+    HardwareAssemblerImplTest(HardwareAssembler hardwareAssembler) {
+        this.hardwareAssembler = hardwareAssembler;
     }
 
     @Test
@@ -24,7 +24,7 @@ class SpecsModelAssemblerImplTest {
         Map<String, String> parsedSpecifications = new HashMap<>();
         parsedSpecifications.put("socket", "AMD AM 4");
         parsedSpecifications.put("tdp", "70");
-        Processor processor = specsModelAssembler.assembleProcessor(parsedSpecifications);
+        Processor processor = hardwareAssembler.assembleProcessor(parsedSpecifications);
         assertEquals("AMD AM 4", processor.getSocket());
         assertEquals(70, processor.getHeatRelease());
     }
@@ -34,7 +34,7 @@ class SpecsModelAssemblerImplTest {
         Map<String, String> parsedSpecifications = new HashMap<>();
         parsedSpecifications.put("socket", "AMD AM 4");
         parsedSpecifications.put("tdp", "");
-        Processor processor = specsModelAssembler.assembleProcessor(parsedSpecifications);
+        Processor processor = hardwareAssembler.assembleProcessor(parsedSpecifications);
         assertEquals("AMD AM 4", processor.getSocket());
         assertEquals(-100, processor.getHeatRelease());
     }

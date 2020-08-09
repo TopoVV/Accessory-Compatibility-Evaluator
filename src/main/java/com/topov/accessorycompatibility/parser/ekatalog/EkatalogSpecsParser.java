@@ -1,8 +1,8 @@
 package com.topov.accessorycompatibility.parser.ekatalog;
 
-import com.topov.accessorycompatibility.parser.MotherboardDomParser;
-import com.topov.accessorycompatibility.parser.ProcessorDomParser;
-import com.topov.accessorycompatibility.parser.RamDomParser;
+import com.topov.accessorycompatibility.parser.MotherboardParser;
+import com.topov.accessorycompatibility.parser.ProcessorParser;
+import com.topov.accessorycompatibility.parser.RamParser;
 import com.topov.accessorycompatibility.parser.SpecsParser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,32 +17,32 @@ import java.util.Map;
 public class EkatalogSpecsParser implements SpecsParser {
     private static final Logger LOG = LogManager.getLogger(EkatalogSpecsParser.class.getName());
 
-    private final MotherboardDomParser motherboardDomParser;
-    private final ProcessorDomParser processorDomParser;
-    private final RamDomParser ramDomParser;
+    private final MotherboardParser motherboardParser;
+    private final ProcessorParser processorParser;
+    private final RamParser ramParser;
 
     @Autowired
-    public EkatalogSpecsParser(@Qualifier("ekatalogMotherboardParser") MotherboardDomParser motherboardDomParser,
-                               @Qualifier("ekatalogProcessorParser") ProcessorDomParser processorDomParser,
-                               @Qualifier("ekatalogRamParser") RamDomParser ramDomParser) {
-        this.motherboardDomParser = motherboardDomParser;
-        this.processorDomParser = processorDomParser;
-        this.ramDomParser = ramDomParser;
+    public EkatalogSpecsParser(@Qualifier("ekatalogMotherboardParser") MotherboardParser motherboardParser,
+                               @Qualifier("ekatalogProcessorParser") ProcessorParser processorParser,
+                               @Qualifier("ekatalogRamParser") RamParser ramParser) {
+        this.motherboardParser = motherboardParser;
+        this.processorParser = processorParser;
+        this.ramParser = ramParser;
     }
 
     @Override
     public Map<String, String> parseProcessorSpecs(Document processorDom) {
-        return processorDomParser.parseProcessorDom(processorDom);
+        return processorParser.parseProcessorDom(processorDom);
     }
 
     @Override
     public Map<String, String> parseMotherboardSpecs(Document motherboardDom) {
-        return motherboardDomParser.parseMotherboardDom(motherboardDom);
+        return motherboardParser.parseMotherboardDom(motherboardDom);
     }
 
     @Override
     public Map<String, String> parseRamSpecs(Document ramUrl) {
-        return ramDomParser.parseRamDom(ramUrl);
+        return ramParser.parseRamDom(ramUrl);
 
     }
 }

@@ -4,6 +4,6 @@ import org.jsoup.nodes.Document;
 
 import java.util.Map;
 
-public interface ProcessorDomParser {
+public interface ProcessorParser {
     Map<String, String> parseProcessorDom(Document document);
 }

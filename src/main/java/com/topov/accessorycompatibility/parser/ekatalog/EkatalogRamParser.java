@@ -1,6 +1,6 @@
 package com.topov.accessorycompatibility.parser.ekatalog;
 
-import com.topov.accessorycompatibility.parser.RamDomParser;
+import com.topov.accessorycompatibility.parser.RamParser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jsoup.nodes.Document;
@@ -12,8 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service("ekatalogRamParser")
-public class EkatalogRamDomParser implements RamDomParser {
-    private static final Logger LOG = LogManager.getLogger(EkatalogRamDomParser.class.getName());
+public class EkatalogRamParser implements RamParser {
+    private static final Logger LOG = LogManager.getLogger(EkatalogRamParser.class.getName());
     @Override
     public Map<String, String> parseRamDom(Document document) {
         Map<String, String> specifications = new HashMap<>();

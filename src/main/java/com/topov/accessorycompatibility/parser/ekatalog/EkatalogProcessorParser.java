@@ -1,6 +1,6 @@
 package com.topov.accessorycompatibility.parser.ekatalog;
 
-import com.topov.accessorycompatibility.parser.ProcessorDomParser;
+import com.topov.accessorycompatibility.parser.ProcessorParser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jsoup.nodes.Document;
@@ -12,8 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service("ekatalogProcessorParser")
-public class EkatalogProcessorDomParser implements ProcessorDomParser {
-    private static final Logger LOG = LogManager.getLogger(EkatalogProcessorDomParser.class.getName());
+public class EkatalogProcessorParser implements ProcessorParser {
+    private static final Logger LOG = LogManager.getLogger(EkatalogProcessorParser.class.getName());
 
     @Override
     public Map<String, String> parseProcessorDom(Document document) {

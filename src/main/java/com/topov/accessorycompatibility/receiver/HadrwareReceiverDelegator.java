@@ -13,20 +13,20 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class SpecsReceiverDelegator {
-    private static final Logger LOG = LogManager.getLogger(SpecsReceiverDelegator.class.getName());
+public class HadrwareReceiverDelegator {
+    private static final Logger LOG = LogManager.getLogger(HadrwareReceiverDelegator.class.getName());
 
-    private final Set<SpecsReceiver> receivers;
+    private final Set<HardwareReceiver> receivers;
 
     @Autowired
-    public SpecsReceiverDelegator(Set<SpecsReceiver> receivers) {
+    public HadrwareReceiverDelegator(Set<HardwareReceiver> receivers) {
         this.receivers = receivers;
     }
 
     @Async
     public CompletableFuture<Processor> receiveProcessor(String processorUrl) {
         try {
-            final SpecsReceiver receiver = findAppropriateReceiver(processorUrl);
+            final HardwareReceiver receiver = findAppropriateReceiver(processorUrl);
             final Processor processor = receiver.receiveProcessor(processorUrl);
             return CompletableFuture.completedFuture(processor);
         } catch (RuntimeException e) {
@@ -38,7 +38,7 @@ public class SpecsReceiverDelegator {
     @Async
     public CompletableFuture<Motherboard> receiveMotherboard(String motherboardUrl) {
         try {
-            final SpecsReceiver receiver = findAppropriateReceiver(motherboardUrl);
+            final HardwareReceiver receiver = findAppropriateReceiver(motherboardUrl);
             final Motherboard motherboard = receiver.receiveMotherboard(motherboardUrl);
             return CompletableFuture.completedFuture(motherboard);
         } catch (RuntimeException e) {
@@ -50,7 +50,7 @@ public class SpecsReceiverDelegator {
     @Async
     public CompletableFuture<Ram> receiveRam(String ramUrl) {
         try {
-            final SpecsReceiver receiver = findAppropriateReceiver(ramUrl);
+            final HardwareReceiver receiver = findAppropriateReceiver(ramUrl);
             final Ram ram = receiver.receiveRam(ramUrl);
             return CompletableFuture.completedFuture(ram);
         } catch (RuntimeException e) {
@@ -59,7 +59,7 @@ public class SpecsReceiverDelegator {
         }
     }
 
-    private SpecsReceiver findAppropriateReceiver(String url) {
+    private HardwareReceiver findAppropriateReceiver(String url) {
         return receivers.stream()
                         .filter(receiver -> receiver.supports(url))
                         .findFirst()
