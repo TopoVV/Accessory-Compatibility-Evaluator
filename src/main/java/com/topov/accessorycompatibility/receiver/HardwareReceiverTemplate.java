@@ -23,8 +23,7 @@ public abstract class HardwareReceiverTemplate<T extends Hardware> {
         final Document document = requestDom(url);
         final Map<String, String> specs = parseDom(document);
         final Map<String, String> generalized = generalizeSpecs(specs);
-        final T hardware = assembleHardware(generalized);
-        return hardware;
+        return assembleHardware(generalized);
     }
 
     private Document requestDom(String url) {
