@@ -1,11 +1,14 @@
-package com.topov.accessorycompatibility.model;
+package com.topov.accessorycompatibility.hardware.components;
 
+import com.topov.accessorycompatibility.hardware.Hardware;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Builder
-public class Motherboard extends Hardware {
+@EqualsAndHashCode(callSuper = false)
+public class Pcb extends Hardware {
     private String socket;
     private String chipset;
     private String formFactor;

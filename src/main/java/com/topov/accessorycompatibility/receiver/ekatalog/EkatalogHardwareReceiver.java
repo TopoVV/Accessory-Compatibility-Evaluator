@@ -1,9 +1,9 @@
 package com.topov.accessorycompatibility.receiver.ekatalog;
 
 import com.topov.accessorycompatibility.assembler.HardwareAssembler;
-import com.topov.accessorycompatibility.model.Motherboard;
-import com.topov.accessorycompatibility.model.Processor;
-import com.topov.accessorycompatibility.model.Ram;
+import com.topov.accessorycompatibility.hardware.components.Pcb;
+import com.topov.accessorycompatibility.hardware.components.Cpu;
+import com.topov.accessorycompatibility.hardware.components.Ram;
 import com.topov.accessorycompatibility.parser.Specifications;
 import com.topov.accessorycompatibility.parser.strategy.EkatalogMotherboardParser;
 import com.topov.accessorycompatibility.parser.strategy.EkatalogProcessorParser;
@@ -29,18 +29,18 @@ public class EkatalogHardwareReceiver implements HardwareReceiver {
         this.motherboardParser = new EkatalogMotherboardParser();
     }
 
-    public Processor receiveProcessor(String processorUlr) {
-        final Specifications specifications = specificationExtractor.receiveSpecifications(processorUlr, processorParser);
-        return assembler.assembleProcessor(specifications);
+    public Cpu receiveCpu(String processorUlr) {
+        final Specifications specifications = specificationExtractor.extractSpecifications(processorUlr, processorParser);
+        return assembler.assembleCpu(specifications);
     }
 
-    public Motherboard receiveMotherboard(String motherboardUrl) {
-        final Specifications specifications = specificationExtractor.receiveSpecifications(motherboardUrl, motherboardParser);
-        return assembler.assembleMotherboard(specifications);
+    public Pcb receivePcb(String motherboardUrl) {
+        final Specifications specifications = specificationExtractor.extractSpecifications(motherboardUrl, motherboardParser);
+        return assembler.assemblePcb(specifications);
     }
 
     public Ram receiveRam(String ramUrl) {
-        final  Specifications specifications = specificationExtractor.receiveSpecifications(ramUrl, ramParser);
+        final  Specifications specifications = specificationExtractor.extractSpecifications(ramUrl, ramParser);
         return assembler.assembleRam(specifications);
     }
 

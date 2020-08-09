@@ -23,7 +23,7 @@ public class EkatalogSpecificationExtractor implements SpecificationExtractor {
     }
 
     @Override
-    public Specifications receiveSpecifications(String url, HardwareParsingStrategy parsingStrategy) {
+    public Specifications extractSpecifications(String url, HardwareParsingStrategy parsingStrategy) {
         final HardwareDom hardwareDom = client.requestDom(url);
         final Map<String, String> specs = hardwareDom.parse(parsingStrategy);
         final Map<String, String> generalized = generalizer.generalizeSpecifications(specs);

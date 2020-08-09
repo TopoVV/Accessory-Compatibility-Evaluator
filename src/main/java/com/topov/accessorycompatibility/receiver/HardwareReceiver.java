@@ -1,12 +1,12 @@
 package com.topov.accessorycompatibility.receiver;
 
-import com.topov.accessorycompatibility.model.Motherboard;
-import com.topov.accessorycompatibility.model.Processor;
-import com.topov.accessorycompatibility.model.Ram;
+import com.topov.accessorycompatibility.hardware.components.Pcb;
+import com.topov.accessorycompatibility.hardware.components.Cpu;
+import com.topov.accessorycompatibility.hardware.components.Ram;
 
 public interface HardwareReceiver {
-    Processor receiveProcessor(String processorUrl);
-    Motherboard receiveMotherboard(String motherboardUrl);
+    Cpu receiveCpu(String processorUrl);
+    Pcb receivePcb(String motherboardUrl);
     Ram receiveRam(String ramUrl);
     boolean supports(String url);
 }

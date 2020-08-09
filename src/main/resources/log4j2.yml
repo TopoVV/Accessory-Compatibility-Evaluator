@@ -5,7 +5,7 @@ Configuration:
     Console:
       name: ConsoleAppender
       PatternLayout:
-        Pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
+        Pattern: "%highlight{[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n}{WARN=Yellow, INFO=Green, ERROR=Red, DEBUG=Cyan}"
 
   Loggers:
     logger:

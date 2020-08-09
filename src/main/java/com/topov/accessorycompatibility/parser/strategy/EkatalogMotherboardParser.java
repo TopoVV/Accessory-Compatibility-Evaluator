@@ -28,7 +28,6 @@ public class EkatalogMotherboardParser implements HardwareParsingStrategy {
                 final String motherboardRamTypeValue = paramName.replace("mbd-", "");
                 specifications.put(motherboardRamTypeParam, motherboardRamTypeValue);
             }
-
             specifications.put(paramName, paramValue);
         }
         return specifications;

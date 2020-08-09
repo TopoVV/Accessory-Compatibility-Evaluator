@@ -1,19 +1,18 @@
-package com.topov.accessorycompatibility.compatibility;
+package com.topov.accessorycompatibility.compatibility.cases;
 
-import com.topov.accessorycompatibility.model.Motherboard;
-import com.topov.accessorycompatibility.model.Processor;
-import lombok.AllArgsConstructor;
-import org.apache.tomcat.jni.Proc;
+import com.topov.accessorycompatibility.dto.Incompatibility;
+import com.topov.accessorycompatibility.hardware.components.Pcb;
+import com.topov.accessorycompatibility.hardware.components.Cpu;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MotherboardProcessorCompatibility extends CompatibilityEvaluationAbstract<Motherboard, Processor> {
+public class PcbCpuCompatibilityCase extends CompatibilityCaseAbstract<Pcb, Cpu> {
     private static final String HARDWARE_PAIR_NAME = "MOTHERBOARD-PROCESSOR";
     private static final String SOCKETS_INCOMPATIBLE = "Motherboard socket (%s) is not compatible with CPU socket (%s)";
 
-    protected MotherboardProcessorCompatibility(Motherboard component1, Processor component2) {
-        super(component1, component2);
+    public PcbCpuCompatibilityCase(Pcb pcb, Cpu cpu) {
+        super(pcb, cpu);
     }
 
     @Override

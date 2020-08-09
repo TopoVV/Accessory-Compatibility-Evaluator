@@ -1,8 +1,8 @@
 package com.topov.accessorycompatibility.receiver;
 
-import com.topov.accessorycompatibility.model.Motherboard;
-import com.topov.accessorycompatibility.model.Processor;
-import com.topov.accessorycompatibility.model.Ram;
+import com.topov.accessorycompatibility.hardware.components.Pcb;
+import com.topov.accessorycompatibility.hardware.components.Cpu;
+import com.topov.accessorycompatibility.hardware.components.Ram;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +24,11 @@ public class HadrwareReceiverDelegator {
     }
 
     @Async
-    public CompletableFuture<Processor> receiveProcessor(String processorUrl) {
+    public CompletableFuture<Cpu> receiveProcessor(String processorUrl) {
         try {
             final HardwareReceiver receiver = findAppropriateReceiver(processorUrl);
-            final Processor processor = receiver.receiveProcessor(processorUrl);
-            return CompletableFuture.completedFuture(processor);
+            final Cpu cpu = receiver.receiveCpu(processorUrl);
+            return CompletableFuture.completedFuture(cpu);
         } catch (RuntimeException e) {
             LOG.error(e);
             return CompletableFuture.failedFuture(e);
@@ -36,11 +36,11 @@ public class HadrwareReceiverDelegator {
     }
 
     @Async
-    public CompletableFuture<Motherboard> receiveMotherboard(String motherboardUrl) {
+    public CompletableFuture<Pcb> receiveMotherboard(String motherboardUrl) {
         try {
             final HardwareReceiver receiver = findAppropriateReceiver(motherboardUrl);
-            final Motherboard motherboard = receiver.receiveMotherboard(motherboardUrl);
-            return CompletableFuture.completedFuture(motherboard);
+            final Pcb pcb = receiver.receivePcb(motherboardUrl);
+            return CompletableFuture.completedFuture(pcb);
         } catch (RuntimeException e) {
             LOG.error(e);
             return CompletableFuture.failedFuture(e);

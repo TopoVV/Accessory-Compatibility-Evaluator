@@ -1,6 +1,6 @@
 package com.topov.accessorycompatibility.assembler;
 
-import com.topov.accessorycompatibility.model.Processor;
+import com.topov.accessorycompatibility.hardware.components.Cpu;
 import com.topov.accessorycompatibility.parser.Specifications;
 import com.topov.accessorycompatibility.parser.SpecificationGeneralizer;
 import org.junit.jupiter.api.Test;
@@ -27,9 +27,9 @@ class HardwareAssemblerImplTest {
         parsedSpecifications.put(SpecificationGeneralizer.CPU_SOCKET_KEY, "amd am 4");
         parsedSpecifications.put(SpecificationGeneralizer.CPU_TDP_KEY, "70");
         final Specifications specifications = new Specifications(parsedSpecifications);
-        Processor processor = hardwareAssembler.assembleProcessor(specifications);
-        assertEquals("amd am 4", processor.getSocket());
-        assertEquals(70, processor.getHeatRelease());
+        Cpu cpu = hardwareAssembler.assembleCpu(specifications);
+        assertEquals("amd am 4", cpu.getSocket());
+        assertEquals(70, cpu.getHeatRelease());
     }
 
     @Test
@@ -38,8 +38,8 @@ class HardwareAssemblerImplTest {
         parsedSpecifications.put(SpecificationGeneralizer.CPU_SOCKET_KEY, "amd am 4");
         parsedSpecifications.put(SpecificationGeneralizer.CPU_TDP_KEY, "");
         final Specifications specifications = new Specifications(parsedSpecifications);
-        Processor processor = hardwareAssembler.assembleProcessor(specifications);
-        assertEquals("amd am 4", processor.getSocket());
-        assertEquals(-100, processor.getHeatRelease());
+        Cpu cpu = hardwareAssembler.assembleCpu(specifications);
+        assertEquals("amd am 4", cpu.getSocket());
+        assertEquals(-100, cpu.getHeatRelease());
     }
 }

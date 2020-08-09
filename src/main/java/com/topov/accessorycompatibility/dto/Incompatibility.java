@@ -1,4 +1,4 @@
-package com.topov.accessorycompatibility.compatibility;
+package com.topov.accessorycompatibility.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

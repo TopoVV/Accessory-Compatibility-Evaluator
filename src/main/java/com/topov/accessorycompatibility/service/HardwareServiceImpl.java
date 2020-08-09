@@ -1,10 +1,10 @@
 package com.topov.accessorycompatibility.service;
 
-import com.topov.accessorycompatibility.compatibility.CompatibilityEvaluator;
 import com.topov.accessorycompatibility.dto.response.Compatibility;
-import com.topov.accessorycompatibility.model.Motherboard;
-import com.topov.accessorycompatibility.model.Processor;
-import com.topov.accessorycompatibility.model.Ram;
+import com.topov.accessorycompatibility.hardware.compatibility.CompatiblePair;
+import com.topov.accessorycompatibility.hardware.components.Cpu;
+import com.topov.accessorycompatibility.hardware.components.Pcb;
+import com.topov.accessorycompatibility.hardware.components.Ram;
 import com.topov.accessorycompatibility.receiver.HadrwareReceiverDelegator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,30 +18,31 @@ public class HardwareServiceImpl implements HardwareService {
     private static final Logger LOG = LogManager.getLogger(HardwareServiceImpl.class.getName());
 
     private final HadrwareReceiverDelegator receiverDelegator;
-    private final CompatibilityEvaluator compatibilityEvaluator;
+    private final CompatibilityService compatibilityService;
 
     @Autowired
-    public HardwareServiceImpl(HadrwareReceiverDelegator receiverDelegator, CompatibilityEvaluator compatibilityEvaluator) {
+    public HardwareServiceImpl(HadrwareReceiverDelegator receiverDelegator, CompatibilityService compatibilityService) {
         this.receiverDelegator = receiverDelegator;
-        this.compatibilityEvaluator = compatibilityEvaluator;
+        this.compatibilityService = compatibilityService;
     }
 
     @Override
     public void doWork() {
-        final String processorUrl = "https://ek.ua/AMD-RYZEN-3-MATISSE.htm";
-        final String motherboardUrl = "https://ek.ua/ek-item.php?resolved_name_=ASUS-M5A78L-M-LX3&view_=tbl";
+        final String cpuUrl = "https://ek.ua/AMD-RYZEN-3-MATISSE.htm";
+        final String pcbUrl = "https://ek.ua/ek-item.php?resolved_name_=ASUS-M5A78L-M-LX3&view_=tbl";
         final String ramUrl = "https://ek.ua/TEAM-GROUP-ELITE-SO-DIMM-DDR4.htm";
-        CompletableFuture<Processor> processor = receiverDelegator.receiveProcessor(processorUrl);
-        CompletableFuture<Motherboard> motherboard = receiverDelegator.receiveMotherboard(motherboardUrl);
+        CompletableFuture<Cpu> cpu = receiverDelegator.receiveProcessor(cpuUrl);
+        CompletableFuture<Pcb> pcb = receiverDelegator.receiveMotherboard(pcbUrl);
         CompletableFuture<Ram> ram = receiverDelegator.receiveRam(ramUrl);
 
-        CompletableFuture<Compatibility> motherboardProcessor = compatibilityEvaluator.evaluateProcessorMotherboardCompatibility(processor, motherboard);
-        CompletableFuture<Compatibility> ramMotherboard = compatibilityEvaluator.evaluateMotherboardRamCompatibility(ram, motherboard);
 
-        System.out.println(motherboardProcessor.join());
-        System.out.println(ramMotherboard.join());
+        final CompletableFuture<CompatiblePair> pcbCpu = pcb.thenCombine(cpu, CompatiblePair::pcbCpuPair);
+        final CompletableFuture<CompatiblePair> pcbRam = pcb.thenCombine(ram, CompatiblePair::pcbRamPair);
+        final CompletableFuture<Compatibility> pcbCpuCompatibility = compatibilityService.evaluateCompatibility(pcbCpu);
+        final CompletableFuture<Compatibility> pcbRamCompatibility = compatibilityService.evaluateCompatibility(pcbRam);
 
-
+        System.out.println(pcbCpuCompatibility.join());
+        System.out.println(pcbRamCompatibility.join());
     }
 
 }

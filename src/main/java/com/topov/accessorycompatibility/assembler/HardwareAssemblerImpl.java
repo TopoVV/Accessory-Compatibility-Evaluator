@@ -1,8 +1,8 @@
 package com.topov.accessorycompatibility.assembler;
 
-import com.topov.accessorycompatibility.model.Motherboard;
-import com.topov.accessorycompatibility.model.Processor;
-import com.topov.accessorycompatibility.model.Ram;
+import com.topov.accessorycompatibility.hardware.components.Pcb;
+import com.topov.accessorycompatibility.hardware.components.Cpu;
+import com.topov.accessorycompatibility.hardware.components.Ram;
 import com.topov.accessorycompatibility.parser.Specifications;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,41 +15,41 @@ public class HardwareAssemblerImpl implements HardwareAssembler {
     private static final Logger LOG = LogManager.getLogger(HardwareAssemblerImpl.class.getName());
 
     @Override
-    public Processor assembleProcessor(Specifications specifications) {
+    public Cpu assembleCpu(Specifications specifications) {
         LOG.info("Assembling processor: " + Thread.currentThread().getName());
         final String socket = specifications.getStringValue(CPU_SOCKET_KEY);
         final String tdp = specifications.getNumberValue(CPU_TDP_KEY);
         final String frequency = specifications.getNumberValue(CPU_FREQUENCY_KEY);
         final String threads = specifications.getNumberValue(CPU_THREADS_KEY);
         final String cores = specifications.getNumberValue(CPU_CORES_KEY);
-        return Processor.builder()
-                        .socket(socket)
-                        .heatRelease(Long.parseLong(tdp))
-                        .cores(Integer.parseInt(cores))
-                        .threads(Integer.parseInt(threads))
-                        .frequency(Long.parseLong(frequency))
-                        .build();
+        return Cpu.builder()
+                  .socket(socket)
+                  .heatRelease(Long.parseLong(tdp))
+                  .cores(Integer.parseInt(cores))
+                  .threads(Integer.parseInt(threads))
+                  .frequency(Long.parseLong(frequency))
+                  .build();
     }
 
     @Override
-    public Motherboard assembleMotherboard(Specifications specifications) {
+    public Pcb assemblePcb(Specifications specifications) {
         LOG.info("Assembling motherboard: " + Thread.currentThread().getName());
-        final String socket = specifications.getStringValue(MBD_SOCKET_KEY);
-        final String chipset = specifications.getStringValue(MBD_CHIPSET_KEY);
-        final String formFactor = specifications.getStringValue(MBD_FORM_FACTOR_KEY);
-        final String maxRam = specifications.getNumberValue(MBD_MAX_RAM_KEY);
-        final String ramType = specifications.getStringValue(MBD_RAM_TYPE);
-        final String ramFormFactor = specifications.getStringValue(MBD_RAM_FROM_FACTOR_KEY);
-        final String ramFrequency = specifications.getNumberValue(MBD_MAX_RAM_FREQUENCY_KEY);
-        return Motherboard.builder()
-                          .socket(socket)
-                          .chipset(chipset)
-                          .ramType(ramType)
-                          .formFactor(formFactor)
-                          .ramFormFactor(ramFormFactor)
-                          .maxRam(Integer.parseInt(maxRam))
-                          .ramFrequency(Integer.parseInt(ramFrequency))
-                          .build();
+        final String socket = specifications.getStringValue(PCB_SOCKET_KEY);
+        final String chipset = specifications.getStringValue(PCB_CHIPSET_KEY);
+        final String formFactor = specifications.getStringValue(PCB_FORM_FACTOR_KEY);
+        final String maxRam = specifications.getNumberValue(PCB_MAX_RAM_KEY);
+        final String ramType = specifications.getStringValue(PCB_RAM_TYPE);
+        final String ramFormFactor = specifications.getStringValue(PCB_RAM_FROM_FACTOR_KEY);
+        final String ramFrequency = specifications.getNumberValue(PCB_MAX_RAM_FREQUENCY_KEY);
+        return Pcb.builder()
+                  .socket(socket)
+                  .chipset(chipset)
+                  .ramType(ramType)
+                  .formFactor(formFactor)
+                  .ramFormFactor(ramFormFactor)
+                  .maxRam(Integer.parseInt(maxRam))
+                  .ramFrequency(Integer.parseInt(ramFrequency))
+                  .build();
     }
 
     @Override
