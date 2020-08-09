@@ -1,21 +1,15 @@
-package com.topov.accessorycompatibility.parser.ekatalog;
+package com.topov.accessorycompatibility.parser.strategy;
 
-import com.topov.accessorycompatibility.parser.RamParser;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Service("ekatalogRamParser")
-public class EkatalogRamParser implements RamParser {
-    private static final Logger LOG = LogManager.getLogger(EkatalogRamParser.class.getName());
+public class EkatalogRamParser implements HardwareParsingStrategy {
     @Override
-    public Map<String, String> parseRamDom(Document document) {
+    public Map<String, String> parse(Document document) {
         Map<String, String> specifications = new HashMap<>();
         final Elements params = document.getElementsByClass("prop");
         final Elements values = document.getElementsByClass("val");

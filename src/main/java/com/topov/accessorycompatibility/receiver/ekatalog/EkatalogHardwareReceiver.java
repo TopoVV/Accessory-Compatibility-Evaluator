@@ -1,42 +1,48 @@
 package com.topov.accessorycompatibility.receiver.ekatalog;
 
+import com.topov.accessorycompatibility.assembler.HardwareAssembler;
 import com.topov.accessorycompatibility.model.Motherboard;
 import com.topov.accessorycompatibility.model.Processor;
 import com.topov.accessorycompatibility.model.Ram;
+import com.topov.accessorycompatibility.parser.strategy.EkatalogMotherboardParser;
+import com.topov.accessorycompatibility.parser.strategy.EkatalogProcessorParser;
+import com.topov.accessorycompatibility.parser.strategy.EkatalogRamParser;
 import com.topov.accessorycompatibility.receiver.HardwareReceiver;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.topov.accessorycompatibility.receiver.SpecsReceiver;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service
 public class EkatalogHardwareReceiver implements HardwareReceiver {
     private static final String SUPPORTED_URL = "https://ek.ua/";
+    private final SpecsReceiver specsReceiver;
+    private final HardwareAssembler assembler;
+    private final EkatalogMotherboardParser motherboardParser;
+    private final EkatalogProcessorParser processorParser;
+    private final EkatalogRamParser ramParser;
 
-    private final EkatalogMotherboardReceiver ekatalogMotherboardReceiver;
-    private final EkatalogProcessorReceiver ekatalogProcessorReceiver;
-    private final EkatalogRamReceiver ekatalogRamReceiver;
-
-    @Autowired
-    public EkatalogHardwareReceiver(EkatalogMotherboardReceiver ekatalogMotherboardReceiver,
-                                    EkatalogProcessorReceiver ekatalogProcessorReceiver,
-                                    EkatalogRamReceiver ekatalogRamReceiver) {
-        this.ekatalogMotherboardReceiver = ekatalogMotherboardReceiver;
-        this.ekatalogProcessorReceiver = ekatalogProcessorReceiver;
-        this.ekatalogRamReceiver = ekatalogRamReceiver;
+    public EkatalogHardwareReceiver(SpecsReceiver specsReceiver, HardwareAssembler assembler) {
+        this.specsReceiver = specsReceiver;
+        this.assembler = assembler;
+        this.ramParser = new EkatalogRamParser();
+        this.processorParser = new EkatalogProcessorParser();
+        this.motherboardParser = new EkatalogMotherboardParser();
     }
 
-    @Override
-    public Processor receiveProcessor(String processorUrl) {
-        return ekatalogProcessorReceiver.receiveHardwareComponent(processorUrl);
+    public Processor receiveProcessor(String processorUlr) {
+        final Map<String, String> specs = specsReceiver.receiveSpecifications(processorUlr, processorParser);
+        return assembler.assembleProcessor(specs);
     }
 
-    @Override
     public Motherboard receiveMotherboard(String motherboardUrl) {
-        return ekatalogMotherboardReceiver.receiveHardwareComponent(motherboardUrl);
+        final Map<String, String> specs = specsReceiver.receiveSpecifications(motherboardUrl, motherboardParser);
+        return assembler.assembleMotherboard(specs);
     }
 
-    @Override
     public Ram receiveRam(String ramUrl) {
-        return ekatalogRamReceiver.receiveHardwareComponent(ramUrl);
+        final Map<String, String> specs = specsReceiver.receiveSpecifications(ramUrl, ramParser);
+        return assembler.assembleRam(specs);
     }
 
     @Override

@@ -1,5 +1,6 @@
-package com.topov.accessorycompatibility.receiver;
+package com.topov.accessorycompatibility.net;
 
+import com.topov.accessorycompatibility.parser.strategy.HardwareParsingStrategy;
 import org.jsoup.nodes.Document;
 
 import java.util.Map;

@@ -1,6 +1,7 @@
 package com.topov.accessorycompatibility.assembler;
 
 import com.topov.accessorycompatibility.model.Processor;
+import com.topov.accessorycompatibility.parser.SpecsGeneralizer;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,20 +23,20 @@ class HardwareAssemblerImplTest {
     @Test
     public void assembleProcessor() {
         Map<String, String> parsedSpecifications = new HashMap<>();
-        parsedSpecifications.put("socket", "AMD AM 4");
-        parsedSpecifications.put("tdp", "70");
+        parsedSpecifications.put(SpecsGeneralizer.CPU_SOCKET_KEY, "amd am 4");
+        parsedSpecifications.put(SpecsGeneralizer.CPU_TDP_KEY, "70");
         Processor processor = hardwareAssembler.assembleProcessor(parsedSpecifications);
-        assertEquals("AMD AM 4", processor.getSocket());
+        assertEquals("amd am 4", processor.getSocket());
         assertEquals(70, processor.getHeatRelease());
     }
 
     @Test
     public void assembleProcessorWithEmptyProperty() {
         Map<String, String> parsedSpecifications = new HashMap<>();
-        parsedSpecifications.put("socket", "AMD AM 4");
-        parsedSpecifications.put("tdp", "");
+        parsedSpecifications.put(SpecsGeneralizer.CPU_SOCKET_KEY, "amd am 4");
+        parsedSpecifications.put(SpecsGeneralizer.CPU_TDP_KEY, "");
         Processor processor = hardwareAssembler.assembleProcessor(parsedSpecifications);
-        assertEquals("AMD AM 4", processor.getSocket());
+        assertEquals("amd am 4", processor.getSocket());
         assertEquals(-100, processor.getHeatRelease());
     }
 }

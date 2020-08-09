@@ -1,6 +1,8 @@
 package com.topov.accessorycompatibility.dto.response;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.ToString;
 
 @Getter
 @AllArgsConstructor

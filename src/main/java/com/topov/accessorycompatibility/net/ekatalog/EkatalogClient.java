@@ -1,5 +1,6 @@
 package com.topov.accessorycompatibility.net.ekatalog;
 
+import com.topov.accessorycompatibility.net.HardwareDom;
 import com.topov.accessorycompatibility.net.JsoupClient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,10 +19,11 @@ public class EkatalogClient implements JsoupClient {
     private static final Logger LOG = LogManager.getLogger(EkatalogClient.class.getName());
 
     @Override
-    public Document requestDom(String url) {
+    public HardwareDom requestDom(String url) {
         LOG.info("Requesting processor dom from Ekatalog: " + Thread.currentThread().getName());
         try {
-            return Jsoup.connect(url).get();
+            final Document document = Jsoup.connect(url).get();
+            return new HardwareDom(document);
         } catch (IOException e) {
             throw new RuntimeException("Failed to receive processor document from Ekatalog", e);
         }

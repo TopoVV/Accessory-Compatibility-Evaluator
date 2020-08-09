@@ -1,8 +1,9 @@
 package com.topov.accessorycompatibility.dto.response;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.ToString;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter

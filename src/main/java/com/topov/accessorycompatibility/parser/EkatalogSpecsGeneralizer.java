@@ -1,6 +1,5 @@
-package com.topov.accessorycompatibility.parser.ekatalog;
+package com.topov.accessorycompatibility.parser;
 
-import com.topov.accessorycompatibility.parser.SpecsGeneralizer;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

@@ -1,15 +1,12 @@
-package com.topov.accessorycompatibility.receiver.strategy;
+package com.topov.accessorycompatibility.parser.strategy;
 
-import com.topov.accessorycompatibility.receiver.HardwareParsingStrategy;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Service("ekProcessorParser-v2")
 public class EkatalogProcessorParser implements HardwareParsingStrategy {
     @Override
     public Map<String, String> parse(Document document) {
