@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class EkatalogSpecsGeneralizer implements SpecsGeneralizer {
+public class EkatalogSpecificationGeneralizer implements SpecificationGeneralizer {
     private final String CYRILLIC = "[АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя]";
 
     private final Map<String, String> keys = Map.ofEntries(

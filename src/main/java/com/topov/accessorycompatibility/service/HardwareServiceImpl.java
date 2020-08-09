@@ -35,14 +35,12 @@ public class HardwareServiceImpl implements HardwareService {
         CompletableFuture<Motherboard> motherboard = receiverDelegator.receiveMotherboard(motherboardUrl);
         CompletableFuture<Ram> ram = receiverDelegator.receiveRam(ramUrl);
 
-        CompletableFuture<Compatibility> motherboardProcessor =
-            compatibilityEvaluator.evaluateProcessorMotherboardCompatibility(processor, motherboard);
-        CompletableFuture<Compatibility> ramMotherboard =
-            compatibilityEvaluator.evaluateMotherboardRamCompatibility(ram, motherboard);
+        CompletableFuture<Compatibility> motherboardProcessor = compatibilityEvaluator.evaluateProcessorMotherboardCompatibility(processor, motherboard);
+        CompletableFuture<Compatibility> ramMotherboard = compatibilityEvaluator.evaluateMotherboardRamCompatibility(ram, motherboard);
 
         System.out.println(motherboardProcessor.join());
         System.out.println(ramMotherboard.join());
-        System.out.println(processor.join());
+
 
     }
 

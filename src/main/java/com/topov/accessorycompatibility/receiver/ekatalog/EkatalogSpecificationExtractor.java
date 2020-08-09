@@ -2,29 +2,31 @@ package com.topov.accessorycompatibility.receiver.ekatalog;
 
 import com.topov.accessorycompatibility.net.HardwareDom;
 import com.topov.accessorycompatibility.net.JsoupClient;
-import com.topov.accessorycompatibility.parser.SpecsGeneralizer;
+import com.topov.accessorycompatibility.parser.Specifications;
+import com.topov.accessorycompatibility.parser.SpecificationGeneralizer;
 import com.topov.accessorycompatibility.parser.strategy.HardwareParsingStrategy;
-import com.topov.accessorycompatibility.receiver.SpecsReceiver;
+import com.topov.accessorycompatibility.receiver.SpecificationExtractor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
 @Service
-public class EkatalogSpecsReceiver implements SpecsReceiver {
+public class EkatalogSpecificationExtractor implements SpecificationExtractor {
     private final JsoupClient client;
-    private final SpecsGeneralizer generalizer;
+    private final SpecificationGeneralizer generalizer;
 
     @Autowired
-    public EkatalogSpecsReceiver(JsoupClient client, SpecsGeneralizer generalizer) {
+    public EkatalogSpecificationExtractor(JsoupClient client, SpecificationGeneralizer generalizer) {
         this.client = client;
         this.generalizer = generalizer;
     }
 
     @Override
-    public Map<String, String> receiveSpecifications(String url, HardwareParsingStrategy parsingStrategy) {
+    public Specifications receiveSpecifications(String url, HardwareParsingStrategy parsingStrategy) {
         final HardwareDom hardwareDom = client.requestDom(url);
         final Map<String, String> specs = hardwareDom.parse(parsingStrategy);
-        return generalizer.generalizeSpecifications(specs);
+        final Map<String, String> generalized = generalizer.generalizeSpecifications(specs);
+        return new Specifications(generalized);
     }
 }
