@@ -9,15 +9,16 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.topov</groupId>
-    <artifactId>accessory-compatibility</artifactId>
+    <artifactId>accessory-compatibilityResult</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>accessory-compatibility</name>
+    <name>accessory-compatibilityResult</name>
     <description>Accessory Compatibility checker</description>
 
     <properties>
         <java.version>11</java.version>
         <jsoup.version>1.13.1</jsoup.version>
         <lombok.version>1.18.12</lombok.version>
+        <modelmapper.version>2.3.7</modelmapper.version>
     </properties>
 
     <dependencies>
@@ -64,6 +65,11 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>${modelmapper.version}</version>
         </dependency>
 
         <dependency>

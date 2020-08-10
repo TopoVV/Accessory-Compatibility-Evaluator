@@ -1,13 +1,17 @@
 package com.topov.accessorycompatibility.parser.strategy;
 
+import com.topov.accessorycompatibility.parser.HardwareParsingStrategy;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class EkatalogRamParser implements HardwareParsingStrategy {
+
+@Component
+public class EkatalogRamParser implements EkatalogParsingStrategy {
     @Override
     public Map<String, String> parse(Document document) {
         Map<String, String> specifications = new HashMap<>();

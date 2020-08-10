@@ -1,17 +1,24 @@
 package com.topov.accessorycompatibility.service;
 
-import com.topov.accessorycompatibility.dto.response.Compatibility;
+import com.topov.accessorycompatibility.dto.CompatibilityResultDto;
+import com.topov.accessorycompatibility.dto.request.HardwareSpecificationSources;
+import com.topov.accessorycompatibility.compatibility.evaluation.CompatibilityResult;
 import com.topov.accessorycompatibility.hardware.compatibility.CompatiblePair;
 import com.topov.accessorycompatibility.hardware.components.Cpu;
 import com.topov.accessorycompatibility.hardware.components.Pcb;
 import com.topov.accessorycompatibility.hardware.components.Ram;
+import com.topov.accessorycompatibility.mapper.CompatibilityResultMapper;
 import com.topov.accessorycompatibility.receiver.HadrwareReceiverDelegator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class HardwareServiceImpl implements HardwareService {
@@ -19,18 +26,22 @@ public class HardwareServiceImpl implements HardwareService {
 
     private final HadrwareReceiverDelegator receiverDelegator;
     private final CompatibilityService compatibilityService;
+    private final CompatibilityResultMapper compatibilityResultMapper;
 
     @Autowired
-    public HardwareServiceImpl(HadrwareReceiverDelegator receiverDelegator, CompatibilityService compatibilityService) {
+    public HardwareServiceImpl(CompatibilityResultMapper compatibilityResultMapper,
+                               HadrwareReceiverDelegator receiverDelegator,
+                               CompatibilityService compatibilityService) {
         this.receiverDelegator = receiverDelegator;
         this.compatibilityService = compatibilityService;
+        this.compatibilityResultMapper = compatibilityResultMapper;
     }
 
     @Override
-    public void doWork() {
-        final String cpuUrl = "https://ek.ua/AMD-RYZEN-3-MATISSE.htm";
-        final String pcbUrl = "https://ek.ua/ek-item.php?resolved_name_=ASUS-M5A78L-M-LX3&view_=tbl";
-        final String ramUrl = "https://ek.ua/TEAM-GROUP-ELITE-SO-DIMM-DDR4.htm";
+    public List<CompatibilityResultDto> evaluateHardwareCompatibility(HardwareSpecificationSources hardwareSources) {
+        final String cpuUrl = hardwareSources.getCpuUrl();
+        final String pcbUrl = hardwareSources.getPcbUrl();
+        final String ramUrl = hardwareSources.getRamUrl();
         CompletableFuture<Cpu> cpu = receiverDelegator.receiveProcessor(cpuUrl);
         CompletableFuture<Pcb> pcb = receiverDelegator.receiveMotherboard(pcbUrl);
         CompletableFuture<Ram> ram = receiverDelegator.receiveRam(ramUrl);
@@ -38,11 +49,13 @@ public class HardwareServiceImpl implements HardwareService {
 
         final CompletableFuture<CompatiblePair> pcbCpu = pcb.thenCombine(cpu, CompatiblePair::pcbCpuPair);
         final CompletableFuture<CompatiblePair> pcbRam = pcb.thenCombine(ram, CompatiblePair::pcbRamPair);
-        final CompletableFuture<Compatibility> pcbCpuCompatibility = compatibilityService.evaluateCompatibility(pcbCpu);
-        final CompletableFuture<Compatibility> pcbRamCompatibility = compatibilityService.evaluateCompatibility(pcbRam);
+        final CompletableFuture<CompatibilityResult> pcbCpuCompatibility = compatibilityService.evaluateCompatibility(pcbCpu);
+        final CompletableFuture<CompatibilityResult> pcbRamCompatibility = compatibilityService.evaluateCompatibility(pcbRam);
 
-        System.out.println(pcbCpuCompatibility.join());
-        System.out.println(pcbRamCompatibility.join());
+        return Stream.of(pcbCpuCompatibility, pcbRamCompatibility)
+                     .map(CompletableFuture::join)
+                     .map(compatibilityResultMapper::toDto)
+                     .collect(toList());
     }
 
 }

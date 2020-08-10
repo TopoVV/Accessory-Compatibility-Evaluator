@@ -1,4 +1,4 @@
-package com.topov.accessorycompatibility.parser.strategy;
+package com.topov.accessorycompatibility.parser;
 
 import org.jsoup.nodes.Document;
 

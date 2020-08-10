@@ -1,4 +1,4 @@
-package com.topov.accessorycompatibility.dto;
+package com.topov.accessorycompatibility.compatibility;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Incompatibility {
-    private String hardwarePair;
     private String incompatibilityCase;
     private String incompatibilityDescription;
 }

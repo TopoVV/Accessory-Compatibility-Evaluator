@@ -1,9 +1,6 @@
 package com.topov.accessorycompatibility.hardware.compatibility;
 
-import com.topov.accessorycompatibility.hardware.components.Cpu;
 import com.topov.accessorycompatibility.hardware.Hardware;
-import com.topov.accessorycompatibility.hardware.components.Pcb;
-import com.topov.accessorycompatibility.hardware.components.Ram;
 
 public class CompatiblePairImpl implements CompatiblePair {
     private final EvaluationCase evaluationCase;
@@ -27,12 +24,5 @@ public class CompatiblePairImpl implements CompatiblePair {
     }
 
     @Override
-    public EvaluationCase getEvaluationCase() {
-        return this.evaluationCase;
-    }
-
-    public enum EvaluationCase {
-        MOTHERBOARD_PROCESSOR,
-        MOTHERBOARD_RAM
-    }
+    public EvaluationCase getEvaluationCase() { return this.evaluationCase; }
 }

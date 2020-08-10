@@ -6,8 +6,8 @@ import com.topov.accessorycompatibility.hardware.compatibility.CompatiblePair;
 import com.topov.accessorycompatibility.hardware.components.Ram;
 import org.springframework.stereotype.Service;
 
-import static com.topov.accessorycompatibility.hardware.compatibility.CompatiblePairImpl.EvaluationCase.MOTHERBOARD_PROCESSOR;
-import static com.topov.accessorycompatibility.hardware.compatibility.CompatiblePairImpl.EvaluationCase.MOTHERBOARD_RAM;
+import static com.topov.accessorycompatibility.hardware.compatibility.CompatiblePair.EvaluationCase.MOTHERBOARD_PROCESSOR;
+import static com.topov.accessorycompatibility.hardware.compatibility.CompatiblePair.EvaluationCase.MOTHERBOARD_RAM;
 
 @Service
 public class CompatibilityCaseFactory {

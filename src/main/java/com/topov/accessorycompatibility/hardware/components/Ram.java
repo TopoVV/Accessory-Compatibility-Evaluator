@@ -4,14 +4,23 @@ import com.topov.accessorycompatibility.hardware.Hardware;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
-@Data
-@Builder
+@Getter
 @EqualsAndHashCode(callSuper = false)
 public class Ram extends Hardware {
-    private String formFactor;
-    private Integer frequency;
-    private String timings;
-    private Long voltage;
-    private String type;
+    private final String formFactor;
+    private final Integer frequency;
+    private final String timings;
+    private final Long voltage;
+    private final String type;
+
+    @Builder
+    public Ram(String formFactor, Integer frequency, String timings, Long voltage, String type) {
+        this.formFactor = formFactor;
+        this.frequency = frequency;
+        this.timings = timings;
+        this.voltage = voltage;
+        this.type = type;
+    }
 }

@@ -1,6 +1,5 @@
 package com.topov.accessorycompatibility.hardware.compatibility;
 
-import com.topov.accessorycompatibility.hardware.compatibility.CompatiblePairImpl.EvaluationCase;
 import com.topov.accessorycompatibility.hardware.Hardware;
 import com.topov.accessorycompatibility.hardware.components.Cpu;
 import com.topov.accessorycompatibility.hardware.components.Pcb;
@@ -18,4 +17,9 @@ public interface CompatiblePair {
     Hardware getComponent1();
     Hardware getComponent2();
     EvaluationCase getEvaluationCase();
+
+    enum EvaluationCase {
+        MOTHERBOARD_PROCESSOR,
+        MOTHERBOARD_RAM
+    }
 }

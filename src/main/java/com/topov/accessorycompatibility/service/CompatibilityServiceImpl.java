@@ -3,7 +3,7 @@ package com.topov.accessorycompatibility.service;
 import com.topov.accessorycompatibility.compatibility.cases.CompatibilityCase;
 import com.topov.accessorycompatibility.compatibility.cases.CompatibilityCaseFactory;
 import com.topov.accessorycompatibility.compatibility.evaluation.CompatibilityEvaluator;
-import com.topov.accessorycompatibility.dto.response.Compatibility;
+import com.topov.accessorycompatibility.compatibility.evaluation.CompatibilityResult;
 import com.topov.accessorycompatibility.hardware.compatibility.CompatiblePair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,14 +28,14 @@ public class CompatibilityServiceImpl implements CompatibilityService {
 
     @Async
     @Override
-    public CompletableFuture<Compatibility> evaluateCompatibility(CompletableFuture<CompatiblePair> pair) {
+    public CompletableFuture<CompatibilityResult> evaluateCompatibility(CompletableFuture<CompatiblePair> pair) {
         try {
             final CompatibilityCase command = factory.createCommand(pair.join());
-            final Compatibility compatibility = compatibilityEvaluator.startEvaluation(command);
-            return CompletableFuture.completedFuture(compatibility);
+            final CompatibilityResult compatibilityResult = compatibilityEvaluator.startEvaluation(command);
+            return CompletableFuture.completedFuture(compatibilityResult);
         } catch (Exception e) {
             LOG.warn("Compatibility evaluation error: " + e);
-            return CompletableFuture.completedFuture(Compatibility.failed(e.getMessage()));
+            return CompletableFuture.completedFuture(CompatibilityResult.failed(e.getMessage()));
         }
     }
 }
