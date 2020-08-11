@@ -7,12 +7,11 @@ import com.topov.accessorycompatibility.hardware.components.Cpu;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PcbCpuCompatibilityCase extends CompatibilityCaseAbstract<Pcb, Cpu> {
+public class PcbCpuCompatibilityCase extends CompatibilityCase<Pcb, Cpu> {
     private static final String SOCKETS_INCOMPATIBLE = "Motherboard socket (%s) is not compatible with CPU socket (%s)";
 
     public PcbCpuCompatibilityCase(Pcb pcb, Cpu cpu) {
         super(pcb, cpu);
-        this.caseName = "motherboard-processor";
     }
 
     @Override

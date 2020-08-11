@@ -1,9 +1,11 @@
 package com.topov.accessorycompatibility.service;
 
+import com.topov.accessorycompatibility.compatibility.cases.CompatibilityCase;
+import com.topov.accessorycompatibility.compatibility.cases.PcbCpuCompatibilityCase;
+import com.topov.accessorycompatibility.compatibility.cases.PcbRamCompatibilityCase;
 import com.topov.accessorycompatibility.dto.CompatibilityResultDto;
 import com.topov.accessorycompatibility.dto.request.HardwareSpecificationSources;
 import com.topov.accessorycompatibility.compatibility.evaluation.CompatibilityResult;
-import com.topov.accessorycompatibility.hardware.compatibility.CompatiblePair;
 import com.topov.accessorycompatibility.hardware.components.Cpu;
 import com.topov.accessorycompatibility.hardware.components.Pcb;
 import com.topov.accessorycompatibility.hardware.components.Ram;
@@ -47,8 +49,8 @@ public class HardwareServiceImpl implements HardwareService {
         CompletableFuture<Ram> ram = receiverDelegator.receiveRam(ramUrl);
 
 
-        final CompletableFuture<CompatiblePair> pcbCpu = pcb.thenCombine(cpu, CompatiblePair::pcbCpuPair);
-        final CompletableFuture<CompatiblePair> pcbRam = pcb.thenCombine(ram, CompatiblePair::pcbRamPair);
+        final CompletableFuture<CompatibilityCase<Pcb, Cpu>> pcbCpu = pcb.thenCombine(cpu, PcbCpuCompatibilityCase::new);
+        final CompletableFuture<CompatibilityCase<Pcb, Ram>> pcbRam = pcb.thenCombine(ram, PcbRamCompatibilityCase::new);
         final CompletableFuture<CompatibilityResult> pcbCpuCompatibility = compatibilityService.evaluateCompatibility(pcbCpu);
         final CompletableFuture<CompatibilityResult> pcbRamCompatibility = compatibilityService.evaluateCompatibility(pcbRam);
 

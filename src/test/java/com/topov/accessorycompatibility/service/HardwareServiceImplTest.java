@@ -27,7 +27,7 @@ class HardwareServiceImplTest {
     public void doWork() {
         final HardwareSpecificationSources sources = mock(HardwareSpecificationSources.class);
         when(sources.getCpuUrl()).thenReturn("https://ek.ua/AMD-RYZEN-3-MATISSE.htm");
-        when(sources.getPcbUrl()).thenReturn("https://ek.ua/ek-item.php?resolved_name_=ASUS-ROG-STRIX-B550-F-GAMING&view_=tbl");
+        when(sources.getPcbUrl()).thenReturn("https://ek.ua/ek-item.php?idg_=1688473&view_=tbl");
         when(sources.getRamUrl()).thenReturn("https://ek.ua/TEAM-GROUP-ELITE-SO-DIMM-DDR4.htm");
         final List<CompatibilityResultDto> compatibilityResults = service.evaluateHardwareCompatibility(sources);
         compatibilityResults.forEach(System.out::println);

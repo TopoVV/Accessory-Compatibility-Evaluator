@@ -20,12 +20,13 @@ public class EkatalogClient implements JsoupClient {
 
     @Override
     public HardwareDom requestDom(String url) {
-        LOG.info(String.format("Requesting %s dom from Ekatalog: %s", url, Thread.currentThread().getName()));
+        LOG.info(String.format("Fetching the DOM from %s (Ekatalog)", url));
         try {
             final Document document = Jsoup.connect(url).get();
             return new HardwareDom(document);
         } catch (IOException e) {
-            throw new RuntimeException("Failed to receive processor document from Ekatalog", e);
+            LOG.error(String.format("Exception while fetching the DOM  from %s (Ekatalog)", url), e);
+            throw new RuntimeException(String.format("Failed to receive DOM from %s (Ekatalog)", url), e);
         }
     }
 }
