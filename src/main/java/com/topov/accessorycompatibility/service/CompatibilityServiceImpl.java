@@ -1,7 +1,7 @@
 package com.topov.accessorycompatibility.service;
 
+import com.topov.accessorycompatibility.compatibility.CompatibilityEvaluationInvoker;
 import com.topov.accessorycompatibility.compatibility.cases.CompatibilityCase;
-import com.topov.accessorycompatibility.compatibility.evaluation.CompatibilityEvaluator;
 import com.topov.accessorycompatibility.compatibility.evaluation.CompatibilityResult;
 import com.topov.accessorycompatibility.hardware.Hardware;
 import org.apache.logging.log4j.LogManager;
@@ -15,17 +15,18 @@ import java.util.concurrent.CompletableFuture;
 @Service
 public class CompatibilityServiceImpl implements CompatibilityService {
     private static final Logger LOG = LogManager.getLogger(CompatibilityServiceImpl.class.getName());
-    private final CompatibilityEvaluator compatibilityEvaluator;
+    private final CompatibilityEvaluationInvoker evaluationInvoker;
 
     @Autowired
-    public CompatibilityServiceImpl(CompatibilityEvaluator compatibilityEvaluator) {
-        this.compatibilityEvaluator = compatibilityEvaluator;
+    public CompatibilityServiceImpl(CompatibilityEvaluationInvoker evaluationInvoker) {
+        this.evaluationInvoker = evaluationInvoker;
     }
 
     @Override
-    public <T extends Hardware, U extends Hardware> CompletableFuture<CompatibilityResult> evaluateCompatibility(CompletableFuture<CompatibilityCase<T, U>> compatibilityCase) {
+    public <T extends Hardware, U extends Hardware>
+    CompletableFuture<CompatibilityResult> evaluateCompatibility(CompletableFuture<CompatibilityCase<T, U>> compatibilityCase) {
         try {
-            final CompatibilityResult compatibilityResult = compatibilityEvaluator.startEvaluation(compatibilityCase.join());
+            final CompatibilityResult compatibilityResult = evaluationInvoker.invokeEvaluation(compatibilityCase.join());
             return CompletableFuture.completedFuture(compatibilityResult);
         } catch (Exception e) {
             LOG.warn("Compatibility evaluation error: " + e);

@@ -1,6 +1,6 @@
 package com.topov.accessorycompatibility.compatibility.cases;
 
-import com.topov.accessorycompatibility.compatibility.Incompatibility;
+import com.topov.accessorycompatibility.compatibility.evaluation.Incompatibility;
 import com.topov.accessorycompatibility.hardware.components.Pcb;
 import com.topov.accessorycompatibility.hardware.components.Cpu;
 

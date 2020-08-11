@@ -1,7 +1,7 @@
 package com.topov.accessorycompatibility.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.topov.accessorycompatibility.compatibility.Incompatibility;
+import com.topov.accessorycompatibility.compatibility.evaluation.Incompatibility;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

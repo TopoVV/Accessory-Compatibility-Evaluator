@@ -1,11 +1,10 @@
-package com.topov.accessorycompatibility.receiver.ekatalog;
+package com.topov.accessorycompatibility.extractor;
 
 import com.topov.accessorycompatibility.client.HardwareDom;
 import com.topov.accessorycompatibility.client.JsoupClient;
 import com.topov.accessorycompatibility.parser.Specifications;
 import com.topov.accessorycompatibility.parser.SpecificationGeneralizer;
 import com.topov.accessorycompatibility.parser.HardwareParsingStrategy;
-import com.topov.accessorycompatibility.receiver.SpecificationExtractor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,5 @@
 package com.topov.accessorycompatibility.compatibility.evaluation;
 
-import com.topov.accessorycompatibility.compatibility.Incompatibility;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;

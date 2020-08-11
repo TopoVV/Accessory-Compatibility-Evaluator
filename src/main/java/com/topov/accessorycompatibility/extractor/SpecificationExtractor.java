@@ -1,4 +1,4 @@
-package com.topov.accessorycompatibility.receiver;
+package com.topov.accessorycompatibility.extractor;
 
 import com.topov.accessorycompatibility.parser.Specifications;
 import com.topov.accessorycompatibility.parser.HardwareParsingStrategy;
