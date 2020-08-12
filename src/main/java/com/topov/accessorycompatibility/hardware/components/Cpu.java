@@ -17,6 +17,7 @@ public class Cpu extends Hardware {
 
     @Builder
     public Cpu(String socket, Integer cores, Integer threads, Long frequency, Long heatRelease) {
+        super("processor");
         this.socket = socket;
         this.cores = cores;
         this.threads = threads;

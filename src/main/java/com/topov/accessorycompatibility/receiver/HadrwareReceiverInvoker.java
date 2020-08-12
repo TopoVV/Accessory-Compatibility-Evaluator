@@ -27,6 +27,7 @@ public class HadrwareReceiverInvoker {
 
     @Async
     public <T extends Hardware> CompletableFuture<T> invokeReceiver(HardwareSource<T> source) {
+        LOG.info(String.format("Invoking the specification receiving command: %s", source));
         final T receive = source.receive(findAppropriateReceiver(source.getSourceUrl()), assembler);
         return CompletableFuture.completedFuture(receive);
     }

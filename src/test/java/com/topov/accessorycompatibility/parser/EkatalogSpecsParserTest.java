@@ -1,4 +1,4 @@
-package com.topov.accessorycompatibility.parser.ekatalog;
+package com.topov.accessorycompatibility.parser;
 
 import com.topov.accessorycompatibility.client.HardwareDom;
 import com.topov.accessorycompatibility.parser.strategy.EkatalogPcbParser;

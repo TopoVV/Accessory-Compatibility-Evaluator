@@ -16,7 +16,7 @@ public class HardwareAssemblerImpl implements HardwareAssembler {
 
     @Override
     public Cpu assembleCpu(Specifications specifications) {
-        LOG.info("Assembling processor: " + Thread.currentThread().getName());
+        LOG.info("Assembling processor");
         final String socket = specifications.getStringValue(CPU_SOCKET_KEY);
         final String tdp = specifications.getNumberValue(CPU_TDP_KEY);
         final String frequency = specifications.getNumberValue(CPU_FREQUENCY_KEY);
@@ -33,7 +33,7 @@ public class HardwareAssemblerImpl implements HardwareAssembler {
 
     @Override
     public Pcb assemblePcb(Specifications specifications) {
-        LOG.info("Assembling motherboard: " + Thread.currentThread().getName());
+        LOG.info("Assembling motherboard");
         final String socket = specifications.getStringValue(PCB_SOCKET_KEY);
         final String chipset = specifications.getStringValue(PCB_CHIPSET_KEY);
         final String formFactor = specifications.getStringValue(PCB_FORM_FACTOR_KEY);
@@ -54,7 +54,7 @@ public class HardwareAssemblerImpl implements HardwareAssembler {
 
     @Override
     public Ram assembleRam(Specifications specifications) {
-        LOG.info("Assembling ram: " + Thread.currentThread().getName());
+        LOG.info("Assembling ram");
         final String formFactor = specifications.getStringValue(RAM_FORM_FACTOR_KEY);
         final String frequency = specifications.getNumberValue(RAM_FREQUENCY_KEY);
         final String timings = specifications.getStringValue(RAM_TIMINGS_KEY);

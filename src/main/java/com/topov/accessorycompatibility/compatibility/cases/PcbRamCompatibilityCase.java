@@ -7,7 +7,7 @@ import com.topov.accessorycompatibility.hardware.components.Ram;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PcbRamCompatibilityCase extends CompatibilityCase<Pcb, Ram> {
+public class PcbRamCompatibilityCase extends CompatibilityCaseAbstract<Pcb, Ram> {
     private static final String RAM_TYPES_INCOMPATIBLE = "Motherboard RAM socket (%s) is not compatible with RAM type (%s)";
 
     public PcbRamCompatibilityCase(Pcb pcb, Ram ram) {

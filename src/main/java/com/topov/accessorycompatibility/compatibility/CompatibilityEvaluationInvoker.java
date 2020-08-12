@@ -1,6 +1,7 @@
 package com.topov.accessorycompatibility.compatibility;
 
 import com.topov.accessorycompatibility.compatibility.cases.CompatibilityCase;
+import com.topov.accessorycompatibility.compatibility.cases.CompatibilityCaseAbstract;
 import com.topov.accessorycompatibility.compatibility.evaluation.CompatibilityResult;
 import com.topov.accessorycompatibility.compatibility.evaluation.Incompatibility;
 import com.topov.accessorycompatibility.hardware.Hardware;
@@ -14,14 +15,13 @@ import java.util.List;
 public class CompatibilityEvaluationInvoker {
     private static final Logger LOG = LogManager.getLogger(CompatibilityEvaluationInvoker.class.getName());
 
-    public <T extends Hardware, U extends Hardware>
-    CompatibilityResult invokeEvaluation(CompatibilityCase<T, U> compatibilityCase) {
-        LOG.info("Evaluating compatibility! " + compatibilityCase);
+    public CompatibilityResult invokeEvaluation(CompatibilityCase compatibilityCase) {
+        LOG.info(String.format("Evaluating compatibility: %s", compatibilityCase));
         final List<Incompatibility> incompatibilities = compatibilityCase.evaluate();
         if(incompatibilities.size() > 0) {
-            return new CompatibilityResult("success", "cs-1", "incompatible", incompatibilities);
+            return new CompatibilityResult("success", compatibilityCase.getCaseName(), "incompatible", incompatibilities);
         } else {
-            return new CompatibilityResult("success", "cs-2", "compatible", incompatibilities);
+            return new CompatibilityResult("success", compatibilityCase.getCaseName(), "compatible", incompatibilities);
         }
     }
 }
