@@ -2,9 +2,7 @@ package com.topov.accessorycompatibility.service;
 
 import com.topov.accessorycompatibility.compatibility.CompatibilityEvaluationInvoker;
 import com.topov.accessorycompatibility.compatibility.cases.CompatibilityCase;
-import com.topov.accessorycompatibility.compatibility.cases.CompatibilityCaseAbstract;
 import com.topov.accessorycompatibility.compatibility.evaluation.CompatibilityResult;
-import com.topov.accessorycompatibility.hardware.Hardware;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +30,8 @@ public class CompatibilityServiceImpl implements CompatibilityService {
             return CompletableFuture.completedFuture(compatibilityResult);
         } catch (Exception e) {
             LOG.error("Compatibility evaluation error: " + e);
-            return CompletableFuture.completedFuture(CompatibilityResult.failed(e.getMessage()));
+            final String message = e.getCause().getMessage();
+            return CompletableFuture.completedFuture(CompatibilityResult.failed(message));
         }
     }
 }

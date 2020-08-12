@@ -2,7 +2,6 @@ package com.topov.accessorycompatibility.hardware.components;
 
 import com.topov.accessorycompatibility.hardware.Hardware;
 import lombok.Builder;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 

@@ -1,10 +1,10 @@
 package com.topov.accessorycompatibility.hardware.sources;
 
 import com.topov.accessorycompatibility.assembler.HardwareAssembler;
+import com.topov.accessorycompatibility.hardware.HardwareSource;
 import com.topov.accessorycompatibility.hardware.components.Cpu;
 import com.topov.accessorycompatibility.parser.Specifications;
 import com.topov.accessorycompatibility.receiver.HardwareReceiver;
-import com.topov.accessorycompatibility.hardware.HardwareSource;
 
 public class CpuSource extends HardwareSource<Cpu> {
     public CpuSource(String source) {

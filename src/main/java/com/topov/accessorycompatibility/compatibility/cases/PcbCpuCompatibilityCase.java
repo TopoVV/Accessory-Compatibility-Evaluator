@@ -1,8 +1,8 @@
 package com.topov.accessorycompatibility.compatibility.cases;
 
 import com.topov.accessorycompatibility.compatibility.evaluation.Incompatibility;
-import com.topov.accessorycompatibility.hardware.components.Pcb;
 import com.topov.accessorycompatibility.hardware.components.Cpu;
+import com.topov.accessorycompatibility.hardware.components.Pcb;
 
 import java.util.ArrayList;
 import java.util.List;

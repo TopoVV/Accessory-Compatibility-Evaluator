@@ -1,10 +1,8 @@
 package com.topov.accessorycompatibility.compatibility;
 
 import com.topov.accessorycompatibility.compatibility.cases.CompatibilityCase;
-import com.topov.accessorycompatibility.compatibility.cases.CompatibilityCaseAbstract;
 import com.topov.accessorycompatibility.compatibility.evaluation.CompatibilityResult;
 import com.topov.accessorycompatibility.compatibility.evaluation.Incompatibility;
-import com.topov.accessorycompatibility.hardware.Hardware;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -19,9 +17,9 @@ public class CompatibilityEvaluationInvoker {
         LOG.info(String.format("Evaluating compatibility: %s", compatibilityCase));
         final List<Incompatibility> incompatibilities = compatibilityCase.evaluate();
         if(incompatibilities.size() > 0) {
-            return new CompatibilityResult("success", compatibilityCase.getCaseName(), "incompatible", incompatibilities);
+            return new CompatibilityResult("Successful", compatibilityCase.getCaseName(), "incompatible", incompatibilities);
         } else {
-            return new CompatibilityResult("success", compatibilityCase.getCaseName(), "compatible", incompatibilities);
+            return new CompatibilityResult("Successful", compatibilityCase.getCaseName(), "compatible", incompatibilities);
         }
     }
 }

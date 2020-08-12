@@ -1,6 +1,7 @@
 package com.topov.accessorycompatibility.parser.strategy;
 
-import com.topov.accessorycompatibility.parser.HardwareParsingStrategy;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -12,21 +13,31 @@ import java.util.Map;
 
 @Component
 public class EkatalogRamParser implements EkatalogParsingStrategy {
+    private static final Logger LOG = LogManager.getLogger(EkatalogRamParser.class.getName());
     @Override
     public Map<String, String> parse(Document document) {
-        Map<String, String> specifications = new HashMap<>();
-        final Elements params = document.getElementsByClass("prop");
-        final Elements values = document.getElementsByClass("val");
+        try {
+            Map<String, String> specifications = new HashMap<>();
+            final Elements parameters = removeUnnecessaryParameters(document.select(".prop"));
+            final Elements values = document.select("val");
 
-        params.removeIf(element -> element.nextElementSibling().className().equals("small-col-plate2"));
 
-        for(int i = 0; i < params.size(); i++) {
-            final Element param = params.get(i);
-            final Element value = values.get(i);
-            final String paramName = String.format("ram-%s", param.select("span.gloss").text().trim().toLowerCase());
-            final String paramValue = value.text().toLowerCase();
-            specifications.put(paramName, paramValue);
+            for(int i = 0; i < values.size(); i++) {
+                final Element param = parameters.get(i);
+                final Element value = values.get(i);
+                final String paramName = String.format("ram-%s", param.select("span.gloss").text().trim().toLowerCase());
+                final String paramValue = value.text().toLowerCase();
+                specifications.put(paramName, paramValue);
+            }
+            return specifications;
+        } catch (NullPointerException e) {
+            LOG.error(String.format("Problems during parsing the Ram specifications from Ekatalog. Some elements are null: %s", e));
+            throw new RuntimeException("Problems during parsing the RAM specifications from Ekatalog");
         }
-        return specifications;
+    }
+
+    private Elements removeUnnecessaryParameters(Elements parameters) {
+        parameters.removeIf(element -> element.nextElementSibling().className().equals("small-col-plate2"));
+        return parameters;
     }
 }

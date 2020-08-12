@@ -1,12 +1,13 @@
 package com.topov.accessorycompatibility.receiver.ekatalog;
 
+import com.topov.accessorycompatibility.extractor.SpecificationExtractor;
 import com.topov.accessorycompatibility.parser.Specifications;
 import com.topov.accessorycompatibility.parser.strategy.EkatalogParsingStrategy;
 import com.topov.accessorycompatibility.receiver.HardwareReceiver;
-import com.topov.accessorycompatibility.extractor.SpecificationExtractor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -19,8 +20,8 @@ public class EkatalogSpecificationReceiver implements HardwareReceiver {
     private final Map<String, EkatalogParsingStrategy> parsers;
 
     @Autowired
-    public EkatalogSpecificationReceiver(Map<String, EkatalogParsingStrategy> parsers,
-                                         SpecificationExtractor specificationExtractor) {
+    public EkatalogSpecificationReceiver(@Qualifier("ekatalogSpecificationExtractor") SpecificationExtractor specificationExtractor,
+                                         Map<String, EkatalogParsingStrategy> parsers) {
         this.specificationExtractor = specificationExtractor;
         this.parsers = parsers;
     }

@@ -2,9 +2,9 @@ package com.topov.accessorycompatibility.extractor;
 
 import com.topov.accessorycompatibility.client.HardwareDom;
 import com.topov.accessorycompatibility.client.JsoupClient;
-import com.topov.accessorycompatibility.parser.Specifications;
-import com.topov.accessorycompatibility.parser.SpecificationGeneralizer;
 import com.topov.accessorycompatibility.parser.HardwareParsingStrategy;
+import com.topov.accessorycompatibility.parser.SpecificationGeneralizer;
+import com.topov.accessorycompatibility.parser.Specifications;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

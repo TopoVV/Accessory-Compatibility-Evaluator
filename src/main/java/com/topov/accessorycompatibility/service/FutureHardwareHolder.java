@@ -2,6 +2,7 @@ package com.topov.accessorycompatibility.service;
 
 
 import com.topov.accessorycompatibility.compatibility.cases.CompatibilityCase;
+import com.topov.accessorycompatibility.compatibility.cases.CompatibilityCaseAbstract;
 import com.topov.accessorycompatibility.compatibility.cases.PcbCpuCompatibilityCase;
 import com.topov.accessorycompatibility.compatibility.cases.PcbRamCompatibilityCase;
 import com.topov.accessorycompatibility.hardware.components.Cpu;

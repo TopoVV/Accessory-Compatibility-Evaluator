@@ -1,6 +1,7 @@
 package com.topov.accessorycompatibility.parser.strategy;
 
-import com.topov.accessorycompatibility.parser.HardwareParsingStrategy;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -11,28 +12,43 @@ import java.util.Map;
 
 @Component
 public class EkatalogPcbParser implements EkatalogParsingStrategy {
+    private static final Logger LOG = LogManager.getLogger(EkatalogPcbParser.class.getName());
+
     @Override
     public Map<String, String> parse(Document document) {
-        final Map<String, String> specifications = new HashMap<>();
-        final Elements parameters = document.select("td.op1");
-        final Elements values = document.select("td.op3");
+        try {
+            final Map<String, String> specifications = new HashMap<>();
+            final Elements parameters =  removeUnnecessaryParameters(document.select("td.op1"));
+            final Elements values = removeUnnecessaryValues(document.select("td.op3"));
 
-        parameters.removeIf(element -> element.parent().children().size() < 2);
-        values.removeIf(element -> element.parent().children().size() < 2);
 
-        for(int i = 0; i < parameters.size(); i++) {
-            final Element parameter = parameters.get(i).getElementsByTag("span").first();
-            final Element value = values.get(i);
-            final String paramName =  String.format("mbd-%s", parameter.text().trim().toLowerCase());
-            final String paramValue = value.text().trim().toLowerCase();
+            for(int i = 0; i < values.size(); i++) {
+                final Element parameter = parameters.get(i).getElementsByTag("span").first();
+                final Element value = values.get(i);
+                final String paramName =  String.format("mbd-%s", parameter.text().trim().toLowerCase());
+                final String paramValue = value.text().trim().toLowerCase();
 
-            if(paramName.contains("ddr")) {
-                final String motherboardRamTypeParam = "mbd-тип-памяти";
-                final String motherboardRamTypeValue = paramName.replace("mbd-", "");
-                specifications.put(motherboardRamTypeParam, motherboardRamTypeValue);
+                if(paramName.contains("ddr")) {
+                    final String motherboardRamTypeParam = "mbd-тип-памяти";
+                    final String motherboardRamTypeValue = paramName.replace("mbd-", "");
+                    specifications.put(motherboardRamTypeParam, motherboardRamTypeValue);
+                }
+                specifications.put(paramName, paramValue);
             }
-            specifications.put(paramName, paramValue);
+            return specifications;
+        } catch (NullPointerException e) {
+            LOG.error(String.format("Problems during parsing the PCB specifications from Ekatalog. Some elements are null: %s", e));
+            throw new RuntimeException("Problems during parsing the PCB specifications from Ekatalog");
         }
-        return specifications;
+    }
+
+    private Elements removeUnnecessaryParameters(Elements parameters) {
+        parameters.removeIf(element -> element.parent().children().size() < 2);
+        return parameters;
+    }
+
+    private Elements removeUnnecessaryValues(Elements values) {
+        values.removeIf(element -> element.parent().children().size() < 2);
+        return values;
     }
 }

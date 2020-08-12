@@ -1,9 +1,6 @@
 package com.topov.accessorycompatibility.compatibility.cases;
 
-import com.topov.accessorycompatibility.compatibility.evaluation.Incompatibility;
 import com.topov.accessorycompatibility.hardware.Hardware;
-
-import java.util.List;
 
 public abstract class CompatibilityCaseAbstract<T extends Hardware, U extends Hardware> implements CompatibilityCase {
     protected final T component1;
@@ -13,17 +10,7 @@ public abstract class CompatibilityCaseAbstract<T extends Hardware, U extends Ha
     protected CompatibilityCaseAbstract(T component1, U component2) {
         this.component1 = component1;
         this.component2 = component2;
-        this.caseName = component1.getHardwareName() + component2.getHardwareName();
-    }
-
-    @Override
-    public Hardware getComponent1() {
-        return this.component1;
-    }
-
-    @Override
-    public Hardware getComponent2() {
-        return this.component2;
+        this.caseName = String.format("%s-%s", component1.getHardwareName(), component2.getHardwareName());
     }
 
     @Override

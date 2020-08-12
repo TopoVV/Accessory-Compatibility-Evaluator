@@ -28,8 +28,13 @@ public class HadrwareReceiverInvoker {
     @Async
     public <T extends Hardware> CompletableFuture<T> invokeReceiver(HardwareSource<T> source) {
         LOG.info(String.format("Invoking the specification receiving command: %s", source));
-        final T receive = source.receive(findAppropriateReceiver(source.getSourceUrl()), assembler);
-        return CompletableFuture.completedFuture(receive);
+        try {
+            final T receive = source.receive(findAppropriateReceiver(source.getSourceUrl()), assembler);
+            return CompletableFuture.completedFuture(receive);
+        } catch (RuntimeException e) {
+            LOG.error(String.format("Failed to receive hardware (source: %s", source.getSourceUrl()));
+            return CompletableFuture.failedFuture(e);
+        }
     }
 
     private HardwareReceiver findAppropriateReceiver(String url) {
