@@ -44,21 +44,16 @@ public class HardwareServiceImpl implements HardwareService {
 
     @Override
     public List<CompatibilityResultDto> evaluateHardwareCompatibility(HardwareSpecificationSources hardwareSources) {
-        CompletableFuture<Cpu> cpu = receiverInvoker.invokeReceiver(new CpuSource(hardwareSources.getCpuUrl()));
-        CompletableFuture<Pcb> pcb = receiverInvoker.invokeReceiver(new PcbSource(hardwareSources.getPcbUrl()));
-        CompletableFuture<Ram> ram = receiverInvoker.invokeReceiver(new RamSource(hardwareSources.getRamUrl()));
-        return cases(cpu, pcb, ram).stream()
+        final FutureHardwareHolder build = FutureHardwareHolder.builder()
+                   .futureCpu(receiverInvoker.invokeReceiver(hardwareSources.getCpuSource()))
+                   .futurePcb(receiverInvoker.invokeReceiver(hardwareSources.getPcbSource()))
+                   .futureRam(receiverInvoker.invokeReceiver(hardwareSources.getRamSource()))
+                   .build();
+
+        return build.getCompatibilityCases().stream()
                    .map(compatibilityService::evaluateCompatibility)
                    .map(CompletableFuture::join)
                    .map(compatibilityResultMapper::toDto)
                    .collect(toList());
-    }
-
-    private List<CompletableFuture<CompatibilityCase>>
-    cases(CompletableFuture<Cpu> cpu, CompletableFuture<Pcb> pcb, CompletableFuture<Ram> ram) {
-        return List.of(
-            pcb.thenCombine(cpu, PcbCpuCompatibilityCase::new),
-            pcb.thenCombine(ram, PcbRamCompatibilityCase::new)
-        );
     }
 }

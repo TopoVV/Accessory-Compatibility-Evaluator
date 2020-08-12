@@ -3,6 +3,9 @@ package com.topov.accessorycompatibility.service;
 import com.topov.accessorycompatibility.compatibility.evaluation.CompatibilityResult;
 import com.topov.accessorycompatibility.dto.CompatibilityResultDto;
 import com.topov.accessorycompatibility.dto.request.HardwareSpecificationSources;
+import com.topov.accessorycompatibility.hardware.sources.CpuSource;
+import com.topov.accessorycompatibility.hardware.sources.PcbSource;
+import com.topov.accessorycompatibility.hardware.sources.RamSource;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +29,9 @@ class HardwareServiceImplTest {
     @Test
     public void doWork() {
         final HardwareSpecificationSources sources = mock(HardwareSpecificationSources.class);
-        when(sources.getCpuUrl()).thenReturn("https://ek.ua/AMD-RYZEN-3-MATISSE.htm");
-        when(sources.getPcbUrl()).thenReturn("https://ek.ua/ek-item.php?idg_=1688473&view_=tbl");
-        when(sources.getRamUrl()).thenReturn("https://ek.ua/TEAM-GROUP-ELITE-SO-DIMM-DDR4.htm");
+        when(sources.getCpuSource()).thenReturn(new CpuSource("https://ek.ua/AMD-RYZEN-3-MATISSE.htm"));
+        when(sources.getPcbSource()).thenReturn(new PcbSource("https://ek.ua/ek-item.php?idg_=1688473&view_=tbl"));
+        when(sources.getRamSource()).thenReturn(new RamSource("https://ek.ua/TEAM-GROUP-ELITE-SO-DIMM-DDR4.htm"));
         final List<CompatibilityResultDto> compatibilityResults = service.evaluateHardwareCompatibility(sources);
         compatibilityResults.forEach(System.out::println);
     }
