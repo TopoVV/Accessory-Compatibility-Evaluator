@@ -16,7 +16,6 @@ public class Ram extends Hardware {
 
     @Builder
     public Ram(String formFactor, Integer frequency, String timings, Long voltage, String type) {
-        super("ram");
         this.formFactor = formFactor;
         this.frequency = frequency;
         this.timings = timings;

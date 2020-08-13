@@ -22,6 +22,7 @@ public class HardwareAssemblerImpl implements HardwareAssembler {
         final String frequency = specifications.getNumberValue(CPU_FREQUENCY_KEY);
         final String threads = specifications.getNumberValue(CPU_THREADS_KEY);
         final String cores = specifications.getNumberValue(CPU_CORES_KEY);
+
         return Cpu.builder()
                   .socket(socket)
                   .heatRelease(Long.parseLong(tdp))
@@ -41,6 +42,7 @@ public class HardwareAssemblerImpl implements HardwareAssembler {
         final String ramType = specifications.getStringValue(PCB_RAM_TYPE);
         final String ramFormFactor = specifications.getStringValue(PCB_RAM_FROM_FACTOR_KEY);
         final String ramFrequency = specifications.getNumberValue(PCB_MAX_RAM_FREQUENCY_KEY);
+
         return Pcb.builder()
                   .socket(socket)
                   .chipset(chipset)
@@ -60,6 +62,7 @@ public class HardwareAssemblerImpl implements HardwareAssembler {
         final String timings = specifications.getStringValue(RAM_TIMINGS_KEY);
         final String voltage = specifications.getNumberValue(RAM_VOLTAGE_KEY);
         final String type = specifications.getStringValue(RAM_TYPE_KEY);
+
         return Ram.builder()
                   .formFactor(formFactor)
                   .frequency(Integer.parseInt(frequency))

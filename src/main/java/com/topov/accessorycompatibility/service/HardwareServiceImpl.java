@@ -39,10 +39,10 @@ public class HardwareServiceImpl implements HardwareService {
                    .futureRam(receiverInvoker.invokeReceiver(hardwareSources.getRamSource()))
                    .build();
 
-        return build.getCompatibilityCases().stream()
-                   .map(compatibilityService::evaluateCompatibility)
-                   .map(CompletableFuture::join)
-                   .map(compatibilityResultMapper::toDto)
-                   .collect(toList());
+        return build.getCompatibilityCaseHolders().stream()
+                    .map(compatibilityService::evaluateCompatibility)
+                    .map(CompletableFuture::join)
+                    .map(compatibilityResultMapper::toDto)
+                    .collect(toList());
     }
 }

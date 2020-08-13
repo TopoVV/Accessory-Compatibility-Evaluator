@@ -1,10 +1,9 @@
 package com.topov.accessorycompatibility.service;
 
 
-import com.topov.accessorycompatibility.compatibility.cases.CompatibilityCase;
-import com.topov.accessorycompatibility.compatibility.cases.CompatibilityCaseAbstract;
-import com.topov.accessorycompatibility.compatibility.cases.PcbCpuCompatibilityCase;
-import com.topov.accessorycompatibility.compatibility.cases.PcbRamCompatibilityCase;
+import com.topov.accessorycompatibility.compatibility.command.CompatibilityCase;
+import com.topov.accessorycompatibility.compatibility.command.PcbCpuCompatibilityEvaluationCommand;
+import com.topov.accessorycompatibility.compatibility.command.PcbRamCompatibilityEvaluationCommand;
 import com.topov.accessorycompatibility.hardware.components.Cpu;
 import com.topov.accessorycompatibility.hardware.components.Pcb;
 import com.topov.accessorycompatibility.hardware.components.Ram;
@@ -27,10 +26,10 @@ public class FutureHardwareHolder {
         this.futureRam = futureRam;
     }
 
-    public List<CompletableFuture<CompatibilityCase>> getCompatibilityCases() {
+    public List<CompatibilityCase> getCompatibilityCaseHolders() {
         return List.of(
-            this.futurePcb.thenCombine(futureCpu, PcbCpuCompatibilityCase::new),
-            this.futurePcb.thenCombine(futureRam, PcbRamCompatibilityCase::new)
+            new CompatibilityCase("motherboard-processor", this.futurePcb.thenCombine(futureCpu, PcbCpuCompatibilityEvaluationCommand::new)),
+            new CompatibilityCase("motherboard-ram", this.futurePcb.thenCombine(futureRam, PcbRamCompatibilityEvaluationCommand::new))
         );
     }
 }

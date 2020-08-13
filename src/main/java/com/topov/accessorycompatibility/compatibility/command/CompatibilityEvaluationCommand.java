@@ -1,10 +1,9 @@
-package com.topov.accessorycompatibility.compatibility.cases;
+package com.topov.accessorycompatibility.compatibility.command;
 
 import com.topov.accessorycompatibility.compatibility.evaluation.Incompatibility;
 
 import java.util.List;
 
-public interface CompatibilityCase {
-    String getCaseName();
+public interface CompatibilityEvaluationCommand {
     List<Incompatibility> evaluate();
 }

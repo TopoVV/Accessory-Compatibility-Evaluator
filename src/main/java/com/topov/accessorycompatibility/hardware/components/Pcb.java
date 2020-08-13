@@ -18,7 +18,6 @@ public class Pcb extends Hardware {
 
     @Builder
     public Pcb(String socket, String chipset, String formFactor, Integer maxRam, Integer ramFrequency, String ramFormFactor, String ramType) {
-        super("motherboard");
         this.socket = socket;
         this.chipset = chipset;
         this.formFactor = formFactor;
@@ -27,4 +26,5 @@ public class Pcb extends Hardware {
         this.ramFormFactor = ramFormFactor;
         this.ramType = ramType;
     }
+
 }
