@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
+/**
+ * Extracts the hardware specifications from the received Ekatalog DOM and returns it in the generalized form.
+ */
 @Service
 public class EkatalogSpecificationExtractor implements SpecificationExtractor {
     private static final Logger LOG = LogManager.getLogger(EkatalogSpecificationExtractor.class.getName());
