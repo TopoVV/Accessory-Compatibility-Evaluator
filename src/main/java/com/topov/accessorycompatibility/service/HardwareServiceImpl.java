@@ -33,16 +33,16 @@ public class HardwareServiceImpl implements HardwareService {
 
     @Override
     public List<CompatibilityResultDto> evaluateHardwareCompatibility(HardwareSpecificationSources hardwareSources) {
-        final FutureHardwareHolder build = FutureHardwareHolder.builder()
+        final FutureHardwareHolder hardware = FutureHardwareHolder.builder()
                    .futureCpu(receiverInvoker.invokeReceiver(hardwareSources.getCpuSource()))
                    .futurePcb(receiverInvoker.invokeReceiver(hardwareSources.getPcbSource()))
                    .futureRam(receiverInvoker.invokeReceiver(hardwareSources.getRamSource()))
                    .build();
 
-        return build.getCompatibilityCaseHolders().stream()
-                    .map(compatibilityService::evaluateCompatibility)
-                    .map(CompletableFuture::join)
-                    .map(compatibilityResultMapper::toDto)
-                    .collect(toList());
+        return hardware.getCompatibilityCaseHolders().stream()
+                       .map(compatibilityService::evaluateCompatibility)
+                       .map(CompletableFuture::join)
+                       .map(compatibilityResultMapper::toDto)
+                       .collect(toList());
     }
 }

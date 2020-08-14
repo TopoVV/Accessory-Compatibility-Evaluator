@@ -17,8 +17,8 @@ public class PcbRamCompatibilityEvaluationCommand extends CompatibilityEvaluatio
     @Override
     public List<Incompatibility> evaluate() {
         final List<Incompatibility> incompatibilities = new ArrayList<>();
-        final String pcbRamType = this.component1.getRamType();
-        final String ramType = this.component2.getType();
+        final String pcbRamType = this.firstComponent.getRamType();
+        final String ramType = this.secondComponent.getType();
 
         if (!pcbRamType.equals(ramType)) {
             final String description = String.format(RAM_TYPES_INCOMPATIBLE, pcbRamType, ramType);

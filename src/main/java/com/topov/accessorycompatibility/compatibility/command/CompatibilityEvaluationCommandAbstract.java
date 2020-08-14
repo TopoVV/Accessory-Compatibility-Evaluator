@@ -2,12 +2,18 @@ package com.topov.accessorycompatibility.compatibility.command;
 
 import com.topov.accessorycompatibility.hardware.Hardware;
 
+/**
+ * A subclass of this class exists for each pair of hardware, which compatibility must be evaluated.
+ * The compatibility evaluation logic is implemented with Command design pattern.
+ * @param <T> - first component type (CPU, PCB, RAM etc)
+ * @param <U> - second component type (CPU, PCB, RAM etc)
+ */
 public abstract class CompatibilityEvaluationCommandAbstract<T extends Hardware, U extends Hardware> implements CompatibilityEvaluationCommand {
-    protected T component1;
-    protected U component2;
+    protected T firstComponent;
+    protected U secondComponent;
 
-    protected CompatibilityEvaluationCommandAbstract(T component1, U component2) {
-        this.component1 = component1;
-        this.component2 = component2;
+    protected CompatibilityEvaluationCommandAbstract(T firstComponent, U secondComponent) {
+        this.firstComponent = firstComponent;
+        this.secondComponent = secondComponent;
     }
 }
