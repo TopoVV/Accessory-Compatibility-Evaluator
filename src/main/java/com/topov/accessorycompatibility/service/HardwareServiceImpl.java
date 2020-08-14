@@ -1,8 +1,10 @@
 package com.topov.accessorycompatibility.service;
 
+import com.topov.accessorycompatibility.compatibility.CompatibilityEvaluationInvoker;
 import com.topov.accessorycompatibility.dto.CompatibilityResultDto;
 import com.topov.accessorycompatibility.dto.request.HardwareSpecificationSources;
 import com.topov.accessorycompatibility.mapper.CompatibilityResultMapper;
+import com.topov.accessorycompatibility.hardware.FutureHardwareHolder;
 import com.topov.accessorycompatibility.receiver.HadrwareReceiverInvoker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,28 +21,29 @@ public class HardwareServiceImpl implements HardwareService {
     private static final Logger LOG = LogManager.getLogger(HardwareServiceImpl.class.getName());
 
     private final HadrwareReceiverInvoker receiverInvoker;
-    private final CompatibilityService compatibilityService;
+    private final CompatibilityEvaluationInvoker evaluationInvoker;
     private final CompatibilityResultMapper compatibilityResultMapper;
 
     @Autowired
-    public HardwareServiceImpl(CompatibilityResultMapper compatibilityResultMapper,
-                               HadrwareReceiverInvoker receiverInvoker,
-                               CompatibilityService compatibilityService) {
+    public HardwareServiceImpl(CompatibilityEvaluationInvoker evaluationInvoker,
+                               CompatibilityResultMapper compatibilityResultMapper,
+                               HadrwareReceiverInvoker receiverInvoker) {
         this.receiverInvoker = receiverInvoker;
-        this.compatibilityService = compatibilityService;
+        this.evaluationInvoker = evaluationInvoker;
         this.compatibilityResultMapper = compatibilityResultMapper;
     }
 
     @Override
     public List<CompatibilityResultDto> evaluateHardwareCompatibility(HardwareSpecificationSources hardwareSources) {
-        final FutureHardwareHolder hardware = FutureHardwareHolder.builder()
-                   .futureCpu(receiverInvoker.invokeReceiver(hardwareSources.getCpuSource()))
-                   .futurePcb(receiverInvoker.invokeReceiver(hardwareSources.getPcbSource()))
-                   .futureRam(receiverInvoker.invokeReceiver(hardwareSources.getRamSource()))
-                   .build();
+        final FutureHardwareHolder hardware =
+            FutureHardwareHolder.builder()
+                                .futureCpu(receiverInvoker.invokeReceiver(hardwareSources.getCpuSource()))
+                                .futurePcb(receiverInvoker.invokeReceiver(hardwareSources.getPcbSource()))
+                                .futureRam(receiverInvoker.invokeReceiver(hardwareSources.getRamSource()))
+                                .build();
 
         return hardware.getCompatibilityCaseHolders().stream()
-                       .map(compatibilityService::evaluateCompatibility)
+                       .map(evaluationInvoker::invokeEvaluation)
                        .map(CompletableFuture::join)
                        .map(compatibilityResultMapper::toDto)
                        .collect(toList());

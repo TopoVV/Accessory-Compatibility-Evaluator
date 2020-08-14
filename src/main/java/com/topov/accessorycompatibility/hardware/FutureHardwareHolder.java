@@ -1,4 +1,4 @@
-package com.topov.accessorycompatibility.service;
+package com.topov.accessorycompatibility.hardware;
 
 
 import com.topov.accessorycompatibility.compatibility.command.CompatibilityCase;

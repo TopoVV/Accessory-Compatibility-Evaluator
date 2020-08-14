@@ -15,6 +15,6 @@ public class CompatibilityCase {
     private CompletableFuture<CompatibilityEvaluationCommand> compatibilityCase;
 
     public List<Incompatibility> evaluateCompatibility() throws ExecutionException, InterruptedException {
-        return compatibilityCase.get().evaluate();
+        return compatibilityCase.join().evaluate();
     }
 }

@@ -41,6 +41,6 @@ public class HadrwareReceiverInvoker {
         return receivers.stream()
                         .filter(receiver -> receiver.supports(url))
                         .findFirst()
-                        .orElseThrow(() -> new RuntimeException("Receivers do not support provided url."));
+                        .orElseThrow(() -> new RuntimeException("No receivers found for the provided source."));
     }
 }

@@ -29,7 +29,7 @@ class HardwareServiceImplTest {
     @Test
     public void doWork() {
         final HardwareSpecificationSources sources = mock(HardwareSpecificationSources.class);
-        when(sources.getCpuSource()).thenReturn(new CpuSource("https://ek.ua/AMD-RYZEN-3-MATISSE.htm"));
+        when(sources.getCpuSource()).thenReturn(new CpuSource("https://ekdsa.ua/AMD-RYZEN-3-MATISSE.htm"));
         when(sources.getPcbSource()).thenReturn(new PcbSource("https://ek.ua/ek-item.php?idg_=1688473&view_=tbl"));
         when(sources.getRamSource()).thenReturn(new RamSource("https://ek.ua/TEAM-GROUP-ELITE-SO-DIMM-DDR4.htm"));
         final List<CompatibilityResultDto> compatibilityResults = service.evaluateHardwareCompatibility(sources);
