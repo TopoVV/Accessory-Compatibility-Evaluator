@@ -1,6 +1,7 @@
 package com.topov.accessorycompatibility.parser;
 
 import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import java.util.Map;
 

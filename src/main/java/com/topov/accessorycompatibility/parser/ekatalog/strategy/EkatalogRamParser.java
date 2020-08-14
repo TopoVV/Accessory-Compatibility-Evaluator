@@ -1,6 +1,7 @@
 package com.topov.accessorycompatibility.parser.ekatalog.strategy;
 
 import com.topov.accessorycompatibility.parser.ekatalog.EkatalogParsingStrategy;
+import jdk.jshell.spi.ExecutionControl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jsoup.nodes.Document;
@@ -13,7 +14,7 @@ import java.util.Map;
 
 
 @Component
-public class EkatalogRamParser implements EkatalogParsingStrategy {
+public class EkatalogRamParser extends EkatalogParsingStrategy {
     private static final Logger LOG = LogManager.getLogger(EkatalogRamParser.class.getName());
     @Override
     public Map<String, String> parse(Document document) {
@@ -37,8 +38,14 @@ public class EkatalogRamParser implements EkatalogParsingStrategy {
         }
     }
 
-    private Elements removeUnnecessaryParameters(Elements parameters) {
+    @Override
+    protected Elements removeUnnecessaryParameters(Elements parameters) {
         parameters.removeIf(element -> element.nextElementSibling().className().equals("small-col-plate2"));
         return parameters;
+    }
+
+    @Override
+    protected Elements removeUnnecessaryValues(Elements values) {
+        return values;
     }
 }

@@ -22,7 +22,7 @@ public class PcbRamCompatibilityEvaluationCommand extends CompatibilityEvaluatio
 
         if (!pcbRamType.equals(ramType)) {
             final String description = String.format(RAM_TYPES_INCOMPATIBLE, pcbRamType, ramType);
-            incompatibilities.add(new Incompatibility("Socket", description));
+            incompatibilities.add(new Incompatibility("socket", description));
         }
 
         return incompatibilities;

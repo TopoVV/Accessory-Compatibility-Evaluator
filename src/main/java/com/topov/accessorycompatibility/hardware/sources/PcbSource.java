@@ -4,7 +4,7 @@ import com.topov.accessorycompatibility.assembler.HardwareAssembler;
 import com.topov.accessorycompatibility.hardware.HardwareSource;
 import com.topov.accessorycompatibility.hardware.components.Pcb;
 import com.topov.accessorycompatibility.parser.Specifications;
-import com.topov.accessorycompatibility.receiver.HardwareReceiver;
+import com.topov.accessorycompatibility.receiver.SpecificationReceiver;
 
 public class PcbSource extends HardwareSource<Pcb> {
     public PcbSource(String source) {
@@ -12,7 +12,7 @@ public class PcbSource extends HardwareSource<Pcb> {
     }
 
     @Override
-    public Pcb receive(HardwareReceiver receiver, HardwareAssembler assembler) {
+    public Pcb receive(SpecificationReceiver receiver, HardwareAssembler assembler) {
         final Specifications specifications = receiver.receivePcb(this.source);
         return assembler.assemblePcb(specifications);
     }

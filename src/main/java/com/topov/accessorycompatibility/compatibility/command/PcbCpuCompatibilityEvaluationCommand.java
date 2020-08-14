@@ -22,7 +22,7 @@ public class PcbCpuCompatibilityEvaluationCommand extends CompatibilityEvaluatio
 
         if(!mbSocket.equals(cpuSocket)) {
             final String description = String.format(SOCKETS_INCOMPATIBLE, mbSocket, cpuSocket);
-            incompatibilities.add(new Incompatibility("Socket", description));
+            incompatibilities.add(new Incompatibility("socket", description));
         }
 
         return incompatibilities;

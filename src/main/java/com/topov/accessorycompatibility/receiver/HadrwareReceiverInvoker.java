@@ -16,11 +16,11 @@ import java.util.concurrent.CompletableFuture;
 public class HadrwareReceiverInvoker {
     private static final Logger LOG = LogManager.getLogger(HadrwareReceiverInvoker.class.getName());
 
-    private final Set<HardwareReceiver> receivers;
+    private final Set<SpecificationReceiver> receivers;
     private final HardwareAssembler assembler;
 
     @Autowired
-    public HadrwareReceiverInvoker(Set<HardwareReceiver> receivers, HardwareAssembler assembler) {
+    public HadrwareReceiverInvoker(Set<SpecificationReceiver> receivers, HardwareAssembler assembler) {
         this.receivers = receivers;
         this.assembler = assembler;
     }
@@ -28,16 +28,18 @@ public class HadrwareReceiverInvoker {
     @Async
     public <T extends Hardware> CompletableFuture<T> invokeReceiver(HardwareSource<T> source) {
         LOG.info(String.format("Invoking the specification receiving command: %s", source));
+        final String sourceUrl = source.getSourceUrl();
         try {
-            final T receive = source.receive(findAppropriateReceiver(source.getSourceUrl()), assembler);
-            return CompletableFuture.completedFuture(receive);
+            final SpecificationReceiver receiver = findAppropriateReceiver(sourceUrl);
+            final T hardware = source.receive(receiver, assembler);
+            return CompletableFuture.completedFuture(hardware);
         } catch (RuntimeException e) {
-            LOG.error(String.format("Failed to receive hardware (source: %s", source.getSourceUrl()));
+            LOG.error(String.format("Failed to receive hardware (source: %s", sourceUrl));
             return CompletableFuture.failedFuture(e);
         }
     }
 
-    private HardwareReceiver findAppropriateReceiver(String url) {
+    private SpecificationReceiver findAppropriateReceiver(String url) {
         return receivers.stream()
                         .filter(receiver -> receiver.supports(url))
                         .findFirst()

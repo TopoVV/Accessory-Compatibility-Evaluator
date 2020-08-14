@@ -4,7 +4,7 @@ import com.topov.accessorycompatibility.assembler.HardwareAssembler;
 import com.topov.accessorycompatibility.hardware.HardwareSource;
 import com.topov.accessorycompatibility.hardware.components.Ram;
 import com.topov.accessorycompatibility.parser.Specifications;
-import com.topov.accessorycompatibility.receiver.HardwareReceiver;
+import com.topov.accessorycompatibility.receiver.SpecificationReceiver;
 
 public class RamSource extends HardwareSource<Ram> {
     public RamSource(String source) {
@@ -12,7 +12,7 @@ public class RamSource extends HardwareSource<Ram> {
     }
 
     @Override
-    public Ram receive(HardwareReceiver receiver, HardwareAssembler assembler) {
+    public Ram receive(SpecificationReceiver receiver, HardwareAssembler assembler) {
         final Specifications specifications = receiver.receiveRam(this.source);
         return assembler.assembleRam(specifications);
     }

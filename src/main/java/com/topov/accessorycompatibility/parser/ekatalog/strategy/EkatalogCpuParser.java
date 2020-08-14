@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class EkatalogCpuParser implements EkatalogParsingStrategy {
+public class EkatalogCpuParser extends EkatalogParsingStrategy {
     private static final Logger LOG = LogManager.getLogger(EkatalogParsingStrategy.class.getName());
     @Override
     public Map<String, String> parse(Document document) {
@@ -35,12 +35,14 @@ public class EkatalogCpuParser implements EkatalogParsingStrategy {
         }
     }
 
-    private Elements removeUnnecessaryParameters(Elements parameters) {
+    @Override
+    protected Elements removeUnnecessaryParameters(Elements parameters) {
         parameters.removeIf(element -> element.parent().children().size() < 2);
         return parameters;
     }
 
-    private Elements removeUnnecessaryValues(Elements values) {
+    @Override
+    protected Elements removeUnnecessaryValues(Elements values) {
         values.removeIf(element -> element.parent().children().size() < 2);
         return values;
     }

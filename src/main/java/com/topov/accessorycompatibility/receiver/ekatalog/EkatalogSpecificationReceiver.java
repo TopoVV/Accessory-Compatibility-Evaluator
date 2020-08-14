@@ -3,7 +3,7 @@ package com.topov.accessorycompatibility.receiver.ekatalog;
 import com.topov.accessorycompatibility.extractor.SpecificationExtractor;
 import com.topov.accessorycompatibility.parser.Specifications;
 import com.topov.accessorycompatibility.parser.ekatalog.EkatalogParsingStrategy;
-import com.topov.accessorycompatibility.receiver.HardwareReceiver;
+import com.topov.accessorycompatibility.receiver.SpecificationReceiver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 
 @Service
-public class EkatalogSpecificationReceiver implements HardwareReceiver {
+public class EkatalogSpecificationReceiver implements SpecificationReceiver {
     private static final Logger LOG = LogManager.getLogger(EkatalogSpecificationReceiver.class.getName());
     private static final String SUPPORTED_URL = "https://ek.ua/";
     private final SpecificationExtractor specificationExtractor;
