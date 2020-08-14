@@ -1,5 +1,6 @@
-package com.topov.accessorycompatibility.parser.strategy;
+package com.topov.accessorycompatibility.parser.ekatalog.strategy;
 
+import com.topov.accessorycompatibility.parser.ekatalog.EkatalogParsingStrategy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jsoup.nodes.Document;

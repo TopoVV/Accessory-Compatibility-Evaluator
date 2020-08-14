@@ -1,5 +1,6 @@
-package com.topov.accessorycompatibility.parser;
+package com.topov.accessorycompatibility.parser.ekatalog;
 
+import com.topov.accessorycompatibility.parser.SpecificationGeneralizer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -7,12 +8,18 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Performs generalization for specifications received from Ekatalog.
+ */
 @Service
 public class EkatalogSpecificationGeneralizer implements SpecificationGeneralizer {
     private static final Logger LOG = LogManager.getLogger(EkatalogSpecificationGeneralizer.class.getName());
 
     private final String CYRILLIC = "[АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя]";
 
+    /**
+     * Contains the correspondent parameter key for each parameter from Ekatalog.
+     */
     private final Map<String, String> keys = Map.ofEntries(
         Map.entry("cpu-разъем (socket)", CPU_SOCKET_KEY),
         Map.entry("cpu-тепловыделение (tdp)", CPU_TDP_KEY),

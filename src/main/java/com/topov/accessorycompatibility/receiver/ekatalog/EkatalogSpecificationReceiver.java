@@ -2,7 +2,7 @@ package com.topov.accessorycompatibility.receiver.ekatalog;
 
 import com.topov.accessorycompatibility.extractor.SpecificationExtractor;
 import com.topov.accessorycompatibility.parser.Specifications;
-import com.topov.accessorycompatibility.parser.strategy.EkatalogParsingStrategy;
+import com.topov.accessorycompatibility.parser.ekatalog.EkatalogParsingStrategy;
 import com.topov.accessorycompatibility.receiver.HardwareReceiver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

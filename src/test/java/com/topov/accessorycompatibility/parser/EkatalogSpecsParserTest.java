@@ -1,9 +1,9 @@
 package com.topov.accessorycompatibility.parser;
 
 import com.topov.accessorycompatibility.client.HardwareDom;
-import com.topov.accessorycompatibility.parser.strategy.EkatalogPcbParser;
-import com.topov.accessorycompatibility.parser.strategy.EkatalogCpuParser;
-import com.topov.accessorycompatibility.parser.strategy.EkatalogRamParser;
+import com.topov.accessorycompatibility.parser.ekatalog.strategy.EkatalogPcbParser;
+import com.topov.accessorycompatibility.parser.ekatalog.strategy.EkatalogCpuParser;
+import com.topov.accessorycompatibility.parser.ekatalog.strategy.EkatalogRamParser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.jupiter.api.Test;
