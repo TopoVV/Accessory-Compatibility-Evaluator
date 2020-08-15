@@ -34,6 +34,7 @@ class HadrwareReceiverInvokerTest {
         when(mockSource.getSourceUrl()).thenReturn(url);
 
         assertThrows(RuntimeException.class, () -> invoker.invokeReceiver(mockSource).join());
+
         verify(receiver, times(0)).receiveCpu(url);
     }
 
@@ -41,7 +42,6 @@ class HadrwareReceiverInvokerTest {
     public void whenSupportedSourceUrl_ThenCallReceiveCpu() {
         final String url = "https://ek.ua/cpu";
         final CpuSource mockSource = new CpuSource(url);
-
         when(receiver.supports(url)).thenReturn(true);
 
         invoker.invokeReceiver(mockSource).join();

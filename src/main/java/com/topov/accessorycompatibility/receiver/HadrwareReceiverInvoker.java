@@ -34,7 +34,7 @@ public class HadrwareReceiverInvoker {
             final T hardware = source.receive(receiver, assembler);
             return CompletableFuture.completedFuture(hardware);
         } catch (RuntimeException e) {
-            LOG.error(String.format("Failed to receive hardware (source: %s", sourceUrl));
+            LOG.error(String.format("Failed to receive hardware (source: %s)", sourceUrl));
             return CompletableFuture.failedFuture(e);
         }
     }

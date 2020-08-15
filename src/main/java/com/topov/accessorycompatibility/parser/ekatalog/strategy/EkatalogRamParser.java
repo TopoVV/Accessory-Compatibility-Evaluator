@@ -21,7 +21,7 @@ public class EkatalogRamParser extends EkatalogParsingStrategy {
         try {
             Map<String, String> specifications = new HashMap<>();
             final Elements parameters = removeUnnecessaryParameters(document.select(".prop"));
-            final Elements values = document.select("val");
+            final Elements values = document.select(".val");
 
 
             for(int i = 0; i < values.size(); i++) {

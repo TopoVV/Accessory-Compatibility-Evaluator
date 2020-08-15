@@ -7,6 +7,7 @@ import com.topov.accessorycompatibility.service.HardwareService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,13 +19,16 @@ public class CompatibilityController {
     private final HardwareService hardwareService;
 
     @Autowired
-    public CompatibilityController(HardwareService hardwareService) {
-        this.hardwareService = hardwareService;
+    public CompatibilityController(HardwareService hardwareService) { this.hardwareService = hardwareService; }
+
+    @GetMapping("/compatibility")
+    public String compatibilityGet() {
+        return "compatibility";
     }
 
     @ResponseBody
     @PostMapping("/compatibility")
-    public ResponseEntity<CompatibilityResponse> compatibilityGet(@RequestBody HardwareSpecificationSources sources) {
+    public ResponseEntity<CompatibilityResponse> compatibilityPost(@RequestBody HardwareSpecificationSources sources) {
         final List<CompatibilityResultDto> compatibilityResults = hardwareService.evaluateHardwareCompatibility(sources);
         return ResponseEntity.ok(new CompatibilityResponse(compatibilityResults));
     }
