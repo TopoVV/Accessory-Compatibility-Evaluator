@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
@@ -43,6 +45,15 @@ public class HadrwareReceiverInvoker {
         return receivers.stream()
                         .filter(receiver -> receiver.supports(url))
                         .findFirst()
-                        .orElseThrow(() -> new RuntimeException("No receivers found for the provided source."));
+                        .orElseThrow(() -> {
+                            try {
+                                final URI sourcePath = new URI(url);
+                                final String host = sourcePath.getHost();
+                                throw new RuntimeException("No receivers found for the provided source: " + host);
+                            } catch (URISyntaxException e) {
+                                LOG.error(e);
+                                throw new RuntimeException("No receivers found for the provided source: " + url);
+                            }
+                        });
     }
 }

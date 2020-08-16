@@ -14,7 +14,7 @@ public class CompatibilityCase {
     private String caseName;
     private CompletableFuture<CompatibilityEvaluationCommand> compatibilityCase;
 
-    public List<Incompatibility> evaluateCompatibility() throws ExecutionException, InterruptedException {
+    public List<Incompatibility> evaluateCompatibility() {
         return compatibilityCase.join().evaluate();
     }
 }
