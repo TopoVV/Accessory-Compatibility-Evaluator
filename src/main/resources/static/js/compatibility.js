@@ -16,25 +16,28 @@ document.addEventListener('DOMContentLoaded', e => {
         const results = compatibilityResponseBody.compatibilityResults;
         for (const result of results) {
             const incompatibilities = result.incompatibilities;
-            let incCase = "";
-            let incDesc = "";
-            incompatibilities.forEach(inc => {
-                incCase += inc.incompatibilityCase + '\n';
-                incDesc += inc.incompatibilityDescription + '\n';
-            });
-            if(result.compatibilityStatus === 'incompatible') {
+            let incCase = '';
+            let incDesc = '';
+            if(incompatibilities != null) {
+                incompatibilities.forEach(inc => {
+                    if(incCase.length !== 0) {
+                        incCase += ', '
+                    }
+                    incCase += inc.incompatibilityCase;
+                    incDesc += `<p>${inc.incompatibilityDescription}</p>`;
+                });
                 await Swal.fire({
                     icon: 'error',
-                    width: 700,
+                    width: 1000,
                     title: result.compatibilityName,
-                    text: result.compatibilityStatus + '(' + incCase + ')',
-                    footer: incDesc
+                    html: incDesc,
+                    footer: result.compatibilityStatus + '(' + incCase + ')'
                 });
             }
             if(result.compatibilityStatus === 'compatible') {
                 await Swal.fire({
                     icon: 'success',
-                    width: 700,
+                    width: 1000,
                     title: result.compatibilityName,
                     text: result.compatibilityStatus,
                 });
