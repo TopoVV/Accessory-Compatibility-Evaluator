@@ -53,7 +53,7 @@ public class HadrwareReceiverInvoker {
                             } catch (URISyntaxException e) {
                                 LOG.error(e);
                                 throw new RuntimeException("No receivers found for the provided source: " + url);
-                            }
+                            
                         });
     }
 }

@@ -18,17 +18,17 @@ public class PcbRamCompatibilityEvaluationCommand extends CompatibilityEvaluatio
     @Override
     public List<Incompatibility> evaluate() {
         final List<Incompatibility> incompatibilities = new ArrayList<>();
-        final String pcbRamType = this.firstComponent.getRamType();
-        final String ramType = this.secondComponent.getType();
-        final String pcbRamFormFactor = this.firstComponent.getRamFormFactor();
-        final String ramFormFactor = this.secondComponent.getFormFactor();
 
-        if (!pcbRamType.equals(ramType)) {
+        if (!this.firstComponent.isCompatibleWithRamType(this.firstComponent.getRamType())) {
+            final String pcbRamType = this.firstComponent.getRamType();
+            final String ramType = this.secondComponent.getType();
             final String description = String.format(RAM_TYPES_INCOMPATIBLE, pcbRamType, ramType);
             incompatibilities.add(new Incompatibility("socket", description));
         }
 
-        if (!pcbRamFormFactor.equals(ramFormFactor)) {
+        if (!this.firstComponent.isCompatibleWithRamFormFactor(this.secondComponent.getFormFactor())) {
+            final String pcbRamFormFactor = this.firstComponent.getRamFormFactor();
+            final String ramFormFactor = this.secondComponent.getFormFactor();
             final String description = String.format(RAM_FORM_FACTORS_INCOMPATIBLE, pcbRamFormFactor, ramFormFactor);
             incompatibilities.add(new Incompatibility("form factor", description));
         }

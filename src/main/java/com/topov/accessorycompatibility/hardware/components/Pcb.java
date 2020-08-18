@@ -27,4 +27,17 @@ public class Pcb extends Hardware {
         this.ramType = ramType;
     }
 
+    public boolean isCompatibleWithCpuSocket(String cpuSocket) {
+        return this.socket.equals(cpuSocket);
+    }
+
+    public boolean isCompatibleWithRamType(String ramType) {
+        return this.ramType.equals(ramType);
+    }
+
+    public boolean isCompatibleWithRamFormFactor(String ramFormFactor) {
+        return this.ramFormFactor.equals(ramFormFactor);
+    }
+
+
 }

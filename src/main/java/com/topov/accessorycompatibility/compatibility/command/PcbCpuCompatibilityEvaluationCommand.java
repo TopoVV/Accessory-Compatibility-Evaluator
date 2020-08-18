@@ -17,10 +17,10 @@ public class PcbCpuCompatibilityEvaluationCommand extends CompatibilityEvaluatio
     @Override
     public List<Incompatibility> evaluate() {
         final List<Incompatibility> incompatibilities = new ArrayList<>();
-        final String mbSocket = this.firstComponent.getSocket();
-        final String cpuSocket = this.secondComponent.getSocket();
 
-        if(!mbSocket.equals(cpuSocket)) {
+        if(!this.firstComponent.isCompatibleWithCpuSocket(this.secondComponent.getSocket())) {
+            final String mbSocket = this.firstComponent.getSocket();
+            final String cpuSocket = this.secondComponent.getSocket();
             final String description = String.format(SOCKETS_INCOMPATIBLE, mbSocket, cpuSocket);
             incompatibilities.add(new Incompatibility("socket", description));
         }
