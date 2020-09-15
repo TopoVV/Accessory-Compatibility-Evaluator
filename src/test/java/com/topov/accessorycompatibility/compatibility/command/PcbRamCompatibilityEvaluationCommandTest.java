@@ -18,8 +18,9 @@ class PcbRamCompatibilityEvaluationCommandTest {
         Pcb mockPcb = mock(Pcb.class);
         Ram mockRam = mock(Ram.class);
 
-        when(mockPcb.getRamType()).thenReturn("ddr4");
         when(mockRam.getType()).thenReturn("ddr3");
+        when(mockPcb.isCompatibleWithRamType("ddr4")).thenReturn(false);
+
 
         Incompatibility expectedIncompatibility = new Incompatibility("socket", "description");
         PcbRamCompatibilityEvaluationCommand command = new PcbRamCompatibilityEvaluationCommand(mockPcb, mockRam);
@@ -33,8 +34,8 @@ class PcbRamCompatibilityEvaluationCommandTest {
         Pcb mockPcb = mock(Pcb.class);
         Ram mockRam = mock(Ram.class);
 
-        when(mockPcb.getRamType()).thenReturn("ddr4");
         when(mockRam.getType()).thenReturn("ddr4");
+        when(mockPcb.isCompatibleWithRamType("ddr4")).thenReturn(true);
 
         Incompatibility expectedIncompatibility = new Incompatibility("socket", "description");
         PcbRamCompatibilityEvaluationCommand command = new PcbRamCompatibilityEvaluationCommand(mockPcb, mockRam);

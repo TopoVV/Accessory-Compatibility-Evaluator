@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+
 @Service
 public class CompatibilityEvaluationInvoker {
     private static final Logger LOG = LogManager.getLogger(CompatibilityEvaluationInvoker.class.getName());

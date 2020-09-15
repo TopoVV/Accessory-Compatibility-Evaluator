@@ -21,20 +21,21 @@ public class HardwareServiceImpl implements HardwareService {
     private static final Logger LOG = LogManager.getLogger(HardwareServiceImpl.class.getName());
 
     private final HadrwareReceiverInvoker receiverInvoker;
-    private final CompatibilityEvaluationInvoker evaluationInvoker;
+    private final CompatibilityEvaluationInvoker compatibilityEvaluationInvoker;
     private final CompatibilityResultMapper compatibilityResultMapper;
 
     @Autowired
-    public HardwareServiceImpl(CompatibilityEvaluationInvoker evaluationInvoker,
+    public HardwareServiceImpl(CompatibilityEvaluationInvoker compatibilityEvaluationInvoker,
                                CompatibilityResultMapper compatibilityResultMapper,
                                HadrwareReceiverInvoker receiverInvoker) {
         this.receiverInvoker = receiverInvoker;
-        this.evaluationInvoker = evaluationInvoker;
+        this.compatibilityEvaluationInvoker = compatibilityEvaluationInvoker;
         this.compatibilityResultMapper = compatibilityResultMapper;
     }
 
     @Override
     public List<CompatibilityResultDto> evaluateHardwareCompatibility(HardwareSpecificationSources hardwareSources) {
+
         final FutureHardwareHolder hardware =
             FutureHardwareHolder.builder()
                                 .futureCpu(receiverInvoker.invokeReceiver(hardwareSources.getCpuSource()))
@@ -43,7 +44,7 @@ public class HardwareServiceImpl implements HardwareService {
                                 .build();
 
         return hardware.getCompatibilityCaseHolders().stream()
-                       .map(evaluationInvoker::invokeEvaluation)
+                       .map(compatibilityEvaluationInvoker::invokeEvaluation)
                        .map(CompletableFuture::join)
                        .map(compatibilityResultMapper::toDto)
                        .collect(toList());

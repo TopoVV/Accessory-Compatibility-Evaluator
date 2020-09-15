@@ -11,8 +11,8 @@ import java.util.concurrent.ExecutionException;
 @Data
 @AllArgsConstructor
 public class CompatibilityCase {
-    private String caseName;
-    private CompletableFuture<CompatibilityEvaluationCommand> compatibilityCase;
+    private final String caseName;
+    private final CompletableFuture<CompatibilityEvaluationCommand> compatibilityCase;
 
     public List<Incompatibility> evaluateCompatibility() {
         return compatibilityCase.join().evaluate();

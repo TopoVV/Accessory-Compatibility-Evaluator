@@ -15,9 +15,9 @@ public class HardwareDom {
     }
 
     /**
-     * Parsing is implemented as Strategy design pattern.
-     * @param strategy - concrete parser.
-     * @return - map of specifications.
+     * Parsing is implemented as the Strategy design pattern.
+     * @param strategy - a concrete parser.
+     * @return - a map of specifications.
      */
     public Map<String, String> parse(HardwareParsingStrategy strategy) {
         return strategy.parse(this.dom);

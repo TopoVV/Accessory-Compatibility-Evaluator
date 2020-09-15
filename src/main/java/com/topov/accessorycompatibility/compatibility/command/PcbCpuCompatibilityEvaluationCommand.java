@@ -7,20 +7,23 @@ import com.topov.accessorycompatibility.hardware.components.Pcb;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PcbCpuCompatibilityEvaluationCommand extends CompatibilityEvaluationCommandAbstract<Pcb, Cpu> {
+public class PcbCpuCompatibilityEvaluationCommand implements CompatibilityEvaluationCommand {
     private static final String SOCKETS_INCOMPATIBLE = "Motherboard socket (%s) is not compatible with CPU socket (%s)";
+    private final Pcb pcb;
+    private final Cpu cpu;
 
     public PcbCpuCompatibilityEvaluationCommand(Pcb pcb, Cpu cpu) {
-        super(pcb, cpu);
+        this.pcb = pcb;
+        this.cpu = cpu;
     }
 
     @Override
     public List<Incompatibility> evaluate() {
         final List<Incompatibility> incompatibilities = new ArrayList<>();
 
-        if(!this.firstComponent.isCompatibleWithCpuSocket(this.secondComponent.getSocket())) {
-            final String mbSocket = this.firstComponent.getSocket();
-            final String cpuSocket = this.secondComponent.getSocket();
+        if(!this.pcb.isCompatibleWithCpuSocket(this.cpu.getSocket())) {
+            final String mbSocket = this.pcb.getSocket();
+            final String cpuSocket = this.cpu.getSocket();
             final String description = String.format(SOCKETS_INCOMPATIBLE, mbSocket, cpuSocket);
             incompatibilities.add(new Incompatibility("socket", description));
         }

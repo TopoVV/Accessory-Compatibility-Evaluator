@@ -19,12 +19,12 @@ public class HadrwareReceiverInvoker {
     private static final Logger LOG = LogManager.getLogger(HadrwareReceiverInvoker.class.getName());
 
     private final Set<SpecificationReceiver> receivers;
-    private final HardwareAssembler assembler;
+    private final HardwareAssembler hardwareAssembler;
 
     @Autowired
-    public HadrwareReceiverInvoker(Set<SpecificationReceiver> receivers, HardwareAssembler assembler) {
+    public HadrwareReceiverInvoker(Set<SpecificationReceiver> receivers, HardwareAssembler hardwareAssembler) {
         this.receivers = receivers;
-        this.assembler = assembler;
+        this.hardwareAssembler = hardwareAssembler;
     }
 
     @Async
@@ -33,7 +33,7 @@ public class HadrwareReceiverInvoker {
         final String sourceUrl = source.getSourceUrl();
         try {
             final SpecificationReceiver receiver = findAppropriateReceiver(sourceUrl);
-            final T hardware = source.receive(receiver, assembler);
+            final T hardware = source.receive(receiver, hardwareAssembler);
             return CompletableFuture.completedFuture(hardware);
         } catch (RuntimeException e) {
             LOG.error(String.format("Failed to receive hardware (source: %s)", sourceUrl));
@@ -52,8 +52,8 @@ public class HadrwareReceiverInvoker {
                                 throw new RuntimeException("No receivers found for the provided source: " + host);
                             } catch (URISyntaxException e) {
                                 LOG.error(e);
-                                throw new RuntimeException("No receivers found for the provided source: " + url);
-                            
+                                throw new RuntimeException(url + " cannot be source");
+                            }
                         });
     }
 }
